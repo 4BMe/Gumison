@@ -9,6 +9,8 @@
 
 
 
+
+
 ## :floppy_disk: 왜 병렬 분산 알고리즘을?
 
 - Scale-out
