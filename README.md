@@ -2,12 +2,11 @@
 
 ## 목차
 
-2. [병렬 분산 알고리즘 사용 이유](#:floppy_disk: 왜 병렬 분산 알고리즘을?)
-3. [MapReduce](MapReduce.md)
-4. [Hadoop](Hadoop.md)
-5. [Hadoop 설치](Hadoop_Install.md)
-
-
+1. [병렬 분산 알고리즘 사용 이유](#:floppy_disk: 왜 병렬 분산 알고리즘을?)
+2. [MapReduce](MapReduce.md)
+3. [Hadoop](Hadoop.md)
+4. [Hadoop 설치](Hadoop_Install.md)
+5. [Partitioner Class](Partitioner_Class.md)
 
 
 
