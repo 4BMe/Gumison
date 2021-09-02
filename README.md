@@ -7,6 +7,7 @@
 3. [Hadoop](Hadoop.md)
 4. [Hadoop 설치](Hadoop_Install.md)
 5. [Partitioner Class](Partitioner_Class.md)
+6. [Inverted Index](Inverted_Index.md)
 
 
 
