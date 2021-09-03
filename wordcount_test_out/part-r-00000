@@ -1,46 +1,293 @@
-"rejoicing	1
-"undo	1
-(and)	1
-.	3
-Administration,	1
-All	1
-Almighty	1
-America	2
-Americans	2
-Americans--born	1
-Americans:	1
-Americas.	1
-And	4
-But	5
-Can	1
-Divided	1
-East	1
-Finally,	2
-For	3
-God	1
-God's	1
-God.	1
-Hemisphere	1
-His	2
-I	3
-If	1
-In	2
-Isaiah--to	1
-Let	8
-My	1
-Nations,	1
-Nor	1
-North	1
-Now	1
-Since	1
-So	1
-South,	1
-The	3
-This	1
-To	5
-Together	1
-United	2
-We	4
-West,	1
-Will	1
-With	1
+All	:wordcount-data.txt:5257
+Almighty	:wordcount-data.txt:151
+Americans	:wordcount-data.txt:5687, wordcount-data.txt:5611
+Americans:	:wordcount-data.txt:6808
+Americas.	:wordcount-data.txt:2851
+And	:wordcount-data.txt:5012, wordcount-data.txt:2860, wordcount-data.txt:6794, wordcount-data.txt:399
+But	:wordcount-data.txt:4271, wordcount-data.txt:1878, wordcount-data.txt:2697, wordcount-data.txt:5424, wordcount-data.txt:3819
+Divided	:wordcount-data.txt:1538
+East	:wordcount-data.txt:6209
+Finally,	:wordcount-data.txt:7028, wordcount-data.txt:3389
+For	:wordcount-data.txt:310, wordcount-data.txt:126, wordcount-data.txt:3695
+I	:wordcount-data.txt:129, wordcount-data.txt:6443, wordcount-data.txt:6490
+If	:wordcount-data.txt:2366
+In	:wordcount-data.txt:5482, wordcount-data.txt:6332
+Let	:wordcount-data.txt:2763, wordcount-data.txt:4338, wordcount-data.txt:696, wordcount-data.txt:4242, wordcount-data.txt:4439, wordcount-data.txt:1147, wordcount-data.txt:4864, wordcount-data.txt:4653
+Nor	:wordcount-data.txt:5306
+North	:wordcount-data.txt:6195
+South,	:wordcount-data.txt:6203
+The	:wordcount-data.txt:283, wordcount-data.txt:5671, wordcount-data.txt:6572
+To	:wordcount-data.txt:1388, wordcount-data.txt:2122, wordcount-data.txt:1674, wordcount-data.txt:2510, wordcount-data.txt:3031
+United	:wordcount-data.txt:3071, wordcount-data.txt:1480
+West,	:wordcount-data.txt:6216
+a	:wordcount-data.txt:3224, wordcount-data.txt:4191, wordcount-data.txt:853, wordcount-data.txt:2554, wordcount-data.txt:7160, wordcount-data.txt:35, wordcount-data.txt:5927, wordcount-data.txt:6363, wordcount-data.txt:6171, wordcount-data.txt:5017, wordcount-data.txt:5905, wordcount-data.txt:1808, wordcount-data.txt:2608, wordcount-data.txt:17, wordcount-data.txt:206, wordcount-data.txt:3466, wordcount-data.txt:5866, wordcount-data.txt:1583, wordcount-data.txt:5098, wordcount-data.txt:2368, wordcount-data.txt:5114, wordcount-data.txt:6234, wordcount-data.txt:5827, wordcount-data.txt:1511, wordcount-data.txt:781, wordcount-data.txt:5136, wordcount-data.txt:82, wordcount-data.txt:3456
+absolute	:wordcount-data.txt:4548, wordcount-data.txt:4590
+adversary,	:wordcount-data.txt:3436
+again--not	:wordcount-data.txt:5815
+against	:wordcount-data.txt:6152, wordcount-data.txt:6015
+age	:wordcount-data.txt:3104
+ago.	:wordcount-data.txt:231
+all	:wordcount-data.txt:6254, wordcount-data.txt:379, wordcount-data.txt:3570, wordcount-data.txt:4607, wordcount-data.txt:6650, wordcount-data.txt:4889, wordcount-data.txt:2766, wordcount-data.txt:354
+alliance	:wordcount-data.txt:2612
+alliance,	:wordcount-data.txt:6186
+always	:wordcount-data.txt:4221, wordcount-data.txt:1838, wordcount-data.txt:1888, wordcount-data.txt:981
+an	:wordcount-data.txt:69, wordcount-data.txt:3102
+and	:wordcount-data.txt:5172, wordcount-data.txt:1036, wordcount-data.txt:1001, wordcount-data.txt:214, wordcount-data.txt:376, wordcount-data.txt:5188, wordcount-data.txt:7128, wordcount-data.txt:3840, wordcount-data.txt:1607, wordcount-data.txt:6647, wordcount-data.txt:2648, wordcount-data.txt:5955, wordcount-data.txt:148, wordcount-data.txt:4816, wordcount-data.txt:4797, wordcount-data.txt:2144, wordcount-data.txt:858, wordcount-data.txt:3273, wordcount-data.txt:4207, wordcount-data.txt:6067, wordcount-data.txt:1417, wordcount-data.txt:6177, wordcount-data.txt:6200, wordcount-data.txt:7277, wordcount-data.txt:6213, wordcount-data.txt:1294, wordcount-data.txt:725, wordcount-data.txt:4484, wordcount-data.txt:742, wordcount-data.txt:4519
+anew	:wordcount-data.txt:3493
+answered	:wordcount-data.txt:5699
+anywhere	:wordcount-data.txt:2838
+area	:wordcount-data.txt:3300
+arms	:wordcount-data.txt:3709, wordcount-data.txt:5849
+arms,	:wordcount-data.txt:5838
+around	:wordcount-data.txt:1039, wordcount-data.txt:473
+ask	:wordcount-data.txt:6818, wordcount-data.txt:7087, wordcount-data.txt:6931, wordcount-data.txt:7147
+asking	:wordcount-data.txt:7260
+assist	:wordcount-data.txt:2635
+assure	:wordcount-data.txt:1277, wordcount-data.txt:6228
+at	:wordcount-data.txt:1601, wordcount-data.txt:466, wordcount-data.txt:1030
+atom,	:wordcount-data.txt:3991
+back	:wordcount-data.txt:5047, wordcount-data.txt:2010
+be	:wordcount-data.txt:5271, wordcount-data.txt:3779, wordcount-data.txt:3742, wordcount-data.txt:5315, wordcount-data.txt:1796, wordcount-data.txt:7331, wordcount-data.txt:2309
+beachhead	:wordcount-data.txt:5018
+become	:wordcount-data.txt:2734
+before	:wordcount-data.txt:139, wordcount-data.txt:3514
+begin	:wordcount-data.txt:4141, wordcount-data.txt:3488
+begin.	:wordcount-data.txt:5432
+belaboring	:wordcount-data.txt:4385
+belief	:wordcount-data.txt:492
+beyond	:wordcount-data.txt:3726, wordcount-data.txt:3751
+blessing	:wordcount-data.txt:7269
+both	:wordcount-data.txt:3999, wordcount-data.txt:4341, wordcount-data.txt:3945, wordcount-data.txt:4165, wordcount-data.txt:4442, wordcount-data.txt:4656, wordcount-data.txt:4867, wordcount-data.txt:3479, wordcount-data.txt:5075
+break	:wordcount-data.txt:2181
+burdens	:wordcount-data.txt:4944
+but	:wordcount-data.txt:7288, wordcount-data.txt:6961, wordcount-data.txt:2346, wordcount-data.txt:32, wordcount-data.txt:550, wordcount-data.txt:3463, wordcount-data.txt:5902, wordcount-data.txt:5133
+by	:wordcount-data.txt:3920, wordcount-data.txt:3555, wordcount-data.txt:3963, wordcount-data.txt:851, wordcount-data.txt:834, wordcount-data.txt:1999, wordcount-data.txt:1806
+cannot	:wordcount-data.txt:2728, wordcount-data.txt:2410, wordcount-data.txt:2380, wordcount-data.txt:1501
+casting	:wordcount-data.txt:2668
+challenge	:wordcount-data.txt:1592
+citizens	:wordcount-data.txt:6912, wordcount-data.txt:7049, wordcount-data.txt:7068
+citizens,	:wordcount-data.txt:5502
+civility	:wordcount-data.txt:4178
+colonial	:wordcount-data.txt:1751
+command	:wordcount-data.txt:4912
+commerce.	:wordcount-data.txt:4819
+common	:wordcount-data.txt:6025
+conquer	:wordcount-data.txt:4745
+control	:wordcount-data.txt:4598, wordcount-data.txt:4522, wordcount-data.txt:1759
+convert	:wordcount-data.txt:2572
+cooperation	:wordcount-data.txt:5029
+cooperative	:wordcount-data.txt:1518
+cost	:wordcount-data.txt:3925
+course.	:wordcount-data.txt:5561
+creating	:wordcount-data.txt:5090
+danger.	:wordcount-data.txt:6436
+days,	:wordcount-data.txt:5346
+days.	:wordcount-data.txt:5301
+deadly	:wordcount-data.txt:3985
+deeds,	:wordcount-data.txt:7222
+different	:wordcount-data.txt:297
+divide	:wordcount-data.txt:4413
+do	:wordcount-data.txt:6865, wordcount-data.txt:6981, wordcount-data.txt:1507, wordcount-data.txt:6952, wordcount-data.txt:6842, wordcount-data.txt:6444, wordcount-data.txt:6491
+doing	:wordcount-data.txt:2311
+each	:wordcount-data.txt:5595
+effort?	:wordcount-data.txt:6290
+efforts	:wordcount-data.txt:2222
+employed.	:wordcount-data.txt:3781
+encourage	:wordcount-data.txt:4800
+end	:wordcount-data.txt:71
+engulf	:wordcount-data.txt:3564
+every	:wordcount-data.txt:1150, wordcount-data.txt:2866
+exchange	:wordcount-data.txt:6519
+expect	:wordcount-data.txt:1844
+explore	:wordcount-data.txt:4350, wordcount-data.txt:4729
+faithful	:wordcount-data.txt:1464
+far	:wordcount-data.txt:1809, wordcount-data.txt:3135
+fellow	:wordcount-data.txt:5496, wordcount-data.txt:6802, wordcount-data.txt:6906
+find	:wordcount-data.txt:1852, wordcount-data.txt:1900
+foolishly	:wordcount-data.txt:1979
+for	:wordcount-data.txt:6954, wordcount-data.txt:6983, wordcount-data.txt:3505, wordcount-data.txt:4503, wordcount-data.txt:2254, wordcount-data.txt:6867, wordcount-data.txt:2620, wordcount-data.txt:6844, wordcount-data.txt:432, wordcount-data.txt:6251, wordcount-data.txt:3230, wordcount-data.txt:4452
+forebears	:wordcount-data.txt:443
+forge	:wordcount-data.txt:6147
+forget	:wordcount-data.txt:646
+forms	:wordcount-data.txt:382, wordcount-data.txt:357
+formulate	:wordcount-data.txt:4468
+forth	:wordcount-data.txt:708, wordcount-data.txt:7235
+forum	:wordcount-data.txt:3225
+fought	:wordcount-data.txt:452
+founded,	:wordcount-data.txt:5587
+freedom--and	:wordcount-data.txt:1934
+freedom--symbolizing	:wordcount-data.txt:49
+friends.	:wordcount-data.txt:1472
+fruitful	:wordcount-data.txt:6239
+generations	:wordcount-data.txt:6367
+generosity	:wordcount-data.txt:530
+give	:wordcount-data.txt:5637
+global	:wordcount-data.txt:6180
+globe	:wordcount-data.txt:2164
+globe.	:wordcount-data.txt:5734
+glow	:wordcount-data.txt:6671
+good	:wordcount-data.txt:2582, wordcount-data.txt:7161, wordcount-data.txt:2595
+granted	:wordcount-data.txt:6386
+great	:wordcount-data.txt:3835
+half	:wordcount-data.txt:2157
+hand	:wordcount-data.txt:4056, wordcount-data.txt:560
+hard	:wordcount-data.txt:854
+hardship,	:wordcount-data.txt:1237
+heavy	:wordcount-data.txt:4939
+heirs	:wordcount-data.txt:669
+help	:wordcount-data.txt:2239, wordcount-data.txt:2386, wordcount-data.txt:2231
+help,	:wordcount-data.txt:7283
+historic	:wordcount-data.txt:6282
+home	:wordcount-data.txt:1032
+human	:wordcount-data.txt:950, wordcount-data.txt:364, wordcount-data.txt:389
+humanity	:wordcount-data.txt:3573
+if	:wordcount-data.txt:5015
+ill,	:wordcount-data.txt:1189
+in	:wordcount-data.txt:5088, wordcount-data.txt:3304, wordcount-data.txt:1961, wordcount-data.txt:5281, wordcount-data.txt:812, wordcount-data.txt:2666, wordcount-data.txt:3581, wordcount-data.txt:5325, wordcount-data.txt:1509, wordcount-data.txt:5953, wordcount-data.txt:5976, wordcount-data.txt:5354, wordcount-data.txt:2135, wordcount-data.txt:5398, wordcount-data.txt:5990, wordcount-data.txt:6418, wordcount-data.txt:3100, wordcount-data.txt:2846, wordcount-data.txt:321, wordcount-data.txt:6276, wordcount-data.txt:4887
+intends	:wordcount-data.txt:2903
+issue	:wordcount-data.txt:468
+it	:wordcount-data.txt:1173, wordcount-data.txt:3204, wordcount-data.txt:2408, wordcount-data.txt:2356, wordcount-data.txt:5313
+it,	:wordcount-data.txt:2316
+it.	:wordcount-data.txt:6487
+itself.	:wordcount-data.txt:6073
+judge	:wordcount-data.txt:7212
+jungle	:wordcount-data.txt:5054
+know	:wordcount-data.txt:2881, wordcount-data.txt:2781
+know,	:wordcount-data.txt:1161
+knowing	:wordcount-data.txt:7291
+land	:wordcount-data.txt:7249
+let	:wordcount-data.txt:5072, wordcount-data.txt:7228, wordcount-data.txt:5427, wordcount-data.txt:4274, wordcount-data.txt:4724, wordcount-data.txt:4959, wordcount-data.txt:2863, wordcount-data.txt:4136
+liberty.	:wordcount-data.txt:1309
+lifetime	:wordcount-data.txt:5403
+mankind?	:wordcount-data.txt:6257
+many	:wordcount-data.txt:2393
+may	:wordcount-data.txt:3318, wordcount-data.txt:5040, wordcount-data.txt:2306
+meet	:wordcount-data.txt:1230, wordcount-data.txt:1579
+mine,	:wordcount-data.txt:5519
+misery,	:wordcount-data.txt:2200
+modern	:wordcount-data.txt:3931
+more	:wordcount-data.txt:1812, wordcount-data.txt:5511, wordcount-data.txt:6235
+more.	:wordcount-data.txt:1377
+mortal	:wordcount-data.txt:326
+much	:wordcount-data.txt:1360
+must	:wordcount-data.txt:7322
+nation	:wordcount-data.txt:972, wordcount-data.txt:1155
+nearly	:wordcount-data.txt:200
+need--not	:wordcount-data.txt:5855
+neighbors	:wordcount-data.txt:2772
+neither	:wordcount-data.txt:3822
+nor	:wordcount-data.txt:5384, wordcount-data.txt:5351
+not	:wordcount-data.txt:3453, wordcount-data.txt:6493, wordcount-data.txt:2319, wordcount-data.txt:5111, wordcount-data.txt:4188, wordcount-data.txt:3670, wordcount-data.txt:14, wordcount-data.txt:6446, wordcount-data.txt:1576, wordcount-data.txt:6821, wordcount-data.txt:1771, wordcount-data.txt:6934, wordcount-data.txt:1835, wordcount-data.txt:5268, wordcount-data.txt:643, wordcount-data.txt:520
+of	:wordcount-data.txt:5363, wordcount-data.txt:7118, wordcount-data.txt:795, wordcount-data.txt:3126, wordcount-data.txt:564, wordcount-data.txt:4060, wordcount-data.txt:2155, wordcount-data.txt:540, wordcount-data.txt:4036, wordcount-data.txt:4196, wordcount-data.txt:362, wordcount-data.txt:387, wordcount-data.txt:6510, wordcount-data.txt:6920, wordcount-data.txt:3980, wordcount-data.txt:511, wordcount-data.txt:2194, wordcount-data.txt:3929, wordcount-data.txt:1307, wordcount-data.txt:5556, wordcount-data.txt:2014, wordcount-data.txt:5125, wordcount-data.txt:5060, wordcount-data.txt:4264, wordcount-data.txt:3857, wordcount-data.txt:25, wordcount-data.txt:3160, wordcount-data.txt:6427, wordcount-data.txt:2747, wordcount-data.txt:5027, wordcount-data.txt:943, wordcount-data.txt:4383, wordcount-data.txt:674, wordcount-data.txt:3184, wordcount-data.txt:47, wordcount-data.txt:2722, wordcount-data.txt:5925, wordcount-data.txt:1462, wordcount-data.txt:7217, wordcount-data.txt:2535, wordcount-data.txt:4919, wordcount-data.txt:6400, wordcount-data.txt:4899, wordcount-data.txt:1516, wordcount-data.txt:3265, wordcount-data.txt:2687, wordcount-data.txt:3533, wordcount-data.txt:5609, wordcount-data.txt:2927, wordcount-data.txt:6996, wordcount-data.txt:7057, wordcount-data.txt:5145, wordcount-data.txt:878, wordcount-data.txt:1713, wordcount-data.txt:5680, wordcount-data.txt:6348, wordcount-data.txt:3050, wordcount-data.txt:1749, wordcount-data.txt:4529, wordcount-data.txt:7076, wordcount-data.txt:6038, wordcount-data.txt:7150, wordcount-data.txt:7090, wordcount-data.txt:4703, wordcount-data.txt:4687, wordcount-data.txt:4605
+off	:wordcount-data.txt:2675
+old	:wordcount-data.txt:1395
+on	:wordcount-data.txt:5411, wordcount-data.txt:4163, wordcount-data.txt:7306
+oppressed	:wordcount-data.txt:4965
+or	:wordcount-data.txt:921, wordcount-data.txt:5547, wordcount-data.txt:1187, wordcount-data.txt:7066, wordcount-data.txt:3590, wordcount-data.txt:2826, wordcount-data.txt:6551
+origins	:wordcount-data.txt:1429
+outpaced	:wordcount-data.txt:3138
+overburdened	:wordcount-data.txt:3908
+patient	:wordcount-data.txt:5983
+peaceful	:wordcount-data.txt:2704
+people	:wordcount-data.txt:2129, wordcount-data.txt:6545
+perhaps	:wordcount-data.txt:5391
+period	:wordcount-data.txt:2265
+permit	:wordcount-data.txt:923
+place,	:wordcount-data.txt:728
+pledge	:wordcount-data.txt:1446, wordcount-data.txt:2209, wordcount-data.txt:3178, wordcount-data.txt:1725, wordcount-data.txt:3457
+poverty	:wordcount-data.txt:369
+poverty,	:wordcount-data.txt:6052
+poverty.	:wordcount-data.txt:2689
+power	:wordcount-data.txt:340, wordcount-data.txt:1994, wordcount-data.txt:4556, wordcount-data.txt:2876
+power,	:wordcount-data.txt:5127
+precise	:wordcount-data.txt:4487
+prescribed	:wordcount-data.txt:190
+present	:wordcount-data.txt:3884
+price,	:wordcount-data.txt:1210
+proposals	:wordcount-data.txt:4494
+ranks	:wordcount-data.txt:1708
+remember	:wordcount-data.txt:1948
+renew	:wordcount-data.txt:3170
+republics	:wordcount-data.txt:2521
+request:	:wordcount-data.txt:3467
+responsibility--I	:wordcount-data.txt:6463
+revolution	:wordcount-data.txt:2712
+revolution.	:wordcount-data.txt:685
+revolutionary	:wordcount-data.txt:412
+reward,	:wordcount-data.txt:7186
+riding	:wordcount-data.txt:2001
+rightly	:wordcount-data.txt:3949
+rights	:wordcount-data.txt:505, wordcount-data.txt:955
+run.	:wordcount-data.txt:3321
+sacrifice	:wordcount-data.txt:7131
+save	:wordcount-data.txt:2416
+secure	:wordcount-data.txt:5182
+self-destruction.	:wordcount-data.txt:3602
+serve	:wordcount-data.txt:6656
+service	:wordcount-data.txt:5716
+share,	:wordcount-data.txt:1438
+shield	:wordcount-data.txt:3259
+shrink	:wordcount-data.txt:6449
+sign	:wordcount-data.txt:4192
+slow	:wordcount-data.txt:932
+south	:wordcount-data.txt:2530
+special	:wordcount-data.txt:2555
+spiritual	:wordcount-data.txt:1420
+spread	:wordcount-data.txt:3974
+stars,	:wordcount-data.txt:4739
+state	:wordcount-data.txt:545
+strength	:wordcount-data.txt:7120
+strong	:wordcount-data.txt:5159
+struggle	:wordcount-data.txt:6007
+struggle,	:wordcount-data.txt:5940
+success	:wordcount-data.txt:1300, wordcount-data.txt:5540
+support	:wordcount-data.txt:1246
+supporting	:wordcount-data.txt:1860, wordcount-data.txt:1916
+sure	:wordcount-data.txt:7182
+suspicion,	:wordcount-data.txt:5062
+sworn	:wordcount-data.txt:134
+take	:wordcount-data.txt:3866
+tap	:wordcount-data.txt:4780
+terrors.	:wordcount-data.txt:4708
+than	:wordcount-data.txt:5515
+that	:wordcount-data.txt:6221, wordcount-data.txt:3475, wordcount-data.txt:6278, wordcount-data.txt:1738, wordcount-data.txt:754, wordcount-data.txt:2885, wordcount-data.txt:676, wordcount-data.txt:3033, wordcount-data.txt:657, wordcount-data.txt:6679, wordcount-data.txt:498, wordcount-data.txt:6503, wordcount-data.txt:1193, wordcount-data.txt:2785, wordcount-data.txt:4016, wordcount-data.txt:3762, wordcount-data.txt:4044, wordcount-data.txt:4174, wordcount-data.txt:7298
+that,	:wordcount-data.txt:1956
+the	:wordcount-data.txt:2918, wordcount-data.txt:5327, wordcount-data.txt:5283, wordcount-data.txt:1452, wordcount-data.txt:1045, wordcount-data.txt:5191, wordcount-data.txt:5707, wordcount-data.txt:5175, wordcount-data.txt:5731, wordcount-data.txt:5156, wordcount-data.txt:5796, wordcount-data.txt:5051, wordcount-data.txt:929, wordcount-data.txt:5916, wordcount-data.txt:4962, wordcount-data.txt:5356, wordcount-data.txt:4936, wordcount-data.txt:4909, wordcount-data.txt:4901, wordcount-data.txt:1705, wordcount-data.txt:4809, wordcount-data.txt:1715, wordcount-data.txt:4783, wordcount-data.txt:4752, wordcount-data.txt:4736, wordcount-data.txt:6022, wordcount-data.txt:4677, wordcount-data.txt:4587, wordcount-data.txt:758, wordcount-data.txt:4545, wordcount-data.txt:6334, wordcount-data.txt:4506, wordcount-data.txt:6350, wordcount-data.txt:4455, wordcount-data.txt:6393, wordcount-data.txt:699, wordcount-data.txt:666, wordcount-data.txt:1963, wordcount-data.txt:2007, wordcount-data.txt:2016, wordcount-data.txt:557, wordcount-data.txt:2137, wordcount-data.txt:542, wordcount-data.txt:4053, wordcount-data.txt:2161, wordcount-data.txt:6582, wordcount-data.txt:527, wordcount-data.txt:6591, wordcount-data.txt:3982, wordcount-data.txt:2186, wordcount-data.txt:3965, wordcount-data.txt:3922, wordcount-data.txt:502, wordcount-data.txt:479, wordcount-data.txt:6668, wordcount-data.txt:2293, wordcount-data.txt:405, wordcount-data.txt:6700, wordcount-data.txt:6922, wordcount-data.txt:2390, wordcount-data.txt:1297, wordcount-data.txt:2420, wordcount-data.txt:337, wordcount-data.txt:6986, wordcount-data.txt:3520, wordcount-data.txt:3497, wordcount-data.txt:7078, wordcount-data.txt:7098, wordcount-data.txt:162, wordcount-data.txt:3297, wordcount-data.txt:2678, wordcount-data.txt:3276, wordcount-data.txt:3267, wordcount-data.txt:7204, wordcount-data.txt:1283, wordcount-data.txt:2740, wordcount-data.txt:7246, wordcount-data.txt:5532, wordcount-data.txt:3146, wordcount-data.txt:3112, wordcount-data.txt:2848, wordcount-data.txt:3068
+these	:wordcount-data.txt:6159
+those	:wordcount-data.txt:4395, wordcount-data.txt:3399, wordcount-data.txt:1971, wordcount-data.txt:1390, wordcount-data.txt:2124, wordcount-data.txt:945, wordcount-data.txt:1676
+though	:wordcount-data.txt:5843, wordcount-data.txt:5880
+tiger	:wordcount-data.txt:2019
+time	:wordcount-data.txt:721
+time,	:wordcount-data.txt:4463
+to	:wordcount-data.txt:4234, wordcount-data.txt:345, wordcount-data.txt:1004, wordcount-data.txt:4288, wordcount-data.txt:1946, wordcount-data.txt:1898, wordcount-data.txt:734, wordcount-data.txt:1850, wordcount-data.txt:4561, wordcount-data.txt:779, wordcount-data.txt:4669, wordcount-data.txt:1794, wordcount-data.txt:3397, wordcount-data.txt:912, wordcount-data.txt:3288, wordcount-data.txt:4881, wordcount-data.txt:1703, wordcount-data.txt:5714, wordcount-data.txt:5650, wordcount-data.txt:7240, wordcount-data.txt:2910, wordcount-data.txt:5910, wordcount-data.txt:5635, wordcount-data.txt:5871, wordcount-data.txt:961, wordcount-data.txt:2229, wordcount-data.txt:5832, wordcount-data.txt:6614, wordcount-data.txt:2808, wordcount-data.txt:2179, wordcount-data.txt:4009, wordcount-data.txt:1275
+today	:wordcount-data.txt:652, wordcount-data.txt:1025, wordcount-data.txt:9
+trumpet	:wordcount-data.txt:5799
+tyranny,	:wordcount-data.txt:6044
+tyranny.	:wordcount-data.txt:1820
+uncertain	:wordcount-data.txt:4020
+unite	:wordcount-data.txt:4369, wordcount-data.txt:4876
+unleashed	:wordcount-data.txt:3546
+unwilling	:wordcount-data.txt:903
+up	:wordcount-data.txt:2029
+view.	:wordcount-data.txt:1873
+villages	:wordcount-data.txt:2147
+votes,	:wordcount-data.txt:2340
+was	:wordcount-data.txt:5584
+weak--and	:wordcount-data.txt:3279
+weakness,	:wordcount-data.txt:4198
+weakness.	:wordcount-data.txt:3686
+weapons,	:wordcount-data.txt:3937
+where	:wordcount-data.txt:5151, wordcount-data.txt:3107
+whether	:wordcount-data.txt:1166, wordcount-data.txt:7036
+which	:wordcount-data.txt:7140, wordcount-data.txt:435, wordcount-data.txt:3306, wordcount-data.txt:6602, wordcount-data.txt:963, wordcount-data.txt:4408, wordcount-data.txt:1006
+whom	:wordcount-data.txt:1690
+wishes	:wordcount-data.txt:1175
+witness	:wordcount-data.txt:914
+words	:wordcount-data.txt:2586
+work	:wordcount-data.txt:7318
+would	:wordcount-data.txt:3414, wordcount-data.txt:6514
+year	:wordcount-data.txt:5949, wordcount-data.txt:5958
+you	:wordcount-data.txt:6859, wordcount-data.txt:7043, wordcount-data.txt:6269, wordcount-data.txt:145
+you,	:wordcount-data.txt:6957
+you.	:wordcount-data.txt:7152
+your	:wordcount-data.txt:6828, wordcount-data.txt:5484, wordcount-data.txt:6870
