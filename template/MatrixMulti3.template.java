@@ -234,7 +234,6 @@ public class MatrixMulti3 {
 
                 FileInputFormat.addInputPath(job, new Path(otherArgs[5]));
                 FileOutputFormat.setOutputPath(job, new Path(otherArgs[6]));
-                //FileSystem.get(config).delete(new Path(otherArgs[1]),true);
                 System.exit(job.waitForCompletion(true) ? 0 : 1);
         }
 

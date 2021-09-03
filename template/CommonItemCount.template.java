@@ -120,19 +120,12 @@ public class CommonItemCount {
 		if ( !job1.waitForCompletion( true ) ) 
 			System.exit(1);
 
+                // run phase2 job
+                // TODO
+                // ------------------------------------------------------
+                //
+                // ------------------------------------------------------
 
-                Job job2 = new Job( conf, "DistinctPairCount" );
-                job2.setJarByClass( CommonItemCount.class );
-                job2.setMapperClass( SimMapper.class );
-                job2.setReducerClass( SimReducer.class );
-                job2.setOutputKeyClass( Text.class );
-                job2.setOutputValueClass( IntWritable.class );
-                FileInputFormat.addInputPath( job2, new Path( otherArgs[1] ) );
-                FileOutputFormat.setOutputPath( job2, new Path( otherArgs[2] ) );
-		if ( fs.exists( new Path( otherArgs[2] ) ) ) 
-			fs.delete( new Path( otherArgs[2] ) );
-                if ( !job2.waitForCompletion( true ) ) 
-			System.exit(1);
 
 	}
 }

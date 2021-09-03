@@ -80,7 +80,7 @@ public class MatrixMulti2 {
 		String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 
                 if (otherArgs.length != 7) {
-                        System.err.println("Usage: <Matrix 1 name> <Matrix 2 name> <Number of row in Matrix 1><Number of columns in Matrix 1 (i.e., Number of rows in Matrix 2)> <Number of columns in Matrix 2> <in> <out>");
+                        System.err.println("Usage: <Matrix 1 name> <Matrix 2 name> <Number of rows in Matrix 1><Number of columns in Matrix 1 (i.e., Number of rows in Matrix 2)> <Number of columns in Matrix 2> <in> <out>");
                         System.exit(2);
                 }
 

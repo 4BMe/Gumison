@@ -42,7 +42,6 @@ public class MatrixMulti {
 	}
 	// Reduce
 	public static class MMReducer extends Reducer<Text, Text, Text, Text> {
-		private IntWritable val = new IntWritable();	// emit할 value로 사용할 변수
 
 		public void reduce(Text key, Iterable<Text> values, Context context) 
 			throws IOException, InterruptedException {
@@ -57,7 +56,7 @@ public class MatrixMulti {
 		Configuration conf = new Configuration();
 		String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 		if (otherArgs.length != 7) {
-			System.err.println("Usage: <Matrix 1 name> <Matrix 2 name> <Number of row in Matrix 1><Number of columns in Matrix 1 (i.e., Number of rows in Matrix 2)> <Number of columns in Matrix 2> <in> <out>");
+			System.err.println("Usage: <Matrix 1 name> <Matrix 2 name> <Number of rows in Matrix 1><Number of columns in Matrix 1 (i.e., Number of rows in Matrix 2)> <Number of columns in Matrix 2> <in> <out>");
 			System.exit(2);
 		}
 
@@ -86,7 +85,6 @@ public class MatrixMulti {
 
 		FileInputFormat.addInputPath(job, new Path(otherArgs[5]));
 		FileOutputFormat.setOutputPath(job, new Path(otherArgs[6]));
-		FileSystem.get(config).delete(new Path(otherArgs[1]),true);
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }

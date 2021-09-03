@@ -9,7 +9,10 @@ public class Driver {
 		try {
 		pgd.addClass("wordcount", Wordcount.class, "A map/reduce program tath performs word counting");
 		pgd.addClass("wordcount1char", Wordcount1char.class, "A map/reduce program that performs word counting. 1st ");
-               	pgd.addClass("wordcountsort", Wordcountsort.class, "A map/reduce program that output frequency wordcountsort.");
+               pgd.addClass("wordcountsort", Wordcountsort.class, "A map/reduce program that output frequency wordcountsort.");
+               pgd.addClass("inverted", InvertedIndex.class, "A map/reduce program that generates the inverted index using words in the input files.");
+                pgd.addClass("matadd", MatrixAdd.class, "A map/reduce program that computes the addition of two matrices.");
+                
       			pgd.driver(args);
 			exitCode = 0;
 		}

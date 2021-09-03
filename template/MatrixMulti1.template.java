@@ -62,13 +62,13 @@ public class MatrixMulti1 {
 		}
 	}
 	// Main
-	public static void main(String[] args) throws Exception {
-		Configuration conf = new Configuration();
-		String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
-		if (otherArgs.length != 7) {
-			System.err.println("Usage: <Matrix1name> <Matrix2name>  <n> <m> <l> <in> <out>");
-			System.exit(2);
-		}
+        public static void main(String[] args) throws Exception {
+                Configuration conf = new Configuration();
+                String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+                if (otherArgs.length != 7) {
+                        System.err.println("Usage: <Matrix 1 name> <Matrix 2 name> <Number of rows in Matrix 1><Number of columns in Matrix 1 (i.e., Number of rows in Matrix 2)> <Number of columns in Matrix 2> <in> <out>");
+                        System.exit(2);
+                }
 
                 FileSystem hdfs = FileSystem.get(conf);
                 Path output = new Path(otherArgs[6]);
@@ -92,9 +92,10 @@ public class MatrixMulti1 {
                 job.setOutputValueClass(IntWritable.class);
                 job.setNumReduceTasks(2);
 
-		FileInputFormat.addInputPath(job, new Path(otherArgs[5]));
-		FileOutputFormat.setOutputPath(job, new Path(otherArgs[6]));
+                FileInputFormat.addInputPath(job, new Path(otherArgs[5]));
+                FileOutputFormat.setOutputPath(job, new Path(otherArgs[6]));
                 if (!job.waitForCompletion(true))
                         System.exit(1);
-	}
+        }
 }
+

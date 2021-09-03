@@ -17,71 +17,51 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-public class InvertedIndex {
+public class MatrixAdd {
 	/* 
 	Object, Text : input key-value pair type (always same (to get a line of input file))
 	Text, IntWritable : output key-value pair type
 	*/
-	public static class TokenizerMapper
-			extends Mapper<Object,Text,Text,Text> {
+	public static class MAddMapper
+			extends Mapper<Object,Text,Text,IntWritable> {
 
-		// variable declairations
-		private final static IntWritable one = new IntWritable(1);
-		private Text word = new Text();
-		private Text pos=new Text();
-		
+
 		// map function (Context -> fixed parameter)
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
 
-			// value.toString() : get a line
-			StringTokenizer itr = new StringTokenizer(value.toString());
-			long p=((LongWritable)key).get();
-			while ( itr.hasMoreTokens() ) {
-				String token=itr.nextToken();
-				
-				word.set(token.trim());
-				
-				if(!token.equals(" ")){
-					pos.set(filename+":"+p);
-					context.write(word, pos);
-				}
-				p+=token.length();
-
-			}
-		}
-		
-		private String filename;
-		protected void setup(Context context) throws IOException, InterruptedException{
-		filename=((FileSplit)context.getInputSplit()).getPath().getName();
-		}
-		
-		
-	}
-
-
-
-	public static class ConcatenatorReducer extends Reducer<Text, Text, Text, Text>{
-	
-		private Text list=new Text();
-		public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException{
-		
-			String s=new String();
-			int comma=0;
-			for(Text val:values){
-				if(comma==0){
-					comma=1;
-					s+=(":"+val.toString());
-				}else{
-				
-					s+=(",    "+val.toString());
-				}
+			String [] arr=value.toString().split("\t");
 			
-			}
-			list.set(s);
-			context.write(key, list);
+			Text emitkey=new Text (arr[1] +"\t"+arr[2]);
+			IntWritable emitval = new IntWritable(Integer.parseInt(arr[3]));
+			context.write(emitkey, emitval);
+			
+			
 		}
 	}
+
+	/*
+	Text, IntWritable : input key type and the value type of input value list
+	Text, IntWritable : output key-value pair type
+	*/
+	public static class MAddReducer
+			extends Reducer<Text,IntWritable,Text,IntWritable> {
+
+
+		// key : a disticnt word
+		// values :  Iterable type (data list)
+		public void reduce(Text key, Iterable<IntWritable> values, Context context) 
+				throws IOException, InterruptedException {
+
+			int sum = 0;
+			for ( IntWritable val : values ) {
+				sum += val.get();
+			}
+			
+			context.write(key,new IntWritable(sum));
+		}
+	}
+
 
 	/* Main function */
 	public static void main(String[] args) throws Exception {
@@ -92,21 +72,22 @@ public class InvertedIndex {
 			System.exit(2);
 		}
 		
-		FileSystem hdfs = FileSystem.get(conf);
+		FileSystem hdfs=FileSystem.get(conf);
 		Path output=new Path(otherArgs[1]);
+		
 		if(hdfs.exists(output)){
 			hdfs.delete(output, true);
 		}
 		
-		Job job = new Job(conf,"inverted index");
-		job.setJarByClass(InvertedIndex.class);
+		Job job = new Job(conf,"matrix addition");
+		job.setJarByClass(MatrixAdd.class);
 
 		// let hadoop know my map and reduce classes
-		job.setMapperClass(TokenizerMapper.class);
-		job.setReducerClass(ConcatenatorReducer.class);
+		job.setMapperClass(MAddMapper.class);
+		job.setReducerClass(MAddReducer.class);
 
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
+		job.setOutputValueClass(IntWritable.class);
 
 		// set number of reduces
 		job.setNumReduceTasks(2);
