@@ -14,7 +14,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-public class Wordcount {
+public class WordCount {
 	/* 
 	Object, Text : input key-value pair type (always same (to get a line of input file))
 	Text, IntWritable : output key-value pair type
@@ -75,7 +75,7 @@ public class Wordcount {
 			System.exit(2);
 		}
 		Job job = new Job(conf,"word count");
-		job.setJarByClass(Wordcount.class);
+		job.setJarByClass(WordCount.class);
 
 		// let hadoop know my map and reduce classes
 		job.setMapperClass(TokenizerMapper.class);

@@ -9,9 +9,9 @@ public class Driver {
 		ProgramDriver pgd = new ProgramDriver();
 		try {
 
-			pgd.addClass("wordcount", Wordcount.class,
+			pgd.addClass("wordcount", WordCount.class,
 				"A map/reduce program that performs word counting.");
-			pgd.addClass("wordcount1", Wordcount1.class,
+			pgd.addClass("wordcount1", WordCount1.class,
 				"A map/reduce program that counts 1st character of word.");
 			pgd.addClass("wordcount-sort", WordCountSort.class,
 				"A map/reduce program that word count sort");
