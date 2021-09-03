@@ -7,3 +7,5 @@
 ### 손동우: dongwoo
 
 Jira Smart Commit Test
+
+Jira Smart Commit Test2
