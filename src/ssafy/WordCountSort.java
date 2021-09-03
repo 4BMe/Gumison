@@ -67,6 +67,7 @@ public class WordCountSort {
 	}
 
 	public static class MyPartitioner extends Partitioner<Text, IntWritable> {
+
 		@Override
 		public int getPartition(Text key, IntWritable value, int numPartitions) {
 			if (key.toString().charAt(0) < 'a') {
