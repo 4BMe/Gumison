@@ -11,3 +11,5 @@ Jira Smart Commit Test
 Jira Smart Commit Test2
 
 Jira Smart Commit Test3
+
+Jira Smart Commit Test4
