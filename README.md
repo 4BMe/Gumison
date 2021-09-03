@@ -5,3 +5,5 @@
 ### 김민지: minji
 ### 김용훈: yonghun
 ### 손동우: dongwoo
+
+Jira Smart Commit Test
