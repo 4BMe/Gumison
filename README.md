@@ -6,10 +6,11 @@
 ### 김용훈: yonghun
 ### 손동우: dongwoo
 
-Jira Smart Commit Test
+---
 
-Jira Smart Commit Test2
+Flowhart: [Miro](https://miro.com/app/board/o9J_ly4qOZ4=/)
 
-Jira Smart Commit Test3
+Wireframe: [Figma](https://www.figma.com/file/7QfbLKcxcf6x6PcHOX3dDi/BigData?node-id=139%3A594)
 
-Jira Smart Commit Test4
+
+
