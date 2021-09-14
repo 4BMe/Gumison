@@ -8,7 +8,7 @@
 
 ---
 
-Persona: [Notion](https://longing-tibia-c48.notion.site/18e723784cc648f8bc3894a9e5d3ffe3)
+Persona/Scenario: [Notion](https://longing-tibia-c48.notion.site/18e723784cc648f8bc3894a9e5d3ffe3)
 
 Flowhart: [Miro](https://miro.com/app/board/o9J_ly4qOZ4=/)
 
