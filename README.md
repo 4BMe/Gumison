@@ -14,5 +14,11 @@ Flowhart: [Miro](https://miro.com/app/board/o9J_ly4qOZ4=/)
 
 Wireframe: [Figma](https://www.figma.com/file/7QfbLKcxcf6x6PcHOX3dDi/BigData?node-id=139%3A594)
 
+기술명세서: [Google Sheet](https://docs.google.com/spreadsheets/d/139-gGMcWpDHfvwfkkuRc-e0uhv6dbrThx6peVbHDJ5g/edit#gid=57751177)
 
+System Architecture: [Google Presentation](https://docs.google.com/presentation/d/1cWDYKZ30reb2djunNxHA0z655Wly9qsoL7yM0UUmuHk/edit#slide=id.gcb19888d7b_5_0)
+
+DB ERD: [ERD Cloud](https://www.erdcloud.com/d/y6Fp3fQghb7LxwLeA)
+
+API 명세서: [Google Sheet](https://docs.google.com/spreadsheets/d/1kWMIpE3GkuFl15K_j_j33c6FWiQ9tc_oHB5Cfs02G-g/edit#gid=0)
 
