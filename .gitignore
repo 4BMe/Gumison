@@ -21,20 +21,20 @@ hadoop-common-project/hadoop-common/src/test/resources/contract-test-options.xml
 hadoop-tools/hadoop-openstack/src/test/resources/contract-test-options.xml
 
 ### Eclipse ###
-./backend/.metadata
-./backend/bin/
-./backend/tmp/
-./backend/*.tmp
-./backend/*.bak
-./backend/*.swp
-./backend/*~.nib
-./backend/local.properties
-./backend/*.settings/
-./backend/*.loadpath
-./backend/*.recommenders
+backend/.metadata
+backend/bin/
+backend/tmp/
+backend/*.tmp
+backend/*.bak
+backend/*.swp
+backend/*~.nib
+backend/local.properties
+backend/*.settings/
+backend/*.loadpath
+backend/*.recommenders
 
 ### STS ###
-./backend/Servers
+backend/Servers
 
 # External tool builders
 .externalToolBuilders/
@@ -233,9 +233,9 @@ test/
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
-./frontend/node_modules/
-./frontend/dist/
-./frontend/npm-debug.log
-./frontend/yarn-error.log
+frontend/node_modules/
+frontend/dist/
+frontend/npm-debug.log
+frontend/yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,intellij,vue,vuejs,apachehadoop
