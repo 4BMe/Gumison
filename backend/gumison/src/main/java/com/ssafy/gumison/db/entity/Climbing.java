@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ClimbingEntity {
+public class Climbing {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

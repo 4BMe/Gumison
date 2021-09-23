@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SolutionVideoEntity {
+public class SolutionVideo {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "video_id")
@@ -29,7 +29,7 @@ public class SolutionVideoEntity {
 
   @ManyToOne
   @JoinColumn(name = "solution_id")
-  private SolutionEntity solution;
+  private Solution solution;
 
   @Column(nullable = false)
   private String url;
