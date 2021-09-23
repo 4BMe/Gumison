@@ -1,10 +1,10 @@
 <template>
-  <div id="footer-bar" class="footer-bar-1 position-relative mb-4 ms-3 me-3 shadow-xl rounded-s">
-        <a href="#"><i class="fa fa-home"></i><span>Home</span></a>
-        <a href="#"><i class="fa fa-star"></i><span>Features</span></a>
-        <a href="#" class="active-nav"><i class="fa fa-heart"></i><span>Pages</span></a>
-        <a href="#"><i class="fa fa-search"></i><span>Search</span></a>
-        <a href="#"><i class="fa fa-cog"></i><span>Settings</span><em class="badge bg-highlight">3</em></a>
+  <div id="footer-bar" class="footer-bar-1">
+        <a href="index-components.html"><i class="fa fa-layer-group"></i><span>Features</span></a>
+        <a href="index-pages.html" class="active-nav"><i class="fa fa-file"></i><span>Pages</span></a>
+        <a href="index.html" class="circle-nav"><i class="fa fa-home"></i><span>Welcome</span></a>
+        <a href="index-projects.html"><i class="fa fa-camera"></i><span>Projects</span></a>
+        <a href="#" data-menu="menu-main"><i class="fa fa-bars"></i><span>Menu</span></a>
     </div>
 </template>
 
