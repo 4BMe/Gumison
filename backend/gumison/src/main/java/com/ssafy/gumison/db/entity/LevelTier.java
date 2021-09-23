@@ -1,6 +1,5 @@
 package com.ssafy.gumison.db.entity;
 
-import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,22 +19,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class HoursEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "hours_id")
-  private Long id;
+public class LevelTier {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "level_tier_id")
+	private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "climbing_id")
-  private ClimbingEntity climbing;
+	@ManyToOne
+	@JoinColumn(name = "climbing_id")
+	private Climbing climbing;
 
-  @Column(nullable = false)
-  private Integer type;
+	@Column(nullable = false)
+	private Integer levelCode;
 
-  @Column(nullable = false)
-  private Time startTime;
-
-  @Column(nullable = false)
-  private Time endTime;
+	@Column(nullable = false)
+	private Integer tierCode;
 }

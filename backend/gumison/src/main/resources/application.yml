@@ -5,3 +5,22 @@ spring:
     hikari:
       username: gumison
       password: gumison
+      
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+      
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+
+server:
+  port: 8888
