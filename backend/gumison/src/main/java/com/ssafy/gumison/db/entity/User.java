@@ -1,4 +1,4 @@
-package com.ssafy.gumison.domain.entity;
+package com.ssafy.gumison.db.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

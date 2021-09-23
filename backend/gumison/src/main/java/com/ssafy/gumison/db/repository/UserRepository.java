@@ -1,9 +1,9 @@
-package com.ssafy.gumison.domain.repository;
+package com.ssafy.gumison.db.repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.ssafy.gumison.domain.entity.User;
+import com.ssafy.gumison.db.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
