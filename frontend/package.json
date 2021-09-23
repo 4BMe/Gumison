@@ -1,27 +1,42 @@
 {
-  "name": "gumison",
+  "name": "chatvia",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
+    "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
-    "router": "^1.3.5",
-    "vue": "^3.0.0",
-    "vuesax": "^3.12.2",
-    "vuex": "^3.6.2"
+    "firebase": "^8.2.2",
+    "simplebar-vue": "^1.6.0",
+    "v-click-outside": "^3.1.2",
+    "vue": "^2.6.12",
+    "vue-carousel": "^0.18.0",
+    "vue-emoji-picker": "^1.0.1",
+    "vue-i18n": "^8.22.2",
+    "vue-infinite-loading": "^2.4.5",
+    "vue-meta": "^2.4.0",
+    "vue-router": "^3.4.9",
+    "vuelidate": "^0.7.6",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/cli-plugin-babel": "^4.5.6",
+    "@vue/cli-plugin-eslint": "^4.5.6",
+    "@vue/cli-service": "^4.5.6",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint": "^7.10.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.26.11",
+    "sass-loader": "^10.0.2",
+    "vue-cli-plugin-i18n": "^1.0.1",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
@@ -29,7 +44,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
+      "plugin:vue/essential",
       "eslint:recommended"
     ],
     "parserOptions": {
