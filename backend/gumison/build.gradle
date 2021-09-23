@@ -29,6 +29,21 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	//querydsl
+	annotationProcessor("com.querydsl:querydsl-apt:4.4.0:jpa")
+	implementation("com.querydsl:querydsl-apt:4.4.0")
+
+	//jpa
+	annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("com.querydsl:querydsl-jpa:4.4.0")
+	
+	//springfox
+	implementation("io.springfox:springfox-swagger2:3.0.0")
+	implementation("io.springfox:springfox-swagger-ui:3.0.0")
+	implementation("io.springfox:springfox-data-rest:3.0.0")
+	implementation("io.springfox:springfox-bean-validators:3.0.0")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
 }
 
 test {
