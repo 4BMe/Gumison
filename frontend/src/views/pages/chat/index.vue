@@ -6,6 +6,7 @@ import Contacts from "./tabs/contacts";
 import Profile from "./tabs/profile";
 import RoomsList from "./tabs/userlist";
 import Groups from "./tabs/groups";
+import LevelRecord from "./tabs/level-record";
 
 import { chatMemberList, chatMessages } from "./data";
 
@@ -17,6 +18,7 @@ export default {
     Room,
     RoomsList,
     Contacts,
+    LevelRecord,
   },
   props: {
     height: {
@@ -137,7 +139,7 @@ export default {
       file: null,
       room: {},
       showRoomsList: true,
-      isMobile: false,
+      isMobile: true,
     };
   },
   watch: {
@@ -395,6 +397,24 @@ export default {
                 <i class="ri-settings-2-line"></i>
               </a>
             </li>
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Level Record"
+            >
+              <a
+                class="nav-link"
+                id="pills-level-record-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 6"
+                v-bind:class="[activetab === 6 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0)"
+              >
+                <i class="ri-add-box-line"></i>
+              </a>
+            </li>
             <b-dropdown
               class="nav-item profile-user-dropdown d-inline-block d-lg-none"
               toggle-class="nav-link"
@@ -538,7 +558,7 @@ export default {
           >
             <!-- Start Contact content -->
             <Contacts />
-            <!-- Start Contact content -->
+            <!-- End Contact content -->
           </div>
           <!-- End contacts tab-pane -->
 
@@ -553,9 +573,23 @@ export default {
           >
             <!-- Start Settings content -->
             <Setting />
-            <!-- Start Settings content -->
+            <!-- End Settings content -->
           </div>
           <!-- End settings tab-pane -->
+          <!-- Start level record tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-level-record"
+            role="tabpanel"
+            aria-labelledby="pills-level-record-tab"
+            v-if="activetab === 6"
+            v-bind:class="[activetab === 6 ? 'active' : '']"
+          >
+            <!-- Start Level Record content -->
+            <LevelRecord />
+            <!-- End Level Record content -->
+          </div>
+          <!-- End level record tab-pane -->
         </div>
       </div>
 
