@@ -46,6 +46,8 @@ router.beforeEach((routeTo, routeFrom, next) => {
         // Then continue if the token still represents a valid user,
         // otherwise redirect to login.
         validUser ? next() : redirectToLogin()
+        //validUser ? next() : next()
+        
       })
     }
 

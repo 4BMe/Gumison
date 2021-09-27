@@ -30,6 +30,7 @@
                    <button
                       class="btn btn-info btn-block"
                       type="submit"
+                      v-on:click="tryToLogIn"
                     > <img src="@/assets/images/logo-google-thumbnail.png" alt height="30" class="logo" style="margin-right:10%" />구글 로그인</button>
                   <!-- 카카오 로그인 -->
                    <button
