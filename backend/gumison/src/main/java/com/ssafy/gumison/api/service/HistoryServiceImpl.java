@@ -27,8 +27,7 @@ public class HistoryServiceImpl implements HistoryService {
   @Override
   public UserHistoryRes history(String nickname) {
     User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
-    PageRequest page = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "date"));
-    List<Solution> solutionList = solutionRepository.findByUserId(user.getId(), page);
+    List<Solution> solutionList = getSolutionList(user.getId(), 0);
     String tier = commonCodeRepository.findtier(user.getAccumulateExp());
     List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
 
@@ -37,8 +36,11 @@ public class HistoryServiceImpl implements HistoryService {
 
   @Override
   public SolutionListRes solutionList(String nickname, int pageNumber) {
+    User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
+    List<Solution> solutionList = getSolutionList(user.getId(), pageNumber);
+    List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
 
-    return null;
+    return SolutionListRes.of(solutionListItems);
   }
 
   @Override
@@ -59,4 +61,10 @@ public class HistoryServiceImpl implements HistoryService {
     return list;
   }
 
+  private List<Solution> getSolutionList(Long userId, int pageNumber) {
+    List<Solution> solutionList = new LinkedList<Solution>();
+    PageRequest page = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "date"));
+    solutionList = solutionRepository.findByUserId(userId, page);
+    return solutionList;
+  }
 }
