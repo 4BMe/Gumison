@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 
 import javax.servlet.http.HttpSession;
 
-@Api(value="사용자 관련 API")
-@RequestMapping("/api/user")
+@Api(value = "사용자 관련 API")
+@RequestMapping("/api/users")
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -32,7 +32,8 @@ public class UserController {
 
 
   @GetMapping("search/{keyword}/{pageNumber}")
-  public ApiResponseDto<UserSearchRes> searchUsers(@PathVariable("keyword") String nickname, @PathVariable int pageNumber) {
+  public ApiResponseDto<UserSearchRes> searchUsers(@PathVariable("keyword") String nickname,
+      @PathVariable int pageNumber) {
     UserSearchRes userSearchRes = userService.getUserList(nickname, pageNumber);
     return ApiResponseDto.success(userSearchRes);
   }
@@ -41,13 +42,13 @@ public class UserController {
   @GetMapping("/oauth2/login/google")
   @ApiOperation(value = "소셜 로그인", notes = "구글 로그인을 합니다.")
   @ApiResponses({@ApiResponse(code = 200, message = "성공"),
-          @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "페이지 없음"),
-          @ApiResponse(code = 500, message = "서버 오류")})
+      @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "페이지 없음"),
+      @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<SessionUserDto> getCurrentUser() {
-    SessionUserDto sessionUserDto =userService.getCurrentUser(httpSession);
+    SessionUserDto sessionUserDto = userService.getCurrentUser(httpSession);
     log.info("Get user profile - {}", sessionUserDto);
     return ResponseEntity.status(200).body(sessionUserDto);
   }
-  
+
 }

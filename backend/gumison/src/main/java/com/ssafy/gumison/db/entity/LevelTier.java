@@ -20,18 +20,19 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LevelTier {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "level_tier_id")
-	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "climbing_id")
-	private Climbing climbing;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "level_tier_id")
+  private Long id;
 
-	@Column(nullable = false)
-	private Long levelCode;
+  @ManyToOne
+  @JoinColumn(name = "climbing_id")
+  private Climbing climbing;
 
-	@Column(nullable = false)
-	private Long tierCode;
+  @Column(nullable = false)
+  private Long levelCode;
+
+  @Column(nullable = false)
+  private Long tierCode;
 }

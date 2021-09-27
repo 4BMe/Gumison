@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 @Getter
 @Setter
 @DynamicInsert
-@ToString(exclude="solutionList")
+@ToString(exclude = "solutionList")
 public class User {
 
   @Id
@@ -60,18 +60,19 @@ public class User {
   @Column(nullable = false)
   @ColumnDefault("0")
   private Integer accumulateVideo;
-  
+
   @Column(nullable = false)
   @ColumnDefault("201")
   private Long tierCode;
 
-  public User(String oauthId, String oauthType, String profile){
-    this.oauthId=oauthId;
-    this.oauthType=oauthType;
-    this.profile=profile;
+  public User(String oauthId, String oauthType, String profile) {
+    this.oauthId = oauthId;
+    this.oauthType = oauthType;
+    this.profile = profile;
   }
+
   public User update(String profile) {
-    this.profile=profile;
+    this.profile = profile;
     return this;
   }
 

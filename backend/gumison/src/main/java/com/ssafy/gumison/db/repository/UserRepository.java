@@ -11,10 +11,11 @@ import com.ssafy.gumison.db.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findByNickname(String nickname);
-	Optional<User> findByOauthId(String oauthId);
+  Optional<User> findByNickname(String nickname);
 
-	// ~ where nickname like '%nickname%'
-	List<User> findByNicknameContaining(String nickname, Pageable page);
+  Optional<User> findByOauthId(String oauthId);
+
+  // ~ where nickname like '%nickname%'
+  List<User> findByNicknameContaining(String nickname, Pageable page);
 
 }
