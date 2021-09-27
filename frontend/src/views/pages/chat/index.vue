@@ -114,6 +114,26 @@
                 <i class="ri-settings-2-line"></i>
               </a>
             </li>
+            
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Search"
+            >
+              <a
+                class="nav-link"
+                id="pills-setting-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 6"
+                v-bind:class="[activetab === 6 ? 'active' : '']"
+                role="tab"
+                href="#"
+              >
+                <i class="ri-settings-2-line"></i>
+              </a>
+            </li>
+
             <!-- 9번탭: 사용자 계정 , 로그인 필요 페이지 -->
               <li
               class="nav-item"
@@ -133,6 +153,7 @@
                 <i class="ri-user-2-line"></i>
               </a>
             </li>
+
             <b-dropdown
               class="nav-item profile-user-dropdown d-inline-block d-lg-none"
               toggle-class="nav-link"
@@ -295,6 +316,22 @@
           </div>
           <!-- End settings tab-pane -->
 
+          <!-- Start search tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-setting"
+            role="tabpanel"
+            aria-labelledby="pills-setting-tab"
+            v-if="activetab === 6"
+            v-bind:class="[activetab === 6 ? 'active' : '']"
+          >
+            <!-- Start search content -->
+            <Search />
+            <!-- End search content -->
+          </div>
+         <!-- End search tab-pane -->
+
+
            <!-- Start 사용자 페이지, 로그인 페이지 tab-pane -->
           <div
             class="tab-pane"
@@ -355,6 +392,7 @@ import Contacts from "./tabs/contacts";
 import Profile from "./tabs/profile";
 import RoomsList from "./tabs/userlist";
 import Groups from "./tabs/groups";
+import Search from "./tabs/search";
 
 import { chatMemberList, chatMessages } from "./data";
 
@@ -366,6 +404,7 @@ export default {
     Room,
     RoomsList,
     Contacts,
+    Search
   },
   props: {
     height: {
@@ -627,7 +666,6 @@ export default {
   },
 };
 </script>
-
 
 
 <style lang="scss" scoped>
