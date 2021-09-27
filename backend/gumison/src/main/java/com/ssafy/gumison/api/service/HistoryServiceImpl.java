@@ -63,7 +63,7 @@ public class HistoryServiceImpl implements HistoryService {
 
   private List<Solution> getSolutionList(Long userId, int pageNumber) {
     List<Solution> solutionList = new LinkedList<Solution>();
-    PageRequest page = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "date"));
+    PageRequest page = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "date"));
     solutionList = solutionRepository.findByUserId(userId, page);
     return solutionList;
   }
