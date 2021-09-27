@@ -35,7 +35,6 @@ logging:
   level:
     root: INFO
     org.springframework: WARN
-    org.apache=WARN:
     com.ssafy.gumison: INFO
 
 server:
