@@ -8,27 +8,33 @@ import com.ssafy.gumison.api.response.SolutionListRes;
 import com.ssafy.gumison.api.response.SolutionRes;
 import com.ssafy.gumison.api.response.UserHistoryRes;
 import com.ssafy.gumison.api.service.HistoryService;
+import com.ssafy.gumison.common.response.ApiResponseDto;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/history")
+@RequestMapping("/api/history")
 @RestController
 @RequiredArgsConstructor
 public class HistoryController {
   private final HistoryService historyService;
 
+  @ApiOperation(value = "유저 히스토리", notes = "히스토리를 보여줍니다.", response = ApiResponseDto.class)
   @GetMapping("/{nickname}")
-  public UserHistoryRes userHistory(@PathVariable("nickname") String nickname) {
-    return historyService.history(nickname);
+  public ApiResponseDto<UserHistoryRes> userHistory(@PathVariable("nickname") String nickname) {
+    UserHistoryRes historyRes = historyService.history(nickname);
+    return ApiResponseDto.success(historyRes);
   }
 
   @GetMapping("/{nickname}/{pageNumber}")
-  public SolutionListRes solutionList(@PathVariable("nickname") String nickname,
+  public ApiResponseDto<SolutionListRes> solutionList(@PathVariable("nickname") String nickname,
       @PathVariable("pageNumber") int pageNumber) {
-    return historyService.solutionList(nickname, pageNumber);
+    SolutionListRes solutionListRes = historyService.solutionList(nickname, pageNumber);
+    return ApiResponseDto.success(solutionListRes);
   }
 
   @GetMapping("/detail/{solutionId}")
-  public SolutionRes getSoultion(@PathVariable("solutionId") String solutionId) {
-    return historyService.solution(solutionId);
+  public ApiResponseDto<SolutionRes> getSoultion(@PathVariable("solutionId") String solutionId) {
+    SolutionRes solutionRes = historyService.solution(solutionId);
+    return ApiResponseDto.success(solutionRes);
   }
 }
