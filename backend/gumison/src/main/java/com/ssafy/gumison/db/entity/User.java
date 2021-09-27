@@ -53,6 +53,9 @@ public class User {
   @Column(nullable = false)
   @ColumnDefault("0")
   private Integer accumulateVideo;
-
+  
+  @Column(nullable = false)
+  @ColumnDefault("201")
+  private Integer tierCode;
 
 }
