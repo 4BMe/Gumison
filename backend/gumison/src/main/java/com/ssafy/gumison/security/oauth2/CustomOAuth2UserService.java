@@ -1,7 +1,6 @@
 package com.ssafy.gumison.security.oauth2;
 
-import com.ssafy.gumison.api.service.OauthServiceimpl;
-import com.ssafy.gumison.common.dto.SessionUser;
+import com.ssafy.gumison.common.dto.SessionUserDto;
 import com.ssafy.gumison.db.entity.User;
 import com.ssafy.gumison.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // OAuth2UserService
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         User user = saveOrUpdate(attributes);
-        httpSession.setAttribute("user", new SessionUser(user)); // SessionUser (직렬화된 dto 클래스 사용)
+        httpSession.setAttribute("user", new SessionUserDto(user)); // SessionUser (직렬화된 dto 클래스 사용)
 
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
