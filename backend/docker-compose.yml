@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis6379
+    hostname: redis6379
+    ports:
+      - 6379:6379
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    restart: always
