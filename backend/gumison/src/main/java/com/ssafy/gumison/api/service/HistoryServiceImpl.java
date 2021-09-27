@@ -37,8 +37,12 @@ public class HistoryServiceImpl implements HistoryService {
 
   @Override
   public SolutionListRes solutionList(String nickname, int pageNumber) {
+    User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
+    PageRequest page = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "date"));
+    List<Solution> solutionList = solutionRepository.findByUserId(user.getId(), page);
+    List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
 
-    return null;
+    return SolutionListRes.of(solutionListItems);
   }
 
   @Override
