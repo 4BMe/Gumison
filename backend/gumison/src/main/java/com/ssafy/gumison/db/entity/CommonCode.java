@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 public class CommonCode {
   @Id
-  private String code;
+  private Long code;
 
   @Column(nullable = false)
   private String type;

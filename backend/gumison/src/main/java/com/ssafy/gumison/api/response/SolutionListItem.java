@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class SolutionListItem {
-  private int tier;
+  private Long tier;
   private String climbingName;
-  private int level;
+  private Long level;
   private int cnt;
   private LocalDate date;
 }
