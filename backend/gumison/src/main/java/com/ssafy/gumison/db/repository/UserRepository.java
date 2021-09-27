@@ -12,6 +12,7 @@ import com.ssafy.gumison.db.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findByNickname(String nickname);
+	Optional<User> findByOauthId(String oauthId);
 
 	// ~ where nickname like '%nickname%'
 	List<User> findByNicknameContaining(String nickname);

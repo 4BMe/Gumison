@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.ssafy.gumison.security.oauth2.CustomOAuth2UserService;
+import com.sun.istack.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +18,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicInsert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Entity
 @Builder
@@ -22,7 +28,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@DynamicInsert
+@ToString(exclude="solutionList")
 public class User {
 
   @Id
@@ -53,6 +60,17 @@ public class User {
   @Column(nullable = false)
   @ColumnDefault("0")
   private Integer accumulateVideo;
+
+
+  public User(String oauthId, String oauthType, String profile){
+    this.oauthId=oauthId;
+    this.oauthType=oauthType;
+    this.profile=profile;
+  }
+  public User update(String profile) {
+    this.profile=profile;
+    return this;
+  }
 
 
 }
