@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="height-full">
     <div class="px-4 pt-4">
       <h4 class="mb-0">거미손</h4>
     </div>
@@ -67,7 +67,7 @@ export default {
     searchKeyword(){
       console.log(this.type + ": " + this.keyword);
       axios
-        .get(`${BASE_URL}/${this.type}/${this.keyword}/1`)
+        .get(`${BASE_URL}/${this.type}/search/${this.keyword}/0`)
         .then(({ data }) => {
           console.log(data);
           // TODO: 목록 창으로 data 전달
@@ -82,8 +82,13 @@ export default {
 </script>
 
 <style scoped>
+.height-full{
+  position:relative;
+  height: 100vh;
+}
+
 .align-middle{
-  position: absolute;
+  position:absolute;
   width: 100%;
   top: 40%;
 }
