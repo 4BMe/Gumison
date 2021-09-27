@@ -30,8 +30,8 @@ public class LevelTier {
 	private Climbing climbing;
 
 	@Column(nullable = false)
-	private Integer levelCode;
+	private Long levelCode;
 
 	@Column(nullable = false)
-	private Integer tierCode;
+	private Long tierCode;
 }

@@ -56,6 +56,6 @@ public class User {
   
   @Column(nullable = false)
   @ColumnDefault("201")
-  private Integer tierCode;
+  private Long tierCode;
 
 }
