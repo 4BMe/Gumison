@@ -30,4 +30,6 @@ public class Climbing {
   private String address;
 
   private String phoneNumber;
+  
+  private String imgUrl;
 }

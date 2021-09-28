@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 public class GumisonApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GumisonApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(GumisonApplication.class, args);
+  }
 }
