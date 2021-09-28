@@ -35,6 +35,8 @@ public class HistoryController {
   @GetMapping("/detail/{solutionId}")
   public ApiResponseDto<SolutionRes> getSoultion(@PathVariable("solutionId") String solutionId) {
     SolutionRes solutionRes = historyService.solution(solutionId);
+    System.out.println(solutionRes.getNickname()+solutionRes.getTier());
+    System.out.println(solutionRes.getSolutionDto().toString());
     return ApiResponseDto.success(solutionRes);
   }
 }
