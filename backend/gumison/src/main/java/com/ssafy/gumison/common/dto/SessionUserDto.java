@@ -1,11 +1,12 @@
 package com.ssafy.gumison.common.dto;
 
 import com.ssafy.gumison.db.entity.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-
 import java.io.Serializable;
 
+@Builder
 @Getter
 @ToString
 public class SessionUserDto implements Serializable {

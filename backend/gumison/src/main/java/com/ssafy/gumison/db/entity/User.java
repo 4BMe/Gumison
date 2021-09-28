@@ -65,12 +65,6 @@ public class User {
   @ColumnDefault("201")
   private Long tierCode;
 
-  public User(String oauthId, String oauthType, String profile) {
-    this.oauthId = oauthId;
-    this.oauthType = oauthType;
-    this.profile = profile;
-  }
-
   public User update(String profile) {
     this.profile = profile;
     return this;
