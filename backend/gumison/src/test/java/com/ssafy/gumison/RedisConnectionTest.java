@@ -1,7 +1,7 @@
 package com.ssafy.gumison;
 
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,9 +28,9 @@ public class RedisConnectionTest {
 
     valueOperations.set(KEY, VALUE);
 
-    Assertions.assertEquals(valueOperations.get(KEY), VALUE);
+    assertEquals(valueOperations.get(KEY), VALUE);
     stringRedisTemplate.delete(KEY);
-    Assertions.assertNull(valueOperations.get(KEY));
+    assertNull(valueOperations.get(KEY));
   }
 
   @Test
@@ -43,13 +43,13 @@ public class RedisConnectionTest {
     ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
 
     for (int i = 0; i < SCORES.length; i++) {
-      Assertions.assertTrue(zSetOperations.add(KEY, VALUES[i], SCORES[i]).booleanValue());
+      assertTrue(zSetOperations.add(KEY, VALUES[i], SCORES[i]).booleanValue());
     }
 
-    Assertions.assertEquals(zSetOperations.rank(KEY, VALUES[2]), 0);
+    assertEquals(zSetOperations.rank(KEY, VALUES[2]), 0);
 
     for (int i = 0; i < SCORES.length; i++) {
-      Assertions.assertNotNull(zSetOperations.remove(KEY, VALUES[i]));
+      assertNotNull(zSetOperations.remove(KEY, VALUES[i]));
     }
 
   }

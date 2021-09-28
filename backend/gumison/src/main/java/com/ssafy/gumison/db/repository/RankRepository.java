@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RankRepository extends JpaRepository<User, Long> {
 
-  @Query(value = "select nickname, accumulate_exp from user;", nativeQuery = true)
-  List<UserExpDto> findNicknamesAndExpAll();
+  @Query(value = "select nickname, accumulate_exp from user where 1;", nativeQuery = true)
+  List<User> findNicknamesAndExpAll();
 }

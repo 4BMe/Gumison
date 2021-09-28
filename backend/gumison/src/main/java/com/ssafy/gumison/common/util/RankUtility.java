@@ -2,6 +2,7 @@ package com.ssafy.gumison.common.util;
 
 import com.ssafy.gumison.common.dto.UserExpDto;
 import com.ssafy.gumison.common.enums.RedisKey;
+import com.ssafy.gumison.db.entity.User;
 import com.ssafy.gumison.db.repository.RankRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class RankUtility {
     ZSetOperations<String, Object> zSetOperations = restTemplate.opsForZSet();
     log.info("Load all user exp into zset");
 
-    List<UserExpDto> userExpDtoList = rankRepository.findNicknamesAndExpAll();
+    List<User> userExpDtoList = rankRepository.findNicknamesAndExpAll();
     userExpDtoList.forEach(userExpDto -> zSetOperations
         .add(RedisKey.RANK.name(), userExpDto.getNickname(), userExpDto.getAccumulateExp()));
   }
