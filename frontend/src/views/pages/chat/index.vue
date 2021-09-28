@@ -392,7 +392,7 @@ import Contacts from "./tabs/contacts";
 import Profile from "./tabs/profile";
 import RoomsList from "./tabs/userlist";
 import Groups from "./tabs/groups";
-import Search from "./tabs/search";
+import Search from "@/views/pages/search/search";
 
 import { chatMemberList, chatMessages } from "./data";
 
