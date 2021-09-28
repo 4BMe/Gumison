@@ -29,7 +29,8 @@ spring:
         max-idle: 10
         min-idle: 2
     port: 6379
-    host: redis
+    host: localhost
+    # host: localhost
 
 server:
   port: 8888

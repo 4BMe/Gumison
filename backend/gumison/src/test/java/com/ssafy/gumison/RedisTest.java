@@ -15,16 +15,17 @@ public class RedisTest {
 	private StringRedisTemplate stringRedisTemplate;
 
 	@Test
-	public void 기본_값_설정_조회_기능() {
+	public void 값_설정_및_조회_삭제_기능을_수행한다() {
 		final String KEY = "testKey";
 		final String VALUE = "testValue";
 
 		ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
 
 		valueOperations.set(KEY, VALUE);
+
 		Assertions.assertEquals(valueOperations.get(KEY), VALUE);
-
-
+		stringRedisTemplate.delete(KEY);
+		Assertions.assertNull(valueOperations.get(KEY));
 	}
 
 }
