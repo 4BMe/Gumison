@@ -1,6 +1,6 @@
 package com.ssafy.gumison.common.enums;
 
 public enum CodeTypeName {
-  LEVEL,
-  TIER
+  래밸,
+  티어
 }

@@ -32,5 +32,21 @@ spring:
     host: localhost
     # host: localhost
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 728431963124-aa22v5qq2de7vik5lhj75rkekgge2sh2.apps.googleusercontent.com
+            client-secret: _o70Bb9pPLVOZFanRBU-lfFV
+            scope: profile, email
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
+    org.apache=WARN:
+    com.ssafy.gumison: INFO
+
 server:
   port: 8888

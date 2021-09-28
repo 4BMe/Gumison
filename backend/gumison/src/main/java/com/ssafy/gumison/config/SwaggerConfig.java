@@ -29,7 +29,9 @@ public class SwaggerConfig {
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false).select()
-        .apis(RequestHandlerSelectors.any()).paths(PathSelectors.ant("/api/**")).build()
+        .apis(RequestHandlerSelectors.any())
+        //.paths(PathSelectors.ant("/api/**")).build()
+        .paths(PathSelectors.any()).build()
         .securityContexts(newArrayList(securityContext())).securitySchemes(newArrayList(apiKey()));
   }
 

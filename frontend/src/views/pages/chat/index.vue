@@ -1,3 +1,389 @@
+<template>
+  <div>
+    <div class="layout-wrapper d-lg-flex">
+      <div class="side-menu flex-lg-column mr-lg-1">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+          <router-link to="/" tag="a" class="logo logo-dark">
+            <span class="logo-sm">
+              <img src="@/assets/images/logo.svg" alt height="30" />
+            </span>
+          </router-link>
+
+          <router-link tag="a" to="/" class="logo logo-light">
+            <span class="logo-sm">
+              <img src="@/assets/images/logo.svg" alt height="30" />
+            </span>
+          </router-link>
+        </div>
+        <!-- end navbar-brand-box -->
+
+        <!-- Start side-menu nav -->
+        <div class="flex-lg-column my-auto">
+          <ul
+            class="nav nav-pills side-menu-nav justify-content-center"
+            role="tablist"
+          >
+            <li
+              class="nav-item"
+              data-placement="top"
+              title="Profile"
+              v-b-tooltip.hover
+            >
+              <a
+                class="nav-link"
+                id="pills-user-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 1"
+                v-bind:class="[activetab === 1 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0);"
+              >
+                <i class="ri-user-2-line"></i>
+              </a>
+            </li>
+            <li
+              class="nav-item"
+              data-placement="top"
+              title="Chats"
+              v-b-tooltip.hover
+            >
+              <a
+                class="nav-link"
+                id="pills-chat-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 2"
+                v-bind:class="[activetab === 2 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0);"
+              >
+                <i class="ri-message-3-line"></i>
+              </a>
+            </li>
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Groups"
+            >
+              <a
+                class="nav-link"
+                id="pills-groups-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 3"
+                v-bind:class="[activetab === 3 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0);"
+              >
+                <i class="ri-group-line"></i>
+              </a>
+            </li>
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Contacts"
+            >
+              <a
+                class="nav-link"
+                id="pills-contacts-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 4"
+                v-bind:class="[activetab === 4 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0);"
+              >
+                <i class="ri-contacts-line"></i>
+              </a>
+            </li>
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Settings"
+            >
+              <a
+                class="nav-link"
+                id="pills-setting-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 5"
+                v-bind:class="[activetab === 5 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0);"
+              >
+                <i class="ri-settings-2-line"></i>
+              </a>
+            </li>
+            
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Search"
+            >
+              <a
+                class="nav-link"
+                id="pills-setting-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 6"
+                v-bind:class="[activetab === 6 ? 'active' : '']"
+                role="tab"
+                href="#"
+              >
+                <i class="ri-settings-2-line"></i>
+              </a>
+            </li>
+
+            <!-- 9번탭: 사용자 계정 , 로그인 필요 페이지 -->
+              <li
+              class="nav-item"
+              data-placement="top"
+              title="Profile"
+              v-b-tooltip.hover
+            >
+              <a
+                class="nav-link"
+                id="pills-user-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 9"
+                v-bind:class="[activetab === 9 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0);"
+              >
+                <i class="ri-user-2-line"></i>
+              </a>
+            </li>
+
+            <b-dropdown
+              class="nav-item profile-user-dropdown d-inline-block d-lg-none"
+              toggle-class="nav-link"
+              variant="white"
+              dropup
+            >
+              <template v-slot:button-content>
+                <img
+                  src="@/assets/images/users/avatar-1.jpg"
+                  alt
+                  class="profile-user rounded-circle"
+                />
+              </template>
+              <b-dropdown-item href="javascript:void(0);">
+                Profile
+                <i class="ri-profile-line float-right text-muted"></i>
+              </b-dropdown-item>
+              <b-dropdown-item href="javascript:void(0);">
+                Setting
+                <i class="ri-settings-3-line float-right text-muted"></i>
+              </b-dropdown-item>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item href="/logout">
+                Log out
+                <i class="ri-logout-circle-r-line float-right text-muted"></i>
+              </b-dropdown-item>
+            </b-dropdown>
+          </ul>
+        </div>
+        <!-- end side-menu nav -->
+
+        <div class="flex-lg-column d-none d-lg-block">
+          <ul class="nav side-menu-nav justify-content-center">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="light-dark"
+                target="_blank"
+                href="http://chatvia-dark.vue.themesbrand.com/"
+                v-b-tooltip.hover title="Dark Mode"
+              >
+                <i class="ri-sun-line theme-mode-icon"></i>
+              </a>
+            </li>
+            <b-dropdown
+              class="nav-item btn-group dropup profile-user-dropdown"
+              variant="white"
+            >
+              <template v-slot:button-content>
+                <img
+                  src="@/assets/images/users/avatar-1.jpg"
+                  alt
+                  class="profile-user rounded-circle"
+                />
+              </template>
+              <b-dropdown-item href="javascript:void(0);">
+                Profile
+                <i class="ri-profile-line float-right text-muted"></i>
+              </b-dropdown-item>
+              <b-dropdown-item href="javascript:void(0);">
+                Setting
+                <i class="ri-settings-3-line float-right text-muted"></i>
+              </b-dropdown-item>
+              <b-dropdown-item href="/logout">
+                Log out
+                <i class="ri-logout-circle-r-line float-right text-muted"></i>
+              </b-dropdown-item>
+            </b-dropdown>
+          </ul>
+        </div>
+        <!-- Side menu user -->
+      </div>
+
+      <!-- start chat-leftsidebar -->
+      <div class="chat-leftsidebar mr-lg-1">
+        <div class="tab-content">
+          <!-- Start Profile tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-user"
+            role="tabpanel"
+            aria-labelledby="pills-user-tab"
+            v-if="activetab === 1"
+            v-bind:class="[activetab === 1 ? 'active' : '']"
+          >
+            <!-- Start profile content -->
+            <Profile />
+            <!-- End profile content -->
+          </div>
+
+          <!-- Start chats tab-pane -->
+          <div
+            class="tab-pane fade show active"
+            id="pills-chat"
+            role="tabpanel"
+            aria-labelledby="pills-chat-tab"
+            v-if="activetab === 2"
+            v-bind:class="[activetab === 2 ? 'active' : '']"
+          >
+            <!-- Start chats content -->
+
+            <RoomsList
+              v-if="!singleRoom"
+              :currentUserId="currentUserId"
+              :rooms="orderedRooms"
+              :loadingRooms="loadingRooms"
+              :room="room"
+              :textMessages="t"
+              :showAddRoom="showAddRoom"
+              :showRoomsList="showRoomsList"
+              :textFormatting="textFormatting"
+              :isMobile="isMobile"
+              @fetchRoom="fetchRoom"
+            />
+          </div>
+          <!-- End chats tab-pane -->
+
+          <!-- Start groups tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-groups"
+            role="tabpanel"
+            aria-labelledby="pills-groups-tab"
+            v-if="activetab === 3"
+            v-bind:class="[activetab === 3 ? 'active' : '']"
+          >
+            <!-- Start Groups content -->
+            <Groups />
+            <!-- End Groups content -->
+          </div>
+          <!-- End groups tab-pane -->
+
+          <!-- Start contacts tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-contacts"
+            role="tabpanel"
+            aria-labelledby="pills-contacts-tab"
+            v-if="activetab === 4"
+            v-bind:class="[activetab === 4 ? 'active' : '']"
+          >
+            <!-- Start Contact content -->
+            <Contacts />
+            <!-- Start Contact content -->
+          </div>
+          <!-- End contacts tab-pane -->
+
+          <!-- Start settings tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-setting"
+            role="tabpanel"
+            aria-labelledby="pills-setting-tab"
+            v-if="activetab === 5"
+            v-bind:class="[activetab === 5 ? 'active' : '']"
+          >
+            <!-- Start Settings content -->
+            <Setting />
+            <!-- Start Settings content -->
+          </div>
+          <!-- End settings tab-pane -->
+
+          <!-- Start search tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-setting"
+            role="tabpanel"
+            aria-labelledby="pills-setting-tab"
+            v-if="activetab === 6"
+            v-bind:class="[activetab === 6 ? 'active' : '']"
+          >
+            <!-- Start search content -->
+            <Search />
+            <!-- End search content -->
+          </div>
+         <!-- End search tab-pane -->
+
+
+           <!-- Start 사용자 페이지, 로그인 페이지 tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-user"
+            role="tabpanel"
+            aria-labelledby="pills-user-tab"
+            v-if="activetab === 9"
+            v-bind:class="[activetab === 9 ? 'active' : '']"
+          >
+            <!-- Start profile content -->
+            <Profile />
+           
+          </div>
+           <!-- End profile content -->
+        </div>
+      </div>
+
+      <Room
+        ref="chatContainer"
+        :currentUserId="currentUserId"
+        :rooms="rooms"
+        :id="room.id || ''"
+        :messages="chatMessages"
+        :roomMessage="roomMessage"
+        :messagesLoaded="messagesLoaded"
+        :menuActions="menuActions"
+        :messageActions="messageActions"
+        :showFiles="showFiles"
+        :showEmojis="showEmojis"
+        :showReactionEmojis="showReactionEmojis"
+        :textMessages="t"
+        :singleRoom="singleRoom"
+        :showRoomsList="showRoomsList"
+        :textFormatting="textFormatting"
+        :isMobile="isMobile"
+        :loadingRooms="loadingRooms"
+        :roomInfo="$listeners.roomInfo"
+        @roomInfo="roomInfo"
+        @fetchMessages="fetchMessages"
+        @sendMessage="sendMessage"
+        @editMessage="editMessage"
+        @deleteMessage="deleteMessage"
+        @openFile="openFile"
+        @menuActionHandler="menuActionHandler"
+        @messageActionHandler="messageActionHandler"
+        @sendMessageReaction="sendMessageReaction"
+        @typingMessage="typingMessage"
+      />
+    </div>
+  </div>
+</template>
+
 <script>
 import Room from "./main";
 import locales from "../locale";
@@ -281,354 +667,6 @@ export default {
 };
 </script>
 
-<template>
-  <div>
-    <div class="layout-wrapper d-lg-flex">
-      <div class="side-menu flex-lg-column mr-lg-1">
-        <!-- LOGO -->
-        <div class="navbar-brand-box">
-          <router-link to="/" tag="a" class="logo logo-dark">
-            <span class="logo-sm">
-              <img src="@/assets/images/logo.svg" alt height="30" />
-            </span>
-          </router-link>
-
-          <router-link tag="a" to="/" class="logo logo-light">
-            <span class="logo-sm">
-              <img src="@/assets/images/logo.svg" alt height="30" />
-            </span>
-          </router-link>
-        </div>
-        <!-- end navbar-brand-box -->
-
-        <!-- Start side-menu nav -->
-        <div class="flex-lg-column my-auto">
-          <ul
-            class="nav nav-pills side-menu-nav justify-content-center"
-            role="tablist"
-          >
-            <li
-              class="nav-item"
-              data-placement="top"
-              title="Profile"
-              v-b-tooltip.hover
-            >
-              <a
-                class="nav-link"
-                id="pills-user-tab"
-                data-toggle="pill"
-                v-on:click="activetab = 1"
-                v-bind:class="[activetab === 1 ? 'active' : '']"
-                role="tab"
-                href="javascript: void(0);"
-              >
-                <i class="ri-user-2-line"></i>
-              </a>
-            </li>
-            <li
-              class="nav-item"
-              data-placement="top"
-              title="Chats"
-              v-b-tooltip.hover
-            >
-              <a
-                class="nav-link"
-                id="pills-chat-tab"
-                data-toggle="pill"
-                v-on:click="activetab = 2"
-                v-bind:class="[activetab === 2 ? 'active' : '']"
-                role="tab"
-                href="javascript: void(0);"
-              >
-                <i class="ri-message-3-line"></i>
-              </a>
-            </li>
-            <li
-              class="nav-item"
-              v-b-tooltip.hover
-              data-placement="top"
-              title="Groups"
-            >
-              <a
-                class="nav-link"
-                id="pills-groups-tab"
-                data-toggle="pill"
-                v-on:click="activetab = 3"
-                v-bind:class="[activetab === 3 ? 'active' : '']"
-                role="tab"
-                href="javascript: void(0);"
-              >
-                <i class="ri-group-line"></i>
-              </a>
-            </li>
-            <li
-              class="nav-item"
-              v-b-tooltip.hover
-              data-placement="top"
-              title="Contacts"
-            >
-              <a
-                class="nav-link"
-                id="pills-contacts-tab"
-                data-toggle="pill"
-                v-on:click="activetab = 4"
-                v-bind:class="[activetab === 4 ? 'active' : '']"
-                role="tab"
-                href="javascript: void(0);"
-              >
-                <i class="ri-contacts-line"></i>
-              </a>
-            </li>
-            <li
-              class="nav-item"
-              v-b-tooltip.hover
-              data-placement="top"
-              title="Settings"
-            >
-              <a
-                class="nav-link"
-                id="pills-setting-tab"
-                data-toggle="pill"
-                v-on:click="activetab = 5"
-                v-bind:class="[activetab === 5 ? 'active' : '']"
-                role="tab"
-                href="javascript: void(0);"
-              >
-                <i class="ri-settings-2-line"></i>
-              </a>
-            </li>
-            
-            <li
-              class="nav-item"
-              v-b-tooltip.hover
-              data-placement="top"
-              title="Search"
-            >
-              <a
-                class="nav-link"
-                id="pills-setting-tab"
-                data-toggle="pill"
-                v-on:click="activetab = 6"
-                v-bind:class="[activetab === 6 ? 'active' : '']"
-                role="tab"
-                href="#"
-              >
-                <i class="ri-settings-2-line"></i>
-              </a>
-            </li>
-            <b-dropdown
-              class="nav-item profile-user-dropdown d-inline-block d-lg-none"
-              toggle-class="nav-link"
-              variant="white"
-              dropup
-            >
-              <template v-slot:button-content>
-                <img
-                  src="@/assets/images/users/avatar-1.jpg"
-                  alt
-                  class="profile-user rounded-circle"
-                />
-              </template>
-              <b-dropdown-item href="javascript:void(0);">
-                Profile
-                <i class="ri-profile-line float-right text-muted"></i>
-              </b-dropdown-item>
-              <b-dropdown-item href="javascript:void(0);">
-                Setting
-                <i class="ri-settings-3-line float-right text-muted"></i>
-              </b-dropdown-item>
-              <b-dropdown-divider></b-dropdown-divider>
-              <b-dropdown-item href="/logout">
-                Log out
-                <i class="ri-logout-circle-r-line float-right text-muted"></i>
-              </b-dropdown-item>
-            </b-dropdown>
-          </ul>
-        </div>
-        <!-- end side-menu nav -->
-
-        <div class="flex-lg-column d-none d-lg-block">
-          <ul class="nav side-menu-nav justify-content-center">
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="light-dark"
-                target="_blank"
-                href="http://chatvia-dark.vue.themesbrand.com/"
-                v-b-tooltip.hover title="Dark Mode"
-              >
-                <i class="ri-sun-line theme-mode-icon"></i>
-              </a>
-            </li>
-            <b-dropdown
-              class="nav-item btn-group dropup profile-user-dropdown"
-              variant="white"
-            >
-              <template v-slot:button-content>
-                <img
-                  src="@/assets/images/users/avatar-1.jpg"
-                  alt
-                  class="profile-user rounded-circle"
-                />
-              </template>
-              <b-dropdown-item href="javascript:void(0);">
-                Profile
-                <i class="ri-profile-line float-right text-muted"></i>
-              </b-dropdown-item>
-              <b-dropdown-item href="javascript:void(0);">
-                Setting
-                <i class="ri-settings-3-line float-right text-muted"></i>
-              </b-dropdown-item>
-              <b-dropdown-item href="/logout">
-                Log out
-                <i class="ri-logout-circle-r-line float-right text-muted"></i>
-              </b-dropdown-item>
-            </b-dropdown>
-          </ul>
-        </div>
-        <!-- Side menu user -->
-      </div>
-
-      <!-- start chat-leftsidebar -->
-      <div class="chat-leftsidebar mr-lg-1">
-        <div class="tab-content">
-          <!-- Start Profile tab-pane -->
-          <div
-            class="tab-pane"
-            id="pills-user"
-            role="tabpanel"
-            aria-labelledby="pills-user-tab"
-            v-if="activetab === 1"
-            v-bind:class="[activetab === 1 ? 'active' : '']"
-          >
-            <!-- Start profile content -->
-            <Profile />
-            <!-- End profile content -->
-          </div>
-
-          <!-- Start chats tab-pane -->
-          <div
-            class="tab-pane fade show active"
-            id="pills-chat"
-            role="tabpanel"
-            aria-labelledby="pills-chat-tab"
-            v-if="activetab === 2"
-            v-bind:class="[activetab === 2 ? 'active' : '']"
-          >
-            <!-- Start chats content -->
-
-            <RoomsList
-              v-if="!singleRoom"
-              :currentUserId="currentUserId"
-              :rooms="orderedRooms"
-              :loadingRooms="loadingRooms"
-              :room="room"
-              :textMessages="t"
-              :showAddRoom="showAddRoom"
-              :showRoomsList="showRoomsList"
-              :textFormatting="textFormatting"
-              :isMobile="isMobile"
-              @fetchRoom="fetchRoom"
-            />
-          </div>
-          <!-- End chats tab-pane -->
-
-          <!-- Start groups tab-pane -->
-          <div
-            class="tab-pane"
-            id="pills-groups"
-            role="tabpanel"
-            aria-labelledby="pills-groups-tab"
-            v-if="activetab === 3"
-            v-bind:class="[activetab === 3 ? 'active' : '']"
-          >
-            <!-- Start Groups content -->
-            <Groups />
-            <!-- End Groups content -->
-          </div>
-          <!-- End groups tab-pane -->
-
-          <!-- Start contacts tab-pane -->
-          <div
-            class="tab-pane"
-            id="pills-contacts"
-            role="tabpanel"
-            aria-labelledby="pills-contacts-tab"
-            v-if="activetab === 4"
-            v-bind:class="[activetab === 4 ? 'active' : '']"
-          >
-            <!-- Start Contact content -->
-            <Contacts />
-            <!-- Start Contact content -->
-          </div>
-          <!-- End contacts tab-pane -->
-
-          <!-- Start settings tab-pane -->
-          <div
-            class="tab-pane"
-            id="pills-setting"
-            role="tabpanel"
-            aria-labelledby="pills-setting-tab"
-            v-if="activetab === 5"
-            v-bind:class="[activetab === 5 ? 'active' : '']"
-          >
-            <!-- Start Settings content -->
-            <Setting />
-            <!-- Start Settings content -->
-          </div>
-          <!-- End settings tab-pane -->
-          
-          <!-- Start search tab-pane -->
-          <div
-            class="tab-pane"
-            id="pills-setting"
-            role="tabpanel"
-            aria-labelledby="pills-setting-tab"
-            v-if="activetab === 6"
-            v-bind:class="[activetab === 6 ? 'active' : '']"
-          >
-            <!-- Start search content -->
-            <Search />
-            <!-- Start search content -->
-          </div>
-          <!-- End search tab-pane -->
-        </div>
-      </div>
-
-      <Room
-        ref="chatContainer"
-        :currentUserId="currentUserId"
-        :rooms="rooms"
-        :id="room.id || ''"
-        :messages="chatMessages"
-        :roomMessage="roomMessage"
-        :messagesLoaded="messagesLoaded"
-        :menuActions="menuActions"
-        :messageActions="messageActions"
-        :showFiles="showFiles"
-        :showEmojis="showEmojis"
-        :showReactionEmojis="showReactionEmojis"
-        :textMessages="t"
-        :singleRoom="singleRoom"
-        :showRoomsList="showRoomsList"
-        :textFormatting="textFormatting"
-        :isMobile="isMobile"
-        :loadingRooms="loadingRooms"
-        :roomInfo="$listeners.roomInfo"
-        @roomInfo="roomInfo"
-        @fetchMessages="fetchMessages"
-        @sendMessage="sendMessage"
-        @editMessage="editMessage"
-        @deleteMessage="deleteMessage"
-        @openFile="openFile"
-        @menuActionHandler="menuActionHandler"
-        @messageActionHandler="messageActionHandler"
-        @sendMessageReaction="sendMessageReaction"
-        @typingMessage="typingMessage"
-      />
-    </div>
-  </div>
-</template>
 
 <style lang="scss" scoped>
 </style>

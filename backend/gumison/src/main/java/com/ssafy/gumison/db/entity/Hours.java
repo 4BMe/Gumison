@@ -21,21 +21,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Hours {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "hours_id")
-	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "climbing_id")
-	private Climbing climbing;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "hours_id")
+  private Long id;
 
-	@Column(nullable = false)
-	private Integer type;
+  @ManyToOne
+  @JoinColumn(name = "climbing_id")
+  private Climbing climbing;
 
-	@Column(nullable = false)
-	private Time startTime;
+  @Column(nullable = false)
+  private Integer type;
 
-	@Column(nullable = false)
-	private Time endTime;
+  @Column(nullable = false)
+  private Time startTime;
+
+  @Column(nullable = false)
+  private Time endTime;
 }

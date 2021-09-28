@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserHistoryResponse")
 public class UserHistoryRes {
+
   private String profile;
   private String nickname;
   private String description;
@@ -17,7 +18,7 @@ public class UserHistoryRes {
   private Long exp;
   private List<SolutionListItem> solutionList;
 
-  public static UserHistoryRes of(User user,String tier, Long exp, List<SolutionListItem> list) {
+  public static UserHistoryRes of(User user, String tier, Long exp, List<SolutionListItem> list) {
     UserHistoryRes res = new UserHistoryRes();
     res.setProfile(user.getProfile());
     res.setNickname(user.getNickname());
