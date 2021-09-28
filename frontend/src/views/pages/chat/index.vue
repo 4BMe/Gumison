@@ -114,44 +114,43 @@
                 <i class="ri-settings-2-line"></i>
               </a>
             </li>
-<<<<<<< HEAD
-=======
-            
->>>>>>> develop
             <li
               class="nav-item"
               v-b-tooltip.hover
               data-placement="top"
-<<<<<<< HEAD
-              title="Level Record"
-            >
-              <a
-                class="nav-link"
-                id="pills-level-record-tab"
-=======
               title="Search"
             >
               <a
                 class="nav-link"
                 id="pills-setting-tab"
->>>>>>> develop
                 data-toggle="pill"
                 v-on:click="activetab = 6"
                 v-bind:class="[activetab === 6 ? 'active' : '']"
                 role="tab"
-<<<<<<< HEAD
-                href="javascript: void(0)"
-              >
-                <i class="ri-add-box-line"></i>
-              </a>
-            </li>
-=======
                 href="#"
               >
                 <i class="ri-settings-2-line"></i>
               </a>
             </li>
-
+            <!-- 8번탭: 사용자 레벨 기록 -->
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Level Record"
+            >
+              <a to="/level-record"
+                class="nav-link"
+                id="pills-level-record-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 8"
+                v-bind:class="[activetab === 8 ? 'active' : '']"
+                role="tab"
+                href="#"
+              >
+                <i class="ri-add-box-line"></i>
+              </a>
+            </li>
             <!-- 9번탭: 사용자 계정 , 로그인 필요 페이지 -->
               <li
               class="nav-item"
@@ -172,7 +171,6 @@
               </a>
             </li>
 
->>>>>>> develop
             <b-dropdown
               class="nav-item profile-user-dropdown d-inline-block d-lg-none"
               toggle-class="nav-link"
@@ -316,7 +314,7 @@
           >
             <!-- Start Contact content -->
             <Contacts />
-            <!-- End Contact content -->
+            <!-- Start Contact content -->
           </div>
           <!-- End contacts tab-pane -->
 
@@ -331,31 +329,7 @@
           >
             <!-- Start Settings content -->
             <Setting />
-<<<<<<< HEAD
             <!-- End Settings content -->
-          </div>
-          <!-- End settings tab-pane -->
-          <!-- Start level record tab-pane -->
-          <div
-            class="tab-pane"
-            id="pills-level-record"
-            role="tabpanel"
-            aria-labelledby="pills-level-record-tab"
-            v-if="activetab === 6"
-            v-bind:class="[activetab === 6 ? 'active' : '']"
-          >
-            <!-- Start Level Record content -->
-            <LevelRecord />
-            <!-- End Level Record content -->
-          </div>
-          <!-- End level record tab-pane -->
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-=======
-            <!-- Start Settings content -->
           </div>
           <!-- End settings tab-pane -->
 
@@ -372,10 +346,22 @@
             <Search />
             <!-- End search content -->
           </div>
-         <!-- End search tab-pane -->
-
-
-           <!-- Start 사용자 페이지, 로그인 페이지 tab-pane -->
+          <!-- End search tab-pane -->
+          <!-- Start level-record tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-level-record"
+            role="tabpanel"
+            aria-labelledby="pills-level-record-tab"
+            v-if="activetab === 8"
+            v-bind:class="[activetab === 8 ? 'active' : '']"
+          >
+            <!-- Start level-record content -->
+            <LevelRecord />
+            <!-- End level-record content -->
+          </div>
+          <!-- End level-record tab-pane -->
+          <!-- Start 사용자 페이지, 로그인 페이지 tab-pane -->
           <div
             class="tab-pane"
             id="pills-user"
@@ -436,6 +422,7 @@ import Profile from "./tabs/profile";
 import RoomsList from "./tabs/userlist";
 import Groups from "./tabs/groups";
 import Search from "@/views/pages/search/search";
+import LevelRecord from "@/views/pages/level-record/level-record";
 
 import { chatMemberList, chatMessages } from "./data";
 
@@ -447,289 +434,7 @@ export default {
     Room,
     RoomsList,
     Contacts,
-    Search
-  },
-  props: {
-    height: {
-      type: String,
-      default: "600px",
-    },
-    theme: {
-      type: String,
-      default: "light",
-    },
-    styles: {
-      type: Object,
-      default: () => ({}),
-    },
-    responsiveBreakpoint: {
-      type: Number,
-      default: 900,
-    },
-    singleRoom: {
-      type: Boolean,
-      default: false,
-    },
-    textMessages: {
-      type: Object,
-      default: null,
-    },
-    currentUserId: {
-      type: [String, Number],
-      default: "",
-    },
-    rooms: {
-      type: Array,
-      default: () => [],
-    },
-    loadingRooms: {
-      type: Boolean,
-      default: false,
-    },
-    id: {
-      type: [String, Number],
-      default: null,
-    },
-    messages: {
-      type: Array,
-      default: () => [],
-    },
-    messagesLoaded: {
-      type: Boolean,
-      default: false,
-    },
-    menuActions: {
-      type: Array,
-      default: () => [],
-    },
-    messageActions: {
-      type: Array,
-      default: () => [
-        {
-          name: "Reply",
-          title: "Reply",
-        },
-        {
-          name: "Edit",
-          title: "Edit Message",
-          onlyMe: true,
-        },
-        {
-          name: "Delete",
-          title: "Delete Message",
-          onlyMe: true,
-        },
-      ],
-    },
-    showAddRoom: {
-      type: Boolean,
-      default: true,
-    },
-    showFiles: {
-      type: Boolean,
-      default: true,
-    },
-    showEmojis: {
-      type: Boolean,
-      default: true,
-    },
-    showReactionEmojis: {
-      type: Boolean,
-      default: true,
-    },
-    textFormatting: {
-      type: Boolean,
-      default: true,
-    },
-    newMessage: {
-      type: Object,
-      default: null,
-    },
-    roomMessage: {
-      type: String,
-      default: "",
-    },
-  },
-  data() {
-    return {
-      chatMemberList: chatMemberList,
-      chatMessages: chatMessages,
-      message: "",
-      input: "",
-      search: "",
-      activetab: 2,
-      emojiPickerHeight: 320,
-      emojiPickerTop: 0,
-      editedMessage: {},
-      emojiPickerRight: "",
-      emojiOpened: false,
-      emojisList: {},
-      imageDimensions: null,
-      file: null,
-      room: {},
-      showRoomsList: true,
-      isMobile: false,
-    };
-  },
-  watch: {
-    rooms(newVal, oldVal) {
-      if (newVal[0] && newVal.length !== oldVal.length) {
-        if (this.id) {
-          const room = newVal.find((r) => r.id === this.id);
-          this.fetchRoom({
-            room,
-          });
-        } else if (!this.isMobile) {
-          this.fetchRoom({
-            room: this.orderedRooms[0],
-          });
-        } else {
-          this.showRoomsList = true;
-        }
-      }
-    },
-    id: {
-      immediate: true,
-      handler(val) {
-        if (val && !this.loadingRooms && this.rooms.length) {
-          const room = this.rooms.find((r) => r.id === val);
-          this.fetchRoom({
-            room,
-          });
-        }
-      },
-    },
-    room(val) {
-      if (!val) return;
-      if (Object.entries(val).length === 0) return;
-    },
-    newMessage(val) {
-      this.$set(this.messages, val.index, val.message);
-    },
-  },
-  mounted() {
-    this.updateResponsive();
-    window.addEventListener("resize", (ev) => {
-      if (ev.isTrusted) this.updateResponsive();
-    });
-  },
-  computed: {
-    t() {
-      return {
-        ...locales,
-        ...this.textMessages,
-      };
-    },
-    orderedRooms() {
-      return this.rooms.slice().sort((a, b) => {
-        const aVal = a.lastMessage || {
-          date: 0,
-        };
-        const bVal = b.lastMessage || {
-          date: 0,
-        };
-        return aVal.date > bVal.date ? -1 : bVal.date > aVal.date ? 1 : 0;
-      });
-    },
-  },
-  methods: {
-    updateResponsive() {
-      this.isMobile = window.innerWidth < this.responsiveBreakpoint;
-    },
-    fetchRoom({ room }) {
-      this.room = room;
-      this.fetchMessages({
-        reset: true,
-      });
-      if (this.isMobile) this.showRoomsList = false;
-    },
-    roomInfo() {
-      this.$emit("roomInfo", this.room);
-    },
-    fetchMessages(options) {
-      this.$emit("fetchMessages", {
-        room: this.room,
-        options,
-      });
-    },
-    sendMessage(message) {
-      this.$emit("sendMessage", {
-        ...message,
-        id: this.room.id,
-      });
-      this.chatMessages.push(message);
-    },
-    editMessage(message) {
-      this.$emit("editMessage", {
-        message,
-        id: this.room.id,
-      });
-      let msgInfo = message;
-      let data = this.chatMessages.find((x) => x.id === msgInfo.messageId);
-      data.content = msgInfo.newContent;
-    },
-    deleteMessage(messageId) {
-      this.$emit("deleteMessage", {
-        messageId,
-        id: this.room.id,
-      });
-
-      let data = this.chatMessages.find((x) => x.id === messageId);
-      data.content = "";
-      data.file = null;
-      this.deleted = true;
-    },
-    openFile(message) {
-      this.$emit("openFile", message);
-    },
-    menuActionHandler(ev) {
-      this.$emit("menuActionHandler", {
-        action: ev,
-        id: this.room.id,
-      });
-    },
-    messageActionHandler(ev) {
-      this.$emit("messageActionHandler", {
-        ...ev,
-        id: this.room.id,
-      });
-    },
-    sendMessageReaction(messageReaction) {
-      this.$emit("sendMessageReaction", {
-        ...messageReaction,
-        id: this.room.id,
-      });
-    },
-    typingMessage(message) {
-      this.$emit("typingMessage", {
-        message,
-        id: this.room.id,
-      });
-    },
-  },
-};
-</script>
-
->>>>>>> develop
-
-<script>
-import locales from "../locale";
-import Setting from "./tabs/setting";
-import Contacts from "./tabs/contacts";
-import Profile from "./tabs/profile";
-import RoomsList from "./tabs/userlist";
-import Groups from "./tabs/groups";
-import LevelRecord from "@/views/pages/level-record/level-record";
-
-import { chatMemberList, chatMessages } from "./data";
-
-export default {
-  components: {
-    Profile,
-    Setting,
-    Groups,
-    RoomsList,
-    Contacts,
+    Search,
     LevelRecord,
   },
   props: {
@@ -851,7 +556,7 @@ export default {
       file: null,
       room: {},
       showRoomsList: true,
-      isMobile: true,
+      isMobile: false,
     };
   },
   watch: {

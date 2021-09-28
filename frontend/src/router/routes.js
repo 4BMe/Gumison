@@ -6,7 +6,14 @@ export default [{
         meta: {
             authRequired: true,
         },
-        component: () => import('../views/pages/chat/index')
+        component: () => import('../views/pages/chat/index'),
+        children:[
+            {
+                path: '/level-record',
+                name: 'level-record',
+                component: () => import('../views/pages/level-record/level-record'),
+            }
+        ]
     },
     {
         path: '/login',
@@ -92,5 +99,5 @@ export default [{
         path: '/lock-screen',
         name: 'lock-screen',
         component: () => import('../views/pages/account/lock-screen'),
-    }
+    },
 ]

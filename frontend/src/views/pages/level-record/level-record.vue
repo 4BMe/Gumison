@@ -10,6 +10,9 @@
           </a>
         </b-card-header>
           <b-card-body>
+            <div>
+              <input type="date" id="input-date" class="">
+            </div>
             <div v-for="(level, index) in levels" :key="index">
               <LevelRecordLine :level=levels[index] :color=colors[index] :index=index />
               <br>
@@ -19,7 +22,7 @@
           <div>
                 <input type="file" value="동영상 업로드" ref="solutionVideos" class="btn btn-outline-success" accept="video/*" multiple @change="handleFileUpload()">
                 <br><br>
-                <input type="button" value="등록" class="btn btn-outline-primary" @click="submit()">
+                <input type="button" value="등록" class="btn btn-outline-primary float-right mr-3" @click="submit()">
           </div>
   </div>
 </template>
@@ -27,10 +30,7 @@
 <script>
 import LevelRecordLine from './components/level-record-line';
 // import { uploadFile } from '@/api/level-record.js';
-import Vue from 'vue';
-import VueAlertify from 'vue-alertify';
 
-Vue.use(VueAlertify);
 export default {
     components: {
         LevelRecordLine,
@@ -69,6 +69,9 @@ export default {
             //     })
         }
     },
+    mounted() {
+      document.getElementById("input-date").valueAsDate = new Date();
+    }
 }
 </script>
 
