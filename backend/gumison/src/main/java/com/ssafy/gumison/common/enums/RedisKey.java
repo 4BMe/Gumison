@@ -1,5 +1,5 @@
 package com.ssafy.gumison.common.enums;
 
 public enum RedisKey {
-  RANK
+  GUMISON_CACHE, RANK, USER_COUNT
 }

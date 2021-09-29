@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RankUtilityTest {
+class RankProviderTest {
 
   @Autowired
-  private RankUtility rankUtility;
+  private RankProvider rankProvider;
 
   @Autowired
   private UserRepositorySupport userRepositorySupport;
@@ -21,7 +21,7 @@ class RankUtilityTest {
     //given
     final int SIZE = userRepositorySupport.findNicknamesAndExpAll().size();
     //when
-    int returnSize = rankUtility.loadAllUserExpIntoRankZSet();
+    int returnSize = rankProvider.loadAllUserExpIntoRankZSet();
     //then
     assertEquals(SIZE, returnSize);
 

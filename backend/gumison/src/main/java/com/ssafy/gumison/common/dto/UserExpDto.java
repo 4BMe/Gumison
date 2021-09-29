@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /*
-  User nickname과 exp만을 저장하는 Dto
+  User nickname과 exp만을 전달하는 Dto
  */
 
 @AllArgsConstructor
-@NoArgsConstructor
+@Setter
 @Getter
 public class UserExpDto {
 
