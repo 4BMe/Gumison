@@ -6,7 +6,11 @@ export default [{
         meta: {
             authRequired: true,
         },
-        component: () => import('../views/pages/chat/index')
+        component: () => import('../views/pages/search/search')
+    },
+    {
+        path: '/profile',
+        name: 'profile',
     },
     {
         path: '/login',
