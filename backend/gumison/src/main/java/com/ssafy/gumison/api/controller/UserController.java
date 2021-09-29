@@ -34,7 +34,7 @@ public class UserController {
   @GetMapping("search/{keyword}/{pageNumber}")
   public ApiResponseDto<UserSearchRes> searchUsers(@PathVariable("keyword") String nickname,
       @PathVariable int pageNumber) {
-    UserSearchRes userSearchRes = userService.getUserList(nickname, pageNumber);
+    UserSearchRes userSearchRes = userService.getUserList(nickname.trim(), pageNumber);
     return ApiResponseDto.success(userSearchRes);
   }
 
