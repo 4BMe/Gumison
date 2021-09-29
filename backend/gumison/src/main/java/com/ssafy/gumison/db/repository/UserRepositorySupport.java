@@ -1,16 +1,16 @@
 package com.ssafy.gumison.db.repository;
 
-import com.querydsl.core.Tuple;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-
-import com.ssafy.gumison.common.dto.UserExpDto;
-import com.ssafy.gumison.db.entity.QUser;
 import java.util.LinkedList;
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import com.querydsl.core.Tuple;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.gumison.common.dto.UserExpDto;
+import com.ssafy.gumison.db.entity.QUser;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 유저 모델 동적 쿼리 생성을 위한 클래스

@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Scheduler {
 
-  private final RankProviderImpl rankProvider;
-
-  /*
-    cron 단위로 스케줄러 실행
-   */
-  @Scheduled(cron = "* 0/10 * * * *")
-  public void loadDataIntoRedisByScheduler() {
-    rankProvider.loadAllUserExpIntoRankZSet();
-  }
+//  private final RankProviderImpl rankProvider;
+//
+//  /*
+//    cron 단위로 스케줄러 실행
+//   */
+//  @Scheduled(cron = "* 0/10 * * * *")
+//  public void loadDataIntoRedisByScheduler() {
+//    rankProvider.loadAllUserExpIntoRankZSet();
+//  }
 }
