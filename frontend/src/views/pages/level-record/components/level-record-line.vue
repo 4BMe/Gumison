@@ -25,7 +25,7 @@ export default {
         }
     },
     mounted() {
-        document.getElementById('color-'+this.index).style="background-color: " + this.color;
+        document.getElementById('color-'+this.index).style="border: 1px solid; background-color: " + this.color;
     }
 }
 </script>

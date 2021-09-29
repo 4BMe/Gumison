@@ -15,7 +15,13 @@ export default [{
     {
         path: '/level-record',
         name: 'level-record',
-        component: () => import('../views/pages/level-record/level-record')
+        component: () => import('../views/pages/level-record/level-record'),
+        props: true
+    },
+    {
+        path: '/temp',
+        name: 'temp',
+        component: () => import('../views/pages/level-record/temp'),
     },
     {
         path: '/login',

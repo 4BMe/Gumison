@@ -51,7 +51,7 @@
               title="Level Record"
             >
               <router-link
-                to="/level-record"
+                to="/temp"
                 class="nav-link"
                 id="pills-level-record-tab"
                 v-on:click.native="activetab = 3"
@@ -170,6 +170,7 @@ export default {
       case '':
         this.activetab = 1;
         break;
+      case 'temp':
       case 'level-record':
         this.activetab = 3;
         break;

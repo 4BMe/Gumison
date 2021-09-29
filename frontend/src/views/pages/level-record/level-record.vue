@@ -2,19 +2,22 @@
   <div class="container">
       <b-card no-body class="border custom-accordion">
         <b-card-header>
-          <a href="javascript: void(0);">
+          <div class="d-flex flex-row">
+            <a href="javascript: void(0);" @click="goBack()">
+              <i class="ri-arrow-left-line mr-2"></i>
+            </a>
             <h5 class="font-size-15 m-0">
               <i class="ri-user-2-line mr-2 align-middle d-inline-block"></i>
                 레벨 기록하기
             </h5>
-          </a>
+          </div>
         </b-card-header>
           <b-card-body>
             <div class="mb-3">
               <input type="date" id="input-date" v-model="solutionDate" class="form-control" />
             </div>
             <div v-for="(level, index) in levels" :key="index">
-              <LevelRecordLine :level=levels[index] :color=colors[index] :index=index class="mb-3" v-model.number="solutionCount[index]" />
+              <LevelRecordLine :level=levels[index] :color=colors[index] :index=index class="mb-3" v-model.number="solutionCounts[index]" />
             </div>
           </b-card-body>
       </b-card>
@@ -33,58 +36,83 @@ import { submit } from '@/api/level-record.js';
 var today = new Date();
 
 export default {
-    components: {
-        LevelRecordLine,
+  props: {
+    levelTierIds: [],
+    levels: [],
+    colors: [],
+    solutionDate: {
+      default: today.toISOString().slice(0,10),
     },
-    data(){
-        return {
-            colors: ['red', 'blue', 'green'],
-            levels: ['빨강', '파랑', '초록'],
-            solutionVideos: '',
-            solutionDate: '',
-            solutionCount: [0, 0, 0],
-        }
+    solutionCounts: {
+      default(){
+        return [];
+      },
     },
-    methods: {
-        handleFileUpload() {
-            this.solutionVideos = this.$refs.solutionVideos.files;
-        },
-        async submitClick() {
-            let solutionRequests = [];
-            for (var i = 0; i < this.colors.length; i++) {
-              if(this.solutionCount[i] > 0)
-              solutionRequests.push({
-                count: this.solutionCount[i],
-                date: this.solutionDate,
-                climbingId: 2,
-                levelTierId: 17,
-                userId: 2
-              })
-            }
-            for (i = 0; i < solutionRequests.length; i++) {
-              console.log(JSON.stringify(solutionRequests[i]));
-            }
+    climbingId: {
+      default: 0
+    },
+    userId:{
+      default: 0
+    },
+  },
+  components: {
+      LevelRecordLine,
+  },
+  data(){
+      return {
+          // colors: ['red', 'blue', 'green'],
+          // levels: ['빨강', '파랑', '초록'],
+          solutionVideos: '',
+          // solutionDate: '',
+          // solutionCounts: [],
+      }
+  },
+  methods: {
+      handleFileUpload() {
+          this.solutionVideos = this.$refs.solutionVideos.files;
+      },
+      goBack(){
+        this.$router.go(-1);
+      },
+      async submitClick() {
+          let recordData = [];
+          for (var i = 0; i < this.colors.length; i++) {
+            if(this.solutionCounts[i] > 0)
+            recordData.push({
+              count: this.solutionCounts[i],
+              date: this.solutionDate,
+              climbingId: this.climbingId,
+              levelTierId: this.levelTierIds[i],
+              userId: this.userId
+            })
+          }
+          for (i = 0; i < recordData.length; i++) {
+            console.log(JSON.stringify(recordData[i]));
+          }
 
-            await submit(solutionRequests)
-            .then(({data}) => {
-              console.log(data);
-            })
-            .catch(error => {
-              console.log(error);
-            })
-        },
-    },
-    mounted() {
-      this.solutionDate = today.toISOString().slice(0,10);
-    },
-    watch: {
-      solutionCount: function(){
-        console.log(this.solutionCount);
+          await submit(recordData)
+          .then(({data}) => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.log(error);
+          })
       },
-      solutionDate: function(){
-        console.log('solutionDate is ' + this.solutionDate);
-      },
+  },
+  mounted() {
+    // this.solutionDate = today.toISOString().slice(0,10);
+    // for (var i = 0; i < this.levelTierIds.length; i++) {
+    //   this.solutionCounts.push(0);
+    // }
+  },
+  watch: {
+    solutionCounts: function(){
+      console.log(this.solutionCounts);
     },
+    solutionDate: function(){
+      console.log('solutionDate is ' + this.solutionDate);
+    },
+  },
 }
 </script>
 
