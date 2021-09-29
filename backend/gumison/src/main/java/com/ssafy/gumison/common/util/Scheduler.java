@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Scheduler {
 
-  private final RankProvider rankProvider;
+  private final RankProviderImpl rankProvider;
 
   /*
     cron 단위로 스케줄러 실행

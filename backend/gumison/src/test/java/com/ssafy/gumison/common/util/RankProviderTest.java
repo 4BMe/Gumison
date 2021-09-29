@@ -39,4 +39,14 @@ class RankProviderTest {
     assertTrue(userExpDto.getRank() >= 0 && userExpDto.getRank() <= SIZE);
   }
 
+  @Test
+  public void 순위_목록을_가져온다(){
+    //given
+    final int START_OFFSET = 0;
+    final int LIMIT = 10;
+    //when
+    rankProvider.getUserRankByStartOffsetAndLimit(START_OFFSET, LIMIT);
+    //final
+  }
+
 }
