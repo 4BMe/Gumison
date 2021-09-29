@@ -42,7 +42,7 @@ class RankProviderTest {
   }
 
   @Test
-  public void 순위_목록을_가져온다(){
+  public void 순위_목록을_가져온다() {
     //given
     final int START_OFFSET = 0;
     final int LIMIT = 10;

@@ -13,7 +13,7 @@ public class Scheduler {
   /*
     cron 단위로 스케줄러 실행
    */
-  @Scheduled(cron = "0/10 * * * * *")
+  @Scheduled(cron = "* 0/10 * * * *")
   public void loadDataIntoRedisByScheduler() {
     rankProvider.loadAllUserExpIntoRankZSet();
   }
