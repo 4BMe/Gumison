@@ -4,7 +4,7 @@
           <div class="col-2">{{level}}</div>
           <div class="col-1 rounded-circle" :id="'color-'+index"></div>
           <div class="col-6">
-              <input type="number" name="clearNum" id="clearNum" v-model="clearNum">
+              <input type="number" min="0" id="solutionNum" v-model="solutionNum" @change="emitEvent()">
           </div>
       </div>
   </div>
@@ -15,7 +15,13 @@ export default {
     props: ['level', 'color', 'index'],
     data() {
         return {
-            clearNum: 0,
+            solutionNum: 0,
+        }
+    },
+    methods: {
+        emitEvent() {
+            console.log("CHILD SENT !!! : " + this.solutionNum)
+            this.$emit('input', this.solutionNum);
         }
     },
     mounted() {

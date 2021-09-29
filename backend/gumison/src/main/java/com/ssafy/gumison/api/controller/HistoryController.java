@@ -1,5 +1,7 @@
 package com.ssafy.gumison.api.controller;
 
+import java.util.Arrays;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,10 +51,14 @@ public class HistoryController {
 
   @ApiOperation(value = "레벨 기록 생성", notes = "성공한 레벨 기록을 생성합니다.", response = ApiResponseDto.class)
   @PostMapping("/")
-  public ApiResponseDto<Solution> createSolution(@RequestBody SolutionRequest solutionRequest) {
-    log.info("[createSolution] : " + solutionRequest);
-    Solution solution = historyService.createSolution(solutionRequest);
-    return ApiResponseDto.success(solution);
+  public ApiResponseDto<Solution[]> createSolution(@RequestBody SolutionRequest[] solutionRequests) {
+    log.info("[createSolution] : " + Arrays.toString(solutionRequests));
+    Solution[] solutions = new Solution[solutionRequests.length];
+    for (int i = 0; i < solutionRequests.length; i++) {
+      Solution solution = historyService.createSolution(solutionRequests[i]);
+      solutions[i] = solution;
+    }
+    return ApiResponseDto.success(solutions);
   }
 
   @ApiOperation(value = "레벨 기록 수정", notes = "성공한 레벨 기록을 수정합니다.", response = ApiResponseDto.class)

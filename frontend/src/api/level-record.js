@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { BASE_URL } from "@/constant/index"
 
 const instance = axios.create({
-    baseURL: 'https://localhost:8888/level-record/',
+    baseURL: BASE_URL + '/history',
     headers: {
       'Content-type': 'application/json',
     },
@@ -9,7 +10,7 @@ const instance = axios.create({
 });
 
 function submit(recordData) {
-    return instance.post('record', recordData);
+    return instance.post('/', recordData);
 }
 
 function uploadFile(fileReq){

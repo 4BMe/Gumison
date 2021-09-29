@@ -1,6 +1,6 @@
 package com.ssafy.gumison.api.request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class SolutionRequest {
   private Long solutionId;
   private Integer accumulateReport;
   private Integer count;
-  private LocalDateTime date;
+  private LocalDate date;
   private Boolean deleteYn;
   private Long climbingId;
   private Long levelTierId;

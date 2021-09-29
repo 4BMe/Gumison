@@ -1,7 +1,7 @@
 import store from '@/state/store'
 
 export default [{
-        path: '',
+        path: '/',
         name: 'home',
         meta: {
             authRequired: true,
@@ -13,7 +13,7 @@ export default [{
         name: 'profile',
     },
     {
-        paht: '/level-record',
+        path: '/level-record',
         name: 'level-record',
         component: () => import('../views/pages/level-record/level-record')
     },

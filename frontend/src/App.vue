@@ -1,7 +1,8 @@
 <template>
   <div id="app">
+    <div class="layout-wrapper d-lg-flex">
     <router-view />
-    <div class="side-menu flex-lg-column mr-lg-1">
+      <div class="side-menu flex-lg-column mr-lg-1">
         <!-- LOGO -->
         <div class="navbar-brand-box">
           <router-link to="/" tag="a" class="logo logo-dark">
@@ -35,11 +36,8 @@
                 to="/"
                 class="nav-link"
                 id="pills-search-tab"
-                data-toggle="pill"
                 v-on:click.native="activetab = 1"
                 v-bind:class="[activetab === 1 ? 'active' : '']"
-                role="tab"
-                href="#"
               >
                 <i class="ri-search-2-line"></i>
               </router-link>
@@ -56,11 +54,8 @@
                 to="/level-record"
                 class="nav-link"
                 id="pills-level-record-tab"
-                data-toggle="pill"
                 v-on:click.native="activetab = 3"
                 v-bind:class="[activetab === 3 ? 'active' : '']"
-                role="tab"
-                href="#"
               >
                 <i class="ri-add-box-line"></i>
               </router-link>
@@ -77,11 +72,8 @@
                 to="profile"
                 class="nav-link"
                 id="pills-user-tab"
-                data-toggle="pill"
                 v-on:click.native="activetab = 4"
                 v-bind:class="[activetab === 4 ? 'active' : '']"
-                role="tab"
-                href="javascript: void(0);"
               >
                 <i class="ri-user-2-line"></i>
               </router-link>
@@ -159,6 +151,7 @@
         </div>
         <!-- Side menu user -->
       </div>
+    </div>
   </div>
 </template>
 
@@ -167,6 +160,22 @@ export default {
   data(){
     return{
       activetab: 1,
+    }
+  },
+  mounted(){
+    var curPage = document.location.href;
+    var routeUrl = curPage.split('/');
+    console.log(routeUrl[3]);
+    switch(routeUrl[3]) {
+      case '':
+        this.activetab = 1;
+        break;
+      case 'level-record':
+        this.activetab = 3;
+        break;
+      case 'profile':
+        this.activtab = 4;
+        break;
     }
   },
 }
