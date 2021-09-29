@@ -125,8 +125,8 @@
                 class="nav-link"
                 id="pills-setting-tab"
                 data-toggle="pill"
-                v-on:click="activetab = 6"
-                v-bind:class="[activetab === 6 ? 'active' : '']"
+                v-on:click="activetab = 8"
+                v-bind:class="[activetab === 8 ? 'active' : '']"
                 role="tab"
                 href="#"
               >
@@ -322,8 +322,8 @@
             id="pills-setting"
             role="tabpanel"
             aria-labelledby="pills-setting-tab"
-            v-if="activetab === 6"
-            v-bind:class="[activetab === 6 ? 'active' : '']"
+            v-if="activetab === 8"
+            v-bind:class="[activetab === 8 ? 'active' : '']"
           >
             <!-- Start search content -->
             <Search />

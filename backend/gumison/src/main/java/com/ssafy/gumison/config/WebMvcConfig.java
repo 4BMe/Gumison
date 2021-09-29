@@ -23,7 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     configuration.addAllowedOriginPattern("*");
     configuration.addAllowedMethod("*");
     configuration.addAllowedHeader("*");
-    //configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);
+    // configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);
     configuration.setAllowCredentials(true);
     configuration.setMaxAge(3600L);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -33,30 +33,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/resources/**")
-        .addResourceLocations("/WEB-INF/resources/");
+    registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
 
-    registry.addResourceHandler("swagger-ui.html")
-        .addResourceLocations("classpath:/META-INF/resources/");
+    registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 
-    registry.addResourceHandler("/webjars/**")
-        .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 
-    /*
-     *
-     * Front-end�뿉�꽌 李몄“�븯�뒗 URL�쓣 /dist濡� 留ㅽ븨
-     *
-     */
-    registry.addResourceHandler("/css/**")
-        .addResourceLocations("classpath:/dist/css/");
-    registry.addResourceHandler("/fonts/**")
-        .addResourceLocations("classpath:/dist/fonts/");
-    registry.addResourceHandler("/icons/**")
-        .addResourceLocations("classpath:/dist/icons/");
-    registry.addResourceHandler("/img/**")
-        .addResourceLocations("classpath:/dist/img/");
-    registry.addResourceHandler("/js/**")
-        .addResourceLocations("classpath:/dist/js/");
+    registry.addResourceHandler("/css/**").addResourceLocations("classpath:/dist/css/");
+    registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/dist/fonts/");
+    registry.addResourceHandler("/icons/**").addResourceLocations("classpath:/dist/icons/");
+    registry.addResourceHandler("/img/**").addResourceLocations("classpath:/dist/img/");
+    registry.addResourceHandler("/js/**").addResourceLocations("classpath:/dist/js/");
   }
 
   public Filter requestLoggingFilter() {
