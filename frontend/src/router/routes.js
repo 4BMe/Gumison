@@ -6,14 +6,16 @@ export default [{
         meta: {
             authRequired: true,
         },
-        component: () => import('../views/pages/chat/index'),
-        children:[
-            {
-                path: '/level-record',
-                name: 'level-record',
-                component: () => import('../views/pages/level-record/level-record'),
-            }
-        ]
+        component: () => import('../views/pages/search/search')
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+    },
+    {
+        paht: '/level-record',
+        name: 'level-record',
+        component: () => import('../views/pages/level-record/level-record')
     },
     {
         path: '/login',
