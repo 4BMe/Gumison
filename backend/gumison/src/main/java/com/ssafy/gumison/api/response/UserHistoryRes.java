@@ -16,15 +16,17 @@ public class UserHistoryRes {
   private String description;
   private String tier;
   private Long exp;
+  private Long nextExp;
   private List<SolutionListItem> solutionList;
 
-  public static UserHistoryRes of(User user, String tier, Long exp, List<SolutionListItem> list) {
+  public static UserHistoryRes of(User user, String tier, Long exp, Long nextExp, List<SolutionListItem> list) {
     UserHistoryRes res = new UserHistoryRes();
     res.setProfile(user.getProfile());
     res.setNickname(user.getNickname());
     res.setDescription(user.getDescription());
     res.setTier(tier);
     res.setExp(exp);
+    res.setNextExp(nextExp);
     res.setSolutionList(list);
     return res;
   }

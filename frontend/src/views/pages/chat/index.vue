@@ -154,6 +154,26 @@
               </a>
             </li>
 
+            <!-- 10번탭: 히스토리 -->
+              <li
+              class="nav-item"
+              data-placement="top"
+              title="History"
+              v-b-tooltip.hover
+            >
+              <a
+                class="nav-link"
+                id="pills-user-tab"
+                data-toggle="pill"
+                v-on:click="activetab = 10"
+                v-bind:class="[activetab === 10 ? 'active' : '']"
+                role="tab"
+                href="javascript: void(0);"
+              >
+                <i class="ri-user-2-line"></i>
+              </a>
+            </li>
+
             <b-dropdown
               class="nav-item profile-user-dropdown d-inline-block d-lg-none"
               toggle-class="nav-link"
@@ -346,6 +366,22 @@
            
           </div>
            <!-- End profile content -->
+
+          <!-- Start history tab-pane -->
+          <div
+            class="tab-pane"
+            id="pills-user"
+            role="tabpanel"
+            aria-labelledby="pills-user-tab"
+            v-if="activetab === 10"
+            v-bind:class="[activetab === 10 ? 'active' : '']"
+          >
+            <!-- Start search content -->
+            <History />
+            <!-- End search content -->
+          </div>
+          <!-- End history tab-pane -->
+
         </div>
       </div>
 
@@ -393,6 +429,7 @@ import Profile from "./tabs/profile";
 import RoomsList from "./tabs/userlist";
 import Groups from "./tabs/groups";
 import Search from "@/views/pages/search/search";
+import History from "@/views/pages/history/myhistory";
 
 import { chatMemberList, chatMessages } from "./data";
 
@@ -404,7 +441,8 @@ export default {
     Room,
     RoomsList,
     Contacts,
-    Search
+    Search,
+    History
   },
   props: {
     height: {

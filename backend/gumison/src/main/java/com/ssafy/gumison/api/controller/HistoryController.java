@@ -11,7 +11,9 @@ import com.ssafy.gumison.api.service.HistoryService;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("/api/history")
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ public class HistoryController {
   @GetMapping("/{nickname}")
   public ApiResponseDto<UserHistoryRes> userHistory(@PathVariable("nickname") String nickname) {
     UserHistoryRes historyRes = historyService.history(nickname);
+    log.info(historyRes.getNickname());
     return ApiResponseDto.success(historyRes);
   }
 

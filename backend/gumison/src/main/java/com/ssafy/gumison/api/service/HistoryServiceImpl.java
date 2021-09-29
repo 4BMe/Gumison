@@ -35,7 +35,8 @@ public class HistoryServiceImpl implements HistoryService {
         commonCodeRepository.findById(user.getTierCode()).orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
-    return UserHistoryRes.of(user, tier, user.getAccumulateExp(), solutionListItems);
+    Long nextExp = codeExpConvert(code.getCode() + 1L);
+    return UserHistoryRes.of(user, tier, user.getAccumulateExp(), nextExp, solutionListItems);
   }
 
   @Override
@@ -72,7 +73,7 @@ public class HistoryServiceImpl implements HistoryService {
 
   private List<Solution> getSolutionList(Long userId, int pageNumber) {
     List<Solution> solutionList = new LinkedList<Solution>();
-    PageRequest page = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "date"));
+    PageRequest page = PageRequest.of(pageNumber, 8, Sort.by(Sort.Direction.DESC, "date"));
     solutionList = solutionRepository.findByUserId(userId, page);
     return solutionList;
   }
@@ -80,6 +81,12 @@ public class HistoryServiceImpl implements HistoryService {
   private String codeNameConvert(Long code) {
     String name = "";
     name = commonCodeRepository.findName(code);
-    return name;
+    return name.toLowerCase();
+  }
+
+  private Long codeExpConvert(Long code) {
+    Long exp = 0L;
+    exp = commonCodeRepository.findExp(code);
+    return exp;
   }
 }
