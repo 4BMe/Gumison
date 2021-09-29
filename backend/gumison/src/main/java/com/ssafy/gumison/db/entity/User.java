@@ -44,24 +44,24 @@ public class User {
 
   private String profile;
 
-  @Column(nullable = false)
+  @NotNull
   private String oauthId;
 
-  @Column(nullable = false)
+  @NotNull
   private String oauthType;
 
   @OneToMany(mappedBy = "user")
   private List<Solution> solutionList = new ArrayList<>();
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("0")
   private Long accumulateExp;
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("0")
   private Integer accumulateVideo;
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("201")
   private Long tierCode;
 

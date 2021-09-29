@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Api(value = "사용자 관련 API")
 @RequestMapping("/api/users")
 @RestController
@@ -28,8 +30,6 @@ public class UserController {
 
   private final UserService userService;
   private final HttpSession httpSession;
-  private final Logger log = LoggerFactory.getLogger(UserController.class);
-
 
   @GetMapping("search/{keyword}/{pageNumber}")
   public ApiResponseDto<UserSearchRes> searchUsers(@PathVariable("keyword") String nickname,
@@ -46,6 +46,7 @@ public class UserController {
       @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<SessionUserDto> getCurrentUser() {
+    log.info("getCurrentUser!!!");
     SessionUserDto sessionUserDto = userService.getCurrentUser(httpSession);
     log.info("Get user profile - {}", sessionUserDto);
     return ResponseEntity.status(200).body(sessionUserDto);
