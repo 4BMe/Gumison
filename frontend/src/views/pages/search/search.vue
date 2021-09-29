@@ -4,7 +4,7 @@
       <h4 class="mb-0">거미손</h4>
     </div>
 
-    <div class="p-4 align-middle">
+    <div class="p-4" v-bind:class="[searchBar]">
       <div class="search-box chat-search-box">
         <div class="input-group bg-light input-group-lg rounded-lg">
           <b-dropdown
@@ -16,7 +16,7 @@
                 <i class="mdi mdi-chevron-down"></i>
               </template>
               <b-dropdown-item @click="selectSearchType('climbing', '클라이밍')">클라이밍</b-dropdown-item>
-              <b-dropdown-item @click="selectSearchType('user', '사용자')">사용자</b-dropdown-item>
+              <b-dropdown-item @click="selectSearchType('users', '사용자')">사용자</b-dropdown-item>
             </b-dropdown>
           <input
             type="text"
@@ -39,22 +39,36 @@
       </div>
       <!-- end search-box -->
     </div>
+
+    <UserList v-show="showUserList"
+       :userList = "list"
+       :word = "word" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { BASE_URL } from "@/constant/index"
+import UserList from "./userlist"
 
 /**
  * Setting tab component
  */
-export default {
+export default { 
+  components: {
+    UserList
+  },
   data() {
     return {
       typeName: "클라이밍",
       type:"climbing",
-      keyword: ""
+      keyword: "",
+      searchBar: "align-middle",
+      pageNumber: 0,
+      showUserList: false,
+      showClimbingList: "none",
+      list: [],
+      word: "",
     };
   },
   mounted() {},
@@ -62,18 +76,29 @@ export default {
     selectSearchType(type, typeName){
       this.type = type;
       this.typeName = typeName;
-      console.log(type);
     },
     searchKeyword(){
-      console.log(this.type + ": " + this.keyword);
+      if(!this.keyword){
+        this.keyword = " ";
+      }
       axios
-        .get(`${BASE_URL}/${this.type}/search/${this.keyword}/0`)
+        .get(`${BASE_URL}/${this.type}/search/${this.keyword}/${this.pageNumber}`)
         .then(({ data }) => {
-          console.log(data);
-          // TODO: 목록 창으로 data 전달
+          this.list = data.data.users;
+          this.searchBar = "";
+          this.word = this.keyword;
+          if(this.type == "users"){
+            this.showClimbingList = false;
+            this.showUserList = true;
+
+          }else{
+            this.showClimbingList = true;
+            this.showUserList = false;
+          }
+
         })
         .catch((err) => {
-          console.log(err);
+          console.log("에러: " + err);
         });
     }
 

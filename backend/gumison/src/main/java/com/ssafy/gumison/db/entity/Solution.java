@@ -3,6 +3,7 @@ package com.ssafy.gumison.db.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,13 +13,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
+
+import com.sun.istack.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Builder
@@ -26,7 +34,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@DynamicInsert
+@DynamicUpdate
 public class Solution {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "solution_id")
@@ -47,19 +59,19 @@ public class Solution {
   @OneToMany(mappedBy = "solution")
   private List<SolutionVideo> solutionVideoList = new ArrayList<>();
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("0")
   private Integer count;
 
-  @Column(nullable = false)
+  @NotNull
   @CreatedDate
   private LocalDateTime date;
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("false")
   private Boolean deleteYN;
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("0")
   private Integer accumulateReport;
 }

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
+import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,8 +47,10 @@ class RankProviderTest {
     final int START_OFFSET = 0;
     final int LIMIT = 10;
     //when
-    rankProvider.getUserRankByStartOffsetAndLimit(START_OFFSET, LIMIT);
-    //final
+    List<UserRankDto> list = rankProvider.getUserRankByStartOffsetAndLimit(START_OFFSET, LIMIT);
+    //then
+    assertNotNull(list);
+    list.forEach(Assertions::assertNotNull);
   }
 
 }

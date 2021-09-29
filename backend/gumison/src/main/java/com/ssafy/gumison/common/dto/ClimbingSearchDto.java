@@ -9,11 +9,14 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public class UserSearchDto {
-  
-  String nickname;
-  String profile;
-  String tier;
-  long solCnt;
-  
+public class ClimbingSearchDto {
+
+  private String climbingName;
+
+  private String address;
+
+  private String phoneNumber;
+
+  private String imgUrl;
+
 }
