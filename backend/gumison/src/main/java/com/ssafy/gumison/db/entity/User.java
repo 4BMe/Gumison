@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.gumison.security.oauth2.CustomOAuth2UserService;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.ColumnDefault;
@@ -51,6 +52,7 @@ public class User {
   private String oauthType;
 
   @OneToMany(mappedBy = "user")
+  @JsonIgnore
   private List<Solution> solutionList = new ArrayList<>();
 
   @Column(nullable = false)
