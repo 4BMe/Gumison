@@ -2,6 +2,7 @@ package com.ssafy.gumison.common.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,18 @@ class RankProviderTest {
     int returnSize = rankProvider.loadAllUserExpIntoRankZSet();
     //then
     assertEquals(SIZE, returnSize);
+  }
 
+  @Test
+  public void 사용자의_순위를_검색한다() {
+    //given
+    final String NICKNAME = "dummy1";
+    //when
+    UserRankDto userExpDto = rankProvider.getUserRankByNickname(NICKNAME);
+    final int SIZE = userRepositorySupport.findNicknamesAndExpAll().size();
+    //then
+    assertNotNull(userExpDto);
+    assertTrue(userExpDto.getRank() >= 0 && userExpDto.getRank() <= SIZE);
   }
 
 }
