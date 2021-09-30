@@ -29,8 +29,8 @@ spring:
         max-idle: 10
         min-idle: 2
     port: 6379
-    host: localhost
-    # host: localhost
+    host: 3.35.156.99
+    password: gumison
 
   security:
     oauth2:
