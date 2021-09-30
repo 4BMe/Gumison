@@ -48,10 +48,11 @@ public class UserServiceImpl implements UserService {
     return sessionUserDto;
   }
 
-  /*
-   유저 닉네임으로 UserSearcDto 반환
-   @param  nickname      사용자 닉네임
-   @return userSearchDto 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
+  /**
+   * 유저 닉네임으로 UserSearcDto 반환
+   *
+   * @param nickname 사용자 닉네임
+   * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
    */
   @Override
   public UserSearchDto getUserSearchDtoByNickname(String nickname) {
@@ -60,11 +61,13 @@ public class UserServiceImpl implements UserService {
     return getUserSearchDtoByUser(user);
   }
 
-  /*
-  유저 정보로 UserSearchDto 반환
-  @param  user          유저 정보
-  @return userSearchDto 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
- */
+  /**
+   * 유저 정보로 UserSearchDto 반환
+   *
+   * @param user 유저 정보
+   * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
+   * @throws RuntimeException 해당 유저의 코드티어에 저장된 값이 CommonCode에 없을 경우
+   */
   private UserSearchDto getUserSearchDtoByUser(User user) {
     CommonCode code = commonCodeRepository.findById(user.getTierCode())
         .orElseThrow(RuntimeException::new);

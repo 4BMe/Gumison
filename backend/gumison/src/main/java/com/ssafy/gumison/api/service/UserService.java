@@ -16,6 +16,12 @@ public interface UserService {
 
   SessionUserDto getCurrentUser(HttpSession httpSession);
 
+  /**
+   * 유저 닉네임으로 UserSearcDto 반환
+   *
+   * @param nickname 사용자 닉네임
+   * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
+   */
   UserSearchDto getUserSearchDtoByNickname(String nickname);
 
 

@@ -6,6 +6,7 @@ import com.ssafy.gumison.api.service.RankService;
 import com.ssafy.gumison.api.service.UserService;
 import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.common.dto.UserSearchDto;
+import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -51,10 +52,17 @@ public class RankController {
   public ApiResponseDto<UserRankListRes> getUserRankListByPage(@PathVariable("page") Integer page) {
     List<UserRankDto> userRankDtoList = rankService.getUserRankByPage(page);
 
-    userRankDtoList.forEach(userRankDto ->{
-          userRankDto
-              .setUserSearchDto(userService.getUserSearchDtoByNickname(userRankDto.getNickname()));
-        });
+    userRankDtoList.forEach(userRankDto -> {
+      UserSearchDto userSearchDto;
+      try {
+        userSearchDto = userService.getUserSearchDtoByNickname(userRankDto.getNickname());
+      } catch (ResourceNotFoundException e) {
+        //탈퇴, 닉네임 변경 등의 이유로 랭킹에는 존재하나 DB에 없는 사용자 랭킹에서 삭제
+        rankService.deleteUserRankByNickname(userRankDto.getNickname());
+        return;
+      }
+      userRankDto.setUserSearchDto(userSearchDto);
+    });
 
     Long lastPageNumber = rankService.getMaxPageCount();
     return ApiResponseDto.success(UserRankListRes.of(userRankDtoList, lastPageNumber));
