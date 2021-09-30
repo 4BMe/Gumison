@@ -32,25 +32,9 @@ public class UserServiceImpl implements UserService {
 
     UserSearchRes userSearchRes = new UserSearchRes();
     for (User user : userList) {
-      CommonCode code = commonCodeRepository.findById(user.getTierCode())
-          .orElseThrow(RuntimeException::new);
-      
-      long solCnt = 0;
-      
-      for (Solution solution : user.getSolutionList()) {
-        solCnt += solution.getCount();
-      }
-
-      UserSearchDto dto = UserSearchDto.builder()
-                          .nickname(user.getNickname())
-                          .profile(user.getProfile())
-                          .tier(code.getName().toLowerCase())
-                          .solCnt(solCnt)
-                          .build();
-      
-      userSearchRes.getUsers().add(dto);
+      userSearchRes.getUsers().add(getUserSearchDtoByUser(user));
     }
-    
+
     log.info("Set user search response: {}", userSearchRes);
 
     return userSearchRes;
@@ -63,4 +47,32 @@ public class UserServiceImpl implements UserService {
     return sessionUserDto;
   }
 
+  /*
+  유저 정보로 UserSearchRequest 반환
+  @param  user          유저 정보
+  @return userSearchDto 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
+ */
+  @Override
+  public UserSearchDto getUserSearchDtoByUser(User user) {
+    CommonCode code = commonCodeRepository.findById(user.getTierCode())
+        .orElseThrow(RuntimeException::new);
+
+    long solvedCount = 0;
+
+    for (Solution solution : user.getSolutionList()) {
+      solvedCount += solution.getCount();
+    }
+
+    return UserSearchDto.builder()
+        .nickname(user.getNickname())
+        .profile(user.getProfile())
+        .tier(code.getName().toLowerCase())
+        .solCnt(solvedCount)
+        .build();
+  }
+
 }
+
+
+
+

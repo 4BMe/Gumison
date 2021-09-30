@@ -2,6 +2,7 @@ package com.ssafy.gumison.redis;
 
 import com.ssafy.gumison.common.dto.UserExpDto;
 import com.ssafy.gumison.common.dto.UserRankDto;
+import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.common.enums.RedisKey;
 import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
@@ -16,7 +17,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-//@Component
+@Component
 @Slf4j
 public class RankProviderImpl implements RankProvider {
 
@@ -76,8 +77,9 @@ public class RankProviderImpl implements RankProvider {
     Optional<Long> userRankOptional = Optional
         .ofNullable(zSetOperations.rank(KEY_PREFIX + RedisKey.RANK, nickname));
     log.info("load user rank, nickname - {}, rank - {}", nickname, userRankOptional.orElse(-1L));
-    return UserRankDto.of(nickname, userRankOptional.orElseThrow(
-        () -> new ResourceNotFoundException("nickname", nickname, null)));
+    return UserRankDto
+        .of(UserSearchDto.builder().nickname(nickname).build(), userRankOptional.orElseThrow(
+            () -> new ResourceNotFoundException("nickname", nickname, null)));
   }
 
   /*
@@ -99,7 +101,8 @@ public class RankProviderImpl implements RankProvider {
     List<UserRankDto> userRankDtoList = new ArrayList<>(limit);
     AtomicLong rank = new AtomicLong(startOffset + 1);
     setOptional.get()
-        .forEach(v -> userRankDtoList.add(UserRankDto.of((String) v, rank.getAndIncrement())));
+        .forEach(v -> userRankDtoList.add(UserRankDto
+            .of(UserSearchDto.builder().nickname((String) v).build(), rank.getAndIncrement())));
 
     return userRankDtoList;
   }
