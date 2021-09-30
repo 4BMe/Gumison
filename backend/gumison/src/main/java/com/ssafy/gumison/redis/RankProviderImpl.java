@@ -93,7 +93,7 @@ public class RankProviderImpl implements RankProvider {
     }
 
     List<UserRankDto> userRankDtoList = new ArrayList<>(limit);
-    AtomicLong rank = new AtomicLong(startOffset);
+    AtomicLong rank = new AtomicLong(startOffset + 1);
     setOptional.get()
         .forEach(v -> userRankDtoList.add(UserRankDto.of((String) v, rank.getAndIncrement())));
 

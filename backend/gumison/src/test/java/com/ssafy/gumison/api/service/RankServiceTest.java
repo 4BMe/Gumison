@@ -44,7 +44,7 @@ class RankServiceTest {
     //then
     assertTrue(userRankDtoList.size() <= MAX_USER_PER_PAGE);
 
-    AtomicInteger index = new AtomicInteger();
+    AtomicInteger index = new AtomicInteger(1);
     userRankDtoList.forEach(userRankDto -> {
       assertNotNull(userRankDto.getRank());
       assertNotNull(userRankDto.getNickname());
