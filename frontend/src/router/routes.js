@@ -8,7 +8,7 @@ export default [{
     {
         path: '/userlist/:keyword',
         name: 'userlist',
-        component: () => import('../views/pages/search/userList'),
+        component: () => import('../views/pages/search/userlist'),
         props: true,
     },
     {
@@ -22,18 +22,29 @@ export default [{
         name: 'climbing',
         component: () => import('../views/pages/climbing/climbing'),
         props: true,
-        children:[
-            {
-                path: '',
-                name: 'level',
-                component: () => import('../views/pages/climbing/level'),
-            },
+        // children:[
+        //     {
+        //         path: '',
+        //         name: 'level',
+        //         component: () => import('../views/pages/climbing/level'),
+        //     },
 
-        ]
+        // ]
     },
     {
         path: '/profile',
         name: 'profile',
+    },
+    {
+        path: '/level-record',
+        name: 'level-record',
+        component: () => import('../views/pages/level-record/level-record'),
+        props: true
+    },
+    {
+        path: '/temp',
+        name: 'temp',
+        component: () => import('../views/pages/level-record/temp'),
     },
     {
         path: '/login',
@@ -119,5 +130,5 @@ export default [{
         path: '/lock-screen',
         name: 'lock-screen',
         component: () => import('../views/pages/account/lock-screen'),
-    }
+    },
 ]
