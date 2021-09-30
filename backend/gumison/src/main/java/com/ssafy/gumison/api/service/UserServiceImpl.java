@@ -1,5 +1,6 @@
 package com.ssafy.gumison.api.service;
 
+import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -48,12 +49,23 @@ public class UserServiceImpl implements UserService {
   }
 
   /*
-  유저 정보로 UserSearchRequest 반환
+   유저 닉네임으로 UserSearcDto 반환
+   @param  nickname      사용자 닉네임
+   @return userSearchDto 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
+   */
+  @Override
+  public UserSearchDto getUserSearchDtoByNickname(String nickname) {
+    User user = userRepository.findByNickname(nickname)
+        .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname"));
+    return getUserSearchDtoByUser(user);
+  }
+
+  /*
+  유저 정보로 UserSearchDto 반환
   @param  user          유저 정보
   @return userSearchDto 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
  */
-  @Override
-  public UserSearchDto getUserSearchDtoByUser(User user) {
+  private UserSearchDto getUserSearchDtoByUser(User user) {
     CommonCode code = commonCodeRepository.findById(user.getTierCode())
         .orElseThrow(RuntimeException::new);
 

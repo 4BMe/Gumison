@@ -3,7 +3,9 @@ package com.ssafy.gumison.api.controller;
 import com.ssafy.gumison.api.response.UserRankListRes;
 import com.ssafy.gumison.api.response.UserRankRes;
 import com.ssafy.gumison.api.service.RankService;
+import com.ssafy.gumison.api.service.UserService;
 import com.ssafy.gumison.common.dto.UserRankDto;
+import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -24,6 +26,8 @@ public class RankController {
 
   private final RankService rankService;
 
+  private final UserService userService;
+
   @ApiOperation(value = "닉네임으로 랭크 불러오기", notes = "닉네임으로 순위를 불러옵니다.")
   @ApiResponses({
       @ApiResponse(code = 200, message = "성공"),
@@ -33,6 +37,7 @@ public class RankController {
   @GetMapping("/detail/{nickname}")
   public ApiResponseDto<UserRankRes> getUserRank(@PathVariable("nickname") String nickname) {
     UserRankDto userRankDto = rankService.getUserRankByNickname(nickname);
+    userRankDto.setUserSearchDto(userService.getUserSearchDtoByNickname(nickname));
     return ApiResponseDto.success(UserRankRes.of(userRankDto));
   }
 
@@ -45,6 +50,12 @@ public class RankController {
   @GetMapping("/{page}")
   public ApiResponseDto<UserRankListRes> getUserRankListByPage(@PathVariable("page") Integer page) {
     List<UserRankDto> userRankDtoList = rankService.getUserRankByPage(page);
+
+    userRankDtoList.forEach(userRankDto ->{
+          userRankDto
+              .setUserSearchDto(userService.getUserSearchDtoByNickname(userRankDto.getNickname()));
+        });
+
     Long lastPageNumber = rankService.getMaxPageCount();
     return ApiResponseDto.success(UserRankListRes.of(userRankDtoList, lastPageNumber));
   }

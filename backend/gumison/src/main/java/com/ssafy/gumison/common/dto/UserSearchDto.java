@@ -13,9 +13,9 @@ import lombok.ToString;
 @ToString
 public class UserSearchDto {
 
-  private String nickname;
-  private String profile;
-  private String tier;
-  private long solCnt;
+  protected String nickname;
+  protected String profile;
+  protected String tier;
+  protected long solCnt;
 
 }

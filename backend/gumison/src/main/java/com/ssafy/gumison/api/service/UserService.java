@@ -16,5 +16,7 @@ public interface UserService {
 
   SessionUserDto getCurrentUser(HttpSession httpSession);
 
-  UserSearchDto getUserSearchDtoByUser(User user);
+  UserSearchDto getUserSearchDtoByNickname(String nickname);
+
+
 }
