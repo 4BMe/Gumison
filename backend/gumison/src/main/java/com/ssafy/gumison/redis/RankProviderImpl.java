@@ -87,8 +87,8 @@ public class RankProviderImpl implements RankProvider {
         .ofNullable(zSetOperations.rank(KEY_PREFIX + RedisKey.RANK, nickname));
     log.info("load user rank, nickname - {}, rank - {}", nickname, userRankOptional.orElse(-1L));
     return UserRankDto
-        .of(UserSearchDto.builder().nickname(nickname).build(), userRankOptional.orElseThrow(
-            () -> new ResourceNotFoundException("nickname", nickname, null)));
+        .of(nickname, userRankOptional
+            .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname")));
   }
 
   /**
@@ -112,8 +112,7 @@ public class RankProviderImpl implements RankProvider {
     List<UserRankDto> userRankDtoList = new ArrayList<>(limit);
     AtomicLong rank = new AtomicLong(startOffset + 1);
     setOptional.get()
-        .forEach(v -> userRankDtoList.add(UserRankDto
-            .of(UserSearchDto.builder().nickname((String) v).build(), rank.getAndIncrement())));
+        .forEach(v -> userRankDtoList.add(UserRankDto.of((String) v, rank.getAndIncrement())));
 
     return userRankDtoList;
   }

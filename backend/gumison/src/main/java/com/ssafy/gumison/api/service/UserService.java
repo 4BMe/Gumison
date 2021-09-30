@@ -24,5 +24,12 @@ public interface UserService {
    */
   UserSearchDto getUserSearchDtoByNickname(String nickname);
 
+  /**
+   * 키워드로 검색한 유저의 전체 수를 반환
+   *
+   * @param keyword 검색 키워드
+   * @return 해당 키워드를 포함한 유저의 수 카운트
+   */
+  Long getUserCountByKeyword(String keyword);
 
 }
