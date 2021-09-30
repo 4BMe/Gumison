@@ -19,7 +19,7 @@ public class SolutionRes {
     res.tier = tier;
     res.solutionDto = SolutionDto.builder().climbingName(solution.getClimbing().getClimbingName())
         .level(levelName).tier(tierName).solutionVideoList(solution.getSolutionVideoList())
-        .count(solution.getCount()).date(solution.getDate().toLocalDate()).build();
+        .count(solution.getCount()).date(solution.getDate()).build();
     return res;
   }
 }

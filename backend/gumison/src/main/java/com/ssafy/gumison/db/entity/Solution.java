@@ -1,6 +1,6 @@
 package com.ssafy.gumison.db.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class Solution {
 
   @NotNull
   @CreatedDate
-  private LocalDateTime date;
+  private LocalDate date;
 
   @NotNull
   @ColumnDefault("false")

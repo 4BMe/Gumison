@@ -2,9 +2,12 @@ package com.ssafy.gumison.config;
 
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 import com.ssafy.gumison.security.oauth2.CustomOAuth2UserService;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,6 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+        .cors()
+        .and()
         .csrf().disable()
         .headers().frameOptions().disable() // h2-console 화면을 사용하기 위해 해당 옵션 disable
         .and()
@@ -36,4 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .userService(customOAuth2UserService); // 리소스 서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능 명시
 
   }
+  
+//swagger 관련 리소스 시큐리티 필터 제거
+ @Override
+ public void configure(WebSecurity web) throws Exception {
+   web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
+       "/webjars/**", "/swagger/**", "/swagger-ui/**");
+ }
 }

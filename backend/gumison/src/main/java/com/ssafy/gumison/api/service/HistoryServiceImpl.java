@@ -72,7 +72,7 @@ public class HistoryServiceImpl implements HistoryService {
       list.add(SolutionListItem.builder().tier(codeNameConvert(solution.getLevelTier().getTierCode()))
           .climbingName(solution.getClimbing().getClimbingName())
           .level(codeNameConvert(solution.getLevelTier().getLevelCode())).cnt(solution.getCount())
-          .date(solution.getDate().toLocalDate()).build());
+          .date(solution.getDate()).build());
     });
     return list;
   }
