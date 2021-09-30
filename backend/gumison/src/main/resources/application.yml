@@ -39,7 +39,18 @@ spring:
           google:
             client-id: 728431963124-aa22v5qq2de7vik5lhj75rkekgge2sh2.apps.googleusercontent.com
             client-secret: _o70Bb9pPLVOZFanRBU-lfFV
+            redirectUri: "http://localhost:8888/oauth2/callback/google"
             scope: profile, email
+
+
+app:
+  auth:
+    tokenSecret: 7F79A5C4F6869E43C17FFBEADAF26
+    tokenExpirationMsec: 864000000
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:8081/oauth2/redirect
+
 
 logging:
   level:
