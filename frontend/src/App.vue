@@ -68,7 +68,7 @@
               v-b-tooltip.hover
             >
               <router-link
-                to="profile"
+                to="/profile"
                 class="nav-link"
                 id="pills-user-tab"
                 v-on:click.native="activetab = 4"
