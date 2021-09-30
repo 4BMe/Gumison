@@ -20,80 +20,80 @@ export default {
                 {
                     id: 19,
                     level: '흰색',
-                    tier: '브론즈4',
+                    tier: 'Bronze4',
                 },
                 {
                     id: 20,
                     level: '노랑',
-                    tier: '브론즈2',
+                    tier: 'Bronze2',
                 },
                 {
                     id: 21,
                     level: '주황',
-                    tier: '실버4',
+                    tier: 'Silver4',
                 },
                 {
                     id: 22,
                     level: '초록',
-                    tier: '실버1',
+                    tier: 'Silver1',
                 },
                 {
                     id: 23,
                     level: '파랑',
-                    tier: '골드3',
+                    tier: 'Gold3',
                 },
                 {
                     id: 24,
                     level: '빨강',
-                    tier: '플레티넘4',
+                    tier: 'Platinum4',
                 },
                 {
                     id: 25,
                     level: '보라',
-                    tier: '플레티넘1',
+                    tier: 'Platinum1',
                 },
                 {
                     id: 26,
                     level: '회색',
-                    tier: '다이아2',
+                    tier: 'Diamond2',
                 },
                 {
                     id: 27,
                     level: '갈색',
-                    tier: '마스터4',
+                    tier: 'Master4',
                 },
                 {
                     id: 28,
                     level: '검정',
-                    tier: '마스터1',
+                    tier: 'Master1',
                 },
             ],
             levelTiersUpdate: [
                 {
                     id: 22,
                     level: '초록',
-                    tier: '실버1',
+                    tier: 'Silver1',
                     solutionCount: 3,
                     solutionDate: '2021-09-15'
                 },
                 {
                     id: 23,
                     level: '파랑',
-                    tier: '골드3',
+                    tier: 'Gold3',
                     solutionCount: 5,
                     solutionDate: '2021-09-15'
                 },
                 {
                     id: 24,
                     level: '빨강',
-                    tier: '플레티넘4',
+                    tier: 'Platinum4',
                     solutionCount: 8,
                     solutionDate: '2021-09-15'
                 },
                 {
                     id: 25,
                     level: '보라',
-                    tier: '플레티넘1',
+                    tier: 'Platinum1',
                     solutionCount: 1,
                     solutionDate: '2021-09-15'
                 },

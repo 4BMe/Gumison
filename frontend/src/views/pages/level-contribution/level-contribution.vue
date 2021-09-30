@@ -55,7 +55,7 @@ export default {
         },
         submitClick() {
             console.log(this.tiers);
-        }
+        },
     },
     mounted(){
         for (var i = 0; i < this.levelTiers.length; i++) {
