@@ -172,6 +172,7 @@ export default {
         break;
       case 'temp':
       case 'level-record':
+      case 'level-contribution':
         this.activetab = 3;
         break;
       case 'profile':

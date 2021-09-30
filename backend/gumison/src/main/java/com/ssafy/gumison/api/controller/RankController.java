@@ -8,6 +8,7 @@ import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import com.ssafy.gumison.common.response.ApiResponseDto;
+import com.ssafy.gumison.redis.UserRankSearchKeywordRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -36,6 +37,7 @@ public class RankController {
 
   private final RankService rankService;
   private final UserService userService;
+  private final UserRankSearchKeywordRepository userRankSearchKeywordRepository;
 
   @ApiOperation(value = "닉네임으로 랭크 불러오기", notes = "닉네임으로 순위를 불러옵니다.")
   @ApiResponses({
@@ -93,7 +95,14 @@ public class RankController {
   public ApiResponseDto<UserRankListRes> getUserRankListByKeywordAndPage(
       @PathVariable("keyword") String keyword, @PathVariable("page") Integer page) {
 
-    Long lastPageNumber = userService.getUserCountByKeyword(keyword) / rankService.getUserSizePerPage() + 1;
+    Long lastPageNumber;
+
+    try {
+      lastPageNumber = userRankSearchKeywordRepository.getUserSearchKeywordCount(keyword);
+    } catch (RuntimeException e) {
+      lastPageNumber = userService.getUserCountByKeyword(keyword) / rankService.getUserSizePerPage() + 1;
+      userRankSearchKeywordRepository.setUserSearchKeywordCount(keyword, lastPageNumber);
+    }
 
     List<UserSearchDto> userSearchDtoList = userService.getUserList(keyword, page - 1).getUsers();
 

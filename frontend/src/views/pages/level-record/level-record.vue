@@ -7,7 +7,7 @@
               <i class="ri-arrow-left-line mr-2"></i>
             </a>
             <h5 class="font-size-15 m-0">
-              <i class="ri-user-2-line mr-2 align-middle d-inline-block"></i>
+              <i class="ri-user-2-line mr-2 mb-1 align-middle d-inline-block"></i>
                 레벨 기록하기
             </h5>
           </div>
@@ -16,8 +16,8 @@
             <div class="mb-3">
               <input type="date" id="input-date" v-model="solutionDate" class="form-control"/>
             </div>
-            <div v-for="(level, index) in levels" :key="index">
-              <LevelRecordLine :level=levels[index] :color=colors[index] :index=index class="mb-3 ml-3" v-model.number="solutionCounts[index]" />
+            <div v-for="(levelTier, index) in levelTiers" :key="index">
+              <LevelRecordLine :level=levelTier.level :color=colors[index] :index=index :solutionCount="levelTier.solutionCount" class="mb-3 ml-3" v-model.number="recordSolutionCounts[index]" />
             </div>
           </b-card-body>
       </b-card>
@@ -33,34 +33,27 @@ import LevelRecordLine from './components/level-record-line';
 import { submit } from '@/api/level-record.js';
 import Colors from '@/constant/colors.js';
 
-var today = new Date();
+var today = new Date().toISOString().slice(0,10);
 
 export default {
   props: {
-    levelTierIds: [],
-    levels: [],
-    solutionDate: {
-      default: today.toISOString().slice(0,10),
-    },
-    solutionCounts: {
-      default(){
-        return [];
-      },
+    userId:{
+      default: 0
     },
     climbingId: {
       default: 0
     },
-    userId:{
-      default: 0
-    },
+    levelTiers: {},
   },
   components: {
       LevelRecordLine,
   },
   data(){
       return {
-          solutionVideos: '',
-          colors: [],
+        recordSolutionCounts: [],
+        solutionVideos: '',
+        solutionDate: today,
+        colors: [],
       }
   },
   methods: {
@@ -73,13 +66,13 @@ export default {
       async submitClick() {
           let recordData = [];
           for (var i = 0; i < this.colors.length; i++) {
-            if(this.solutionCounts[i] > 0)
+            if(this.recordSolutionCounts[i] > 0)
             recordData.push({
-              count: this.solutionCounts[i],
-              date: this.solutionDate,
+              userId: this.userId,
               climbingId: this.climbingId,
-              levelTierId: this.levelTierIds[i],
-              userId: this.userId
+              levelTierId: this.levelTiers[i].id,
+              count: this.recordSolutionCounts[i],
+              date: this.solutionDate,
             })
           }
           for (i = 0; i < recordData.length; i++) {
@@ -96,8 +89,11 @@ export default {
       },
   },
   mounted() {
-    for (var i = 0; i < this.levels.length; i++) {
-      this.colors.push(Colors.colors[this.levels[i]]);
+    for (var i = 0; i < this.levelTiers.length; i++) {
+      this.colors.push(Colors.colors[this.levelTiers[i].level]);
+      if(this.levelTiers[i].solutionDate) {
+        this.solutionDate = this.levelTiers[i].solutionDate;
+      }
     }
   },
 }
