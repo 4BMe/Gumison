@@ -8,7 +8,7 @@ export default [{
     {
         path: '/userlist/:keyword',
         name: 'userlist',
-        component: () => import('../views/pages/search/userList'),
+        component: () => import('../views/pages/search/userlist'),
         props: true,
     },
     {
