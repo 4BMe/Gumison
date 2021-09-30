@@ -1,4 +1,4 @@
-package com.ssafy.gumison.common.util;
+package com.ssafy.gumison.redis;
 
 import com.ssafy.gumison.common.dto.UserExpDto;
 import com.ssafy.gumison.common.dto.UserRankDto;
@@ -26,7 +26,7 @@ public class RankProviderImpl implements RankProvider {
 
   private final ZSetOperations<String, Object> zSetOperations;
 
-  private int userCount;
+  private Long userCount;
 
   public RankProviderImpl(UserRepositorySupport userRepositorySupport,
       RedisTemplate<String, Object> redisTemplate) {
@@ -39,7 +39,8 @@ public class RankProviderImpl implements RankProvider {
       모든 유저의 닉네임과 경험치를 ZSet에 입력
       @returns : 올라간 유저의 수
      */
-  public int loadAllUserExpIntoRankZSet() {
+  @Override
+  public Long loadAllUserExpIntoRankZSet() {
 
     List<UserExpDto> userExpDtoList = userRepositorySupport.findNicknamesAndExpAll();
 
@@ -58,7 +59,7 @@ public class RankProviderImpl implements RankProvider {
           .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, MAX_EXP - accumulateExp);
     });
 
-    this.userCount = userExpDtoList.size();
+    this.userCount = (long)userExpDtoList.size();
     return userCount;
   }
 
@@ -67,6 +68,7 @@ public class RankProviderImpl implements RankProvider {
      @params: nickname
      @returns: UserRankDto - 유저 닉네임, 순위
    */
+  @Override
   public UserRankDto getUserRankByNickname(String nickname) {
     Optional<Long> userRankOptional = Optional
         .ofNullable(zSetOperations.rank(KEY_PREFIX + RedisKey.RANK, nickname));
@@ -80,6 +82,7 @@ public class RankProviderImpl implements RankProvider {
              limit - 가져올 사용자 수
     @returns: userRankDtoList - 유저 닉네임, 랭크 순위 리스트 (size() == limit)
    */
+  @Override
   public List<UserRankDto> getUserRankByStartOffsetAndLimit(int startOffset, int limit) {
     int endOffset = startOffset + limit;
     Optional<Set<Object>> setOptional = Optional.ofNullable(zSetOperations
@@ -95,6 +98,12 @@ public class RankProviderImpl implements RankProvider {
         .forEach(v -> userRankDtoList.add(UserRankDto.of((String) v, rank.getAndIncrement())));
 
     return userRankDtoList;
+  }
+
+  @Override
+  public Long getUserCount() {
+    this.userCount = zSetOperations.zCard(KEY_PREFIX + RedisKey.RANK);
+    return userCount;
   }
 
   private String paddingNicknameWithAccumulateVideo(String nickname, Integer accumulateVideo) {

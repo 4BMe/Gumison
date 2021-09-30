@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
+import com.ssafy.gumison.redis.RankProvider;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
