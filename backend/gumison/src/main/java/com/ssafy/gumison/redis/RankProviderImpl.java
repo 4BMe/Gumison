@@ -3,6 +3,7 @@ package com.ssafy.gumison.redis;
 import com.ssafy.gumison.common.dto.UserExpDto;
 import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.common.enums.RedisKey;
+import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Slf4j
@@ -40,6 +42,7 @@ public class RankProviderImpl implements RankProvider {
       @returns : 올라간 유저의 수
      */
   @Override
+  @Transactional
   public Long loadAllUserExpIntoRankZSet() {
 
     List<UserExpDto> userExpDtoList = userRepositorySupport.findNicknamesAndExpAll();
@@ -59,7 +62,7 @@ public class RankProviderImpl implements RankProvider {
           .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, MAX_EXP - accumulateExp);
     });
 
-    this.userCount = (long)userExpDtoList.size();
+    this.userCount = (long) userExpDtoList.size();
     return userCount;
   }
 
@@ -73,7 +76,8 @@ public class RankProviderImpl implements RankProvider {
     Optional<Long> userRankOptional = Optional
         .ofNullable(zSetOperations.rank(KEY_PREFIX + RedisKey.RANK, nickname));
     log.info("load user rank, nickname - {}, rank - {}", nickname, userRankOptional.orElse(-1L));
-    return UserRankDto.of(nickname, userRankOptional.orElseThrow(RuntimeException::new));
+    return UserRankDto.of(nickname, userRankOptional.orElseThrow(
+        () -> new ResourceNotFoundException("nickname", nickname, null)));
   }
 
   /*

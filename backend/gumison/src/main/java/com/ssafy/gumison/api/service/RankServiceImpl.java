@@ -5,7 +5,6 @@ import com.ssafy.gumison.redis.RankProvider;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.MAX;
 import org.springframework.stereotype.Service;
 
 @Service("RankService")
@@ -24,12 +23,15 @@ public class RankServiceImpl implements RankService {
 
   @Override
   public List<UserRankDto> getUserRankByPage(int page) {
+    if (page > getMaxPageCount() || page <= 0) {
+      throw new RuntimeException(String.format("page number %s is invalid", page));
+    }
     int startOffset = (page - 1) / MAX_USER_PER_PAGE;
     return rankProvider.getUserRankByStartOffsetAndLimit(startOffset, MAX_USER_PER_PAGE);
   }
 
   @Override
   public Long getMaxPageCount() {
-    return rankProvider.getUserCount() / (long)MAX_USER_PER_PAGE + 1;
+    return rankProvider.getUserCount() / (long) MAX_USER_PER_PAGE + 1;
   }
 }

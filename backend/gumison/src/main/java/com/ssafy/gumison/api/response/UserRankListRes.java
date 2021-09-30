@@ -12,11 +12,14 @@ public class UserRankListRes {
 
   List<UserRankDto> userRankList;
 
-  private UserRankListRes(List<UserRankDto> userRankDtoList) {
+  Long lastPageNumber;
+
+  private UserRankListRes(List<UserRankDto> userRankDtoList, Long lastPageNumber) {
     this.userRankList = userRankDtoList;
+    this.lastPageNumber = lastPageNumber;
   }
 
-  public static UserRankListRes of(List<UserRankDto> userRankDtoList) {
-    return new UserRankListRes(userRankDtoList);
+  public static UserRankListRes of(List<UserRankDto> userRankDtoList, Long lastPageNumber) {
+    return new UserRankListRes(userRankDtoList, lastPageNumber);
   }
 }
