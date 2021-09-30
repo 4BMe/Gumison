@@ -43,7 +43,7 @@ public class RankServiceImpl implements RankService {
   @Override
   public List<UserRankDto> getUserRankByPage(int page) {
     if (page > getMaxPageCount() || page <= 0) {
-      throw new RuntimeException(String.format("page number %s is invalid", page));
+      throw new IllegalArgumentException(String.format("page number %s is invalid", page));
     }
     int startOffset = (page - 1) / MAX_USER_PER_PAGE;
     return rankProvider.getUserRankByStartOffsetAndLimit(startOffset, MAX_USER_PER_PAGE);
@@ -69,5 +69,15 @@ public class RankServiceImpl implements RankService {
   public boolean deleteUserRankByNickname(String nickname) {
 
     return rankProvider.deleteUserByNickname(nickname);
+  }
+
+  /**
+   * 한 페이지 당 몇 명의 사용자를 출력할 것인지 반환
+   *
+   * @return 한 페이지에 가져올 사용자 수
+   */
+  @Override
+  public Integer getUserSizePerPage() {
+    return this.MAX_USER_PER_PAGE;
   }
 }

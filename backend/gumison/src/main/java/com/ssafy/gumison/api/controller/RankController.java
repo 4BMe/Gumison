@@ -21,14 +21,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 유저 경험치 순위 API
+ *
+ * @author cherrytomato1
+ * @version 1.1 키워드 검색
+ */
+
+@RequiredArgsConstructor
 @Slf4j
 @RestController
 @RequestMapping("/api/rank")
-@RequiredArgsConstructor
 public class RankController {
 
   private final RankService rankService;
-
   private final UserService userService;
 
   @ApiOperation(value = "닉네임으로 랭크 불러오기", notes = "닉네임으로 순위를 불러옵니다.")
@@ -87,7 +93,9 @@ public class RankController {
   public ApiResponseDto<UserRankListRes> getUserRankListByKeywordAndPage(
       @PathVariable("keyword") String keyword, @PathVariable("page") Integer page) {
 
-    List<UserSearchDto> userSearchDtoList = userService.getUserList(keyword, page).getUsers();
+    Long lastPageNumber = userService.getUserCountByKeyword(keyword) / rankService.getUserSizePerPage() + 1;
+
+    List<UserSearchDto> userSearchDtoList = userService.getUserList(keyword, page - 1).getUsers();
 
     List<UserRankDto> userRankDtoList = new ArrayList<>(userSearchDtoList.size());
     userSearchDtoList.forEach(userSearchDto -> {
@@ -95,8 +103,6 @@ public class RankController {
       userRankDtoList.add(UserRankDto.of(userSearchDto, rank));
     });
 
-
-
-    return ApiResponseDto.success(null);
+    return ApiResponseDto.success(UserRankListRes.of(userRankDtoList, lastPageNumber));
   }
 }

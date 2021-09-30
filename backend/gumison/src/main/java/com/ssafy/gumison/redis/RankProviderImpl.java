@@ -88,7 +88,7 @@ public class RankProviderImpl implements RankProvider {
     log.info("load user rank, nickname - {}, rank - {}", nickname, userRankOptional.orElse(-1L));
     return UserRankDto
         .of(nickname, userRankOptional
-            .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname")));
+            .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname")) + 1);
   }
 
   /**

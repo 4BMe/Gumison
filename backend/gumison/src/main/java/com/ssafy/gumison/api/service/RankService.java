@@ -41,4 +41,10 @@ public interface RankService {
    * @return 삭제 여부
    */
   boolean deleteUserRankByNickname(String nickname);
+
+  /**
+   * 한 페이지 당 몇 명의 사용자를 출력할 것인지 반환
+   * @return 한 페이지에 가져올 사용자 수
+   */
+  Integer getUserSizePerPage();
 }
