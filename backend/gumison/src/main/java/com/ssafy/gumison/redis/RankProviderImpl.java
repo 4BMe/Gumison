@@ -16,7 +16,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-//@Component
+@Component
 @Slf4j
 public class RankProviderImpl implements RankProvider {
 
