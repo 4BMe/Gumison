@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <router-view />
-    <div class="side-menu flex-lg-column mr-lg-1">
+    <div class="layout-wrapper d-lg-flex">
+      <div class="side-menu flex-lg-column mr-lg-1">
         <!-- LOGO -->
         <div class="navbar-brand-box">
           <router-link to="/" tag="a" class="logo logo-dark">
@@ -53,7 +53,7 @@
               v-b-tooltip.hover
             >
               <router-link
-                to="profile"
+                to="/profile"
                 class="nav-link"
                 id="pills-user-tab"
                 data-toggle="pill"
@@ -138,6 +138,9 @@
         </div>
         <!-- Side menu user -->
       </div>
+      
+      <router-view class="mr-lg-1 flex-grow-1"/>
+    </div>
   </div>
 </template>
 
@@ -150,3 +153,7 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+</style>
