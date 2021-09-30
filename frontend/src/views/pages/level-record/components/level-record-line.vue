@@ -20,12 +20,13 @@ export default {
     },
     methods: {
         emitEvent() {
-            console.log("CHILD SENT !!! : " + this.solutionNum)
             this.$emit('input', this.solutionNum);
         }
     },
     mounted() {
-        document.getElementById('color-'+this.index).style="border: 1px solid; background-color: " + this.color;
+        this.$nextTick(function (){
+            document.getElementById('color-'+this.index).style="border: 1px solid; background-color: " + this.color;
+        })
     }
 }
 </script>

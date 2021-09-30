@@ -31,6 +31,7 @@
 <script>
 import LevelRecordLine from './components/level-record-line';
 import { submit } from '@/api/level-record.js';
+import Colors from '@/constant/colors.js';
 
 var today = new Date();
 
@@ -38,7 +39,6 @@ export default {
   props: {
     levelTierIds: [],
     levels: [],
-    colors: [],
     solutionDate: {
       default: today.toISOString().slice(0,10),
     },
@@ -59,11 +59,8 @@ export default {
   },
   data(){
       return {
-          // colors: ['red', 'blue', 'green'],
-          // levels: ['빨강', '파랑', '초록'],
           solutionVideos: '',
-          // solutionDate: '',
-          // solutionCounts: [],
+          colors: [],
       }
   },
   methods: {
@@ -99,18 +96,9 @@ export default {
       },
   },
   mounted() {
-    // this.solutionDate = today.toISOString().slice(0,10);
-    // for (var i = 0; i < this.levelTierIds.length; i++) {
-    //   this.solutionCounts.push(0);
-    // }
-  },
-  watch: {
-    solutionCounts: function(){
-      console.log(this.solutionCounts);
-    },
-    solutionDate: function(){
-      console.log('solutionDate is ' + this.solutionDate);
-    },
+    for (var i = 0; i < this.levels.length; i++) {
+      this.colors.push(Colors.colors[this.levels[i]]);
+    }
   },
 }
 </script>

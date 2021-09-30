@@ -12,7 +12,6 @@ export default {
         return{
             levelTierIds: [19, 20, 21, 22, 23, 24, 25, 26, 27],
             levels: ['흰색', '노랑', '주황', '초록', '파랑', '빨강', '보라', '회색', '갈색', '검정'],
-            colors: ['white', 'yellow', 'orange', 'green', 'blue', 'red', 'purple', 'grey', 'brown', 'black'],
             climbingId: 3,
             userId: 2
         }
@@ -25,10 +24,9 @@ export default {
                     userId: this.userId,
                     levelTierIds: this.levelTierIds,
                     levels: this.levels,
-                    colors: this.colors,
                     climbingId: this.climbingId
                 }
-                })
+            })
         }
     }
 }
