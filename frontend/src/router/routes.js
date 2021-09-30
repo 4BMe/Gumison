@@ -1,12 +1,39 @@
 import store from '@/state/store'
 
 export default [{
-        path: '',
+        path: '/',
         name: 'home',
-        meta: {
-            authRequired: true,
-        },
-        component: () => import('../views/pages/chat/index')
+        component: () => import('../views/pages/search/search')
+    },
+    {
+        path: '/userlist/:keyword',
+        name: 'userlist',
+        component: () => import('../views/pages/search/userList'),
+        props: true,
+    },
+    {
+        path: '/climbinglist/:keyword',
+        name: 'climbinglist',
+        component: () => import('../views/pages/search/climbingList'),
+        props: true,
+    },
+    {
+        path: '/climbing/:id',
+        name: 'climbing',
+        component: () => import('../views/pages/climbing/climbing'),
+        props: true,
+        children:[
+            {
+                path: '',
+                name: 'level',
+                component: () => import('../views/pages/climbing/level'),
+            },
+
+        ]
+    },
+    {
+        path: '/profile',
+        name: 'profile',
     },
     {
         path: '/login',
