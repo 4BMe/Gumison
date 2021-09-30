@@ -1,11 +1,11 @@
 <template>
   <div>
       <div class="row">
-          <div class="col-2">{{level}}</div>
-          <div class="col-1 rounded-circle" :id="'color-'+index"></div>
-          <div class="col-6">
-              <input type="number" min="0" id="solutionNum" v-model="solutionNum" @change="emitEvent()">
-          </div>
+            <div class="col-2 mt-1">{{level}}</div>
+            <div class="col-1 rounded-circle level-record-color" :id="'color-'+index"></div>
+            <div class="col-6">
+                <input type="number" min="0" id="solutionNum" v-model="solutionNum" @change="emitEvent()">
+            </div>
       </div>
   </div>
 </template>
@@ -31,5 +31,4 @@ export default {
 </script>
 
 <style>
-
 </style>

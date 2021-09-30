@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="height-full">
         <div class="d-flex justify-content-center align-items-center border">
             <input type="button" value="클릭!!!!!" class="btn btn-outline-primary" @click="clickButton()">
         </div>

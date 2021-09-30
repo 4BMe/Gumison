@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div class="layout-wrapper d-lg-flex">
-    <router-view />
       <div class="side-menu flex-lg-column mr-lg-1">
         <!-- LOGO -->
         <div class="navbar-brand-box">
@@ -151,6 +150,7 @@
         </div>
         <!-- Side menu user -->
       </div>
+      <router-view class="mr-lg-1 flex-grow-1"/>
     </div>
   </div>
 </template>

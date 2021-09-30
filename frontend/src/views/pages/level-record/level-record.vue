@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="height-full">
       <b-card no-body class="border custom-accordion">
         <b-card-header>
           <div class="d-flex flex-row">
@@ -14,17 +14,16 @@
         </b-card-header>
           <b-card-body>
             <div class="mb-3">
-              <input type="date" id="input-date" v-model="solutionDate" class="form-control" />
+              <input type="date" id="input-date" v-model="solutionDate" class="form-control"/>
             </div>
             <div v-for="(level, index) in levels" :key="index">
-              <LevelRecordLine :level=levels[index] :color=colors[index] :index=index class="mb-3" v-model.number="solutionCounts[index]" />
+              <LevelRecordLine :level=levels[index] :color=colors[index] :index=index class="mb-3 ml-3" v-model.number="solutionCounts[index]" />
             </div>
           </b-card-body>
       </b-card>
-          <div>
-                <input type="file" value="동영상 업로드" ref="solutionVideos" class="btn btn-outline-success" accept="video/*" multiple @change="handleFileUpload()">
-                <br><br>
-                <input type="button" value="등록" class="btn btn-outline-primary float-right mr-3" @click="submitClick()">
+          <div class="d-flex justify-content-center">
+                <input type="file" value="동영상 업로드" ref="solutionVideos" class="btn btn-outline-success ml-3" accept="video/*" multiple @change="handleFileUpload()">
+                <input type="button" value="등록" class="btn btn-outline-primary float-right mr-3 ml-3" @click="submitClick()">
           </div>
   </div>
 </template>
