@@ -1,6 +1,5 @@
 package com.ssafy.gumison.redis;
 
-import ch.qos.logback.core.util.TimeUtil;
 import com.ssafy.gumison.common.enums.RedisKey;
 import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.util.Optional;
@@ -23,10 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserRankSearchKeywordRepositoryImpl implements UserRankSearchKeywordRepository {
 
-  private final ValueOperations<String, Long> valueOperations;
+  private final ValueOperations<String, Object> valueOperations;
   private final String KEY_PREFIX = RedisKey.SEARCH_KEYWORD_COUNT.name() + "_";
 
-  public UserRankSearchKeywordRepositoryImpl(RedisTemplate<String, Long> redisTemplate) {
+  public UserRankSearchKeywordRepositoryImpl(RedisTemplate<String, Object> redisTemplate) {
     valueOperations = redisTemplate.opsForValue();
   }
 
@@ -38,10 +37,15 @@ public class UserRankSearchKeywordRepositoryImpl implements UserRankSearchKeywor
    */
   @Override
   public Long getUserSearchKeywordCount(String keyword) {
-    Optional<Long> countOptional = Optional.ofNullable(valueOperations.get(KEY_PREFIX + keyword));
+    Optional<Object> countOptional = Optional
+        .ofNullable(valueOperations.get(KEY_PREFIX + keyword));
 
-    return countOptional
-        .orElseThrow(() -> new ResourceNotFoundException("key set", keyword, "keyword"));
+    try {
+      return Long.valueOf((String) countOptional
+          .orElseThrow(() -> new ResourceNotFoundException("key set", keyword, "keyword")));
+    } catch (NumberFormatException | ClassCastException e) {
+      throw new RuntimeException("value isn't Long type");
+    }
   }
 
   /**
@@ -53,6 +57,6 @@ public class UserRankSearchKeywordRepositoryImpl implements UserRankSearchKeywor
   @Transactional
   public void setUserSearchKeywordCount(String keyword, Long count) {
     log.info("set new keyword in redis, keyword - {}, count - {}", keyword, count);
-    valueOperations.set(keyword, count, 5, TimeUnit.MINUTES);
+    valueOperations.set(KEY_PREFIX + keyword, String.valueOf(count), 5, TimeUnit.MINUTES);
   }
 }
