@@ -25,7 +25,7 @@ class RankProviderTest {
     //given
     final int SIZE = userRepositorySupport.findNicknamesAndExpAll().size();
     //when
-    int returnSize = rankProvider.loadAllUserExpIntoRankZSet();
+    Long returnSize = rankProvider.loadAllUserExpIntoRankZSet();
     //then
     assertEquals(SIZE, returnSize);
   }

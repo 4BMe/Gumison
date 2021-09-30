@@ -2,9 +2,11 @@ package com.ssafy.gumison.api.controller;
 
 import com.ssafy.gumison.api.response.ClimbingRes;
 import com.ssafy.gumison.api.response.ClimbingSolutionRes;
+import com.ssafy.gumison.api.response.UserRankRes;
 import com.ssafy.gumison.api.service.ClimbingService;
 import com.ssafy.gumison.api.service.RankService;
 import com.ssafy.gumison.api.service.RankServiceImpl;
+import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import com.ssafy.gumison.db.entity.Climbing;
 import java.util.List;
@@ -24,10 +26,9 @@ public class RankController {
   private final RankService rankService;
 
   @GetMapping("/detail/{nickname}")
-  public ApiResponseDto<?> searchClimbingList(
-      @PathVariable("nickname") String nickname) {
-    return ApiResponseDto.success(null);
+  public ApiResponseDto<?> searchClimbingList(@PathVariable("nickname") String nickname) {
+    UserRankDto userRankDto = rankService.getUserRankByNickname(nickname);
+    return ApiResponseDto.success(UserRankRes.of(userRankDto));
   }
-
 
 }
