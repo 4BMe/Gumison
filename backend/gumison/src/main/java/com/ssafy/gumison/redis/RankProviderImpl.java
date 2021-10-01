@@ -71,7 +71,6 @@ public class RankProviderImpl implements RankProvider {
 
       long score = MAX_EXP - ((tierCode % 200) * TIER_BASE_SCORE + accumulateExp);
 
-//      zSetOperations.
       zSetOperations
           .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, score);
     });
