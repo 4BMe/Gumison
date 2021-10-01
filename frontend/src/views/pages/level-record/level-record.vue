@@ -126,7 +126,6 @@ export default {
       if(this.levelTiers[i].solutionDate) 
         this.solutionDate = this.levelTiers[i].solutionDate;
     }
-    console.log(this.solutionIds);
   },
 }
 </script>
