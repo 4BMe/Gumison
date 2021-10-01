@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,8 @@ import org.slf4j.LoggerFactory;
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GenericGenerator(name = "userIdGenerator", strategy = "com.ssafy.gumison.common.util.HashIdGenerator")
+  @GeneratedValue(generator = "userIdGenerator")
   @Column(name = "user_id")
   private Long id;
 
