@@ -4,15 +4,31 @@
       <div class="side-menu flex-lg-column mr-lg-1">
         <!-- LOGO -->
         <div class="navbar-brand-box">
-          <router-link to="/" tag="a" class="logo logo-dark">
+          <router-link
+            to="/"
+            tag="a"
+            class="logo logo-dark"
+          >
             <span class="logo-sm">
-              <img src="@/assets/images/logo.svg" alt height="30" />
+              <img
+                src="@/assets/images/logo.svg"
+                alt
+                height="30"
+              />
             </span>
           </router-link>
 
-          <router-link tag="a" to="/" class="logo logo-light">
+          <router-link
+            tag="a"
+            to="/"
+            class="logo logo-light"
+          >
             <span class="logo-sm">
-              <img src="@/assets/images/logo.svg" alt height="30" />
+              <img
+                src="@/assets/images/logo.svg"
+                alt
+                height="30"
+              />
             </span>
           </router-link>
         </div>
@@ -60,7 +76,7 @@
               </router-link>
             </li>
 
-            <!-- 4번탭: 사용자 계정, 로그인 필요 페이지 -->
+            <!-- 4번탭: 사용자 계정, 로그인 필요 페이지
             <li
               class="nav-item"
               data-placement="top"
@@ -76,7 +92,7 @@
               >
                 <i class="ri-user-2-line"></i>
               </router-link>
-            </li>
+            </li> -->
 
             <b-dropdown
               class="nav-item profile-user-dropdown d-inline-block d-lg-none"
@@ -91,13 +107,17 @@
                   class="profile-user rounded-circle"
                 />
               </template>
-              <b-dropdown-item href="javascript:void(0);">
-                Profile
-                <i class="ri-profile-line float-right text-muted"></i>
-              </b-dropdown-item>
-              <b-dropdown-item href="javascript:void(0);">
-                Setting
-                <i class="ri-settings-3-line float-right text-muted"></i>
+              <!-- 4번탭: 사용자 계정, 로그인 필요 페이지 -->
+              <b-dropdown-item>
+                <router-link
+                  to="/profile"
+                  v-on:click.native="activetab = 4"
+                  v-bind:class="[activetab === 4 ? 'active' : '']"
+                >
+                  Profile
+                  <i class="ri-profile-line float-right text-muted"></i>
+
+                </router-link>
               </b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item href="/logout">
@@ -117,7 +137,8 @@
                 id="light-dark"
                 target="_blank"
                 href="http://chatvia-dark.vue.themesbrand.com/"
-                v-b-tooltip.hover title="Dark Mode"
+                v-b-tooltip.hover
+                title="Dark Mode"
               >
                 <i class="ri-sun-line theme-mode-icon"></i>
               </a>
@@ -150,35 +171,35 @@
         </div>
         <!-- Side menu user -->
       </div>
-      <router-view class="mr-lg-1 flex-grow-1"/>
+      <router-view class="mr-lg-1 flex-grow-1" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
-    return{
+  data() {
+    return {
       activetab: 1,
-    }
+    };
   },
-  mounted(){
+  mounted() {
     var curPage = document.location.href;
-    var routeUrl = curPage.split('/');
+    var routeUrl = curPage.split("/");
     console.log(routeUrl[3]);
-    switch(routeUrl[3]) {
-      case '':
+    switch (routeUrl[3]) {
+      case "":
         this.activetab = 1;
         break;
-      case 'temp':
-      case 'level-record':
-      case 'level-contribution':
+      case "temp":
+      case "level-record":
+      case "level-contribution":
         this.activetab = 3;
         break;
-      case 'profile':
+      case "profile":
         this.activtab = 4;
         break;
     }
   },
-}
+};
 </script>

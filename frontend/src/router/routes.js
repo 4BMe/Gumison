@@ -72,6 +72,13 @@ export default [{
         },
     },
 },
+
+{
+    path: '/oauth2/redirect',
+    name: 'oauth2-redirect',
+    component: () => import('../views/pages/account/oauth2-redirect'),
+
+},
 {
     path: '/register',
     name: 'register',

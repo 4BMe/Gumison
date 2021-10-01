@@ -10,7 +10,7 @@ import { GOOGLE_OAUTH_URL } from "@/constant/index";
 // });
 
 function googleLoginUser() {
-    window.location.href = `${GOOGLE_OAUTH_URL}`;
+    return window.location.href = `${GOOGLE_OAUTH_URL}`;
 }
 
 export {

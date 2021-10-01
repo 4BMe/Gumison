@@ -20,13 +20,13 @@
           </div>
           <div class="card">
             <div class="card-body p-4">
-              <b-alert
+              <!-- <b-alert
                 :variant="notification.type"
                 class="mt-3"
                 v-if="notification.message"
                 :show="notificationAutoCloseDuration"
                 dismissible
-              >{{notification.message}}</b-alert>
+              >{{notification.message}}</b-alert> -->
               <div class="p-3">
                 <div class="form-group">
                   <!-- 구글 로그인 -->
@@ -64,35 +64,33 @@
 
 <script>
 import { googleLoginUser } from "@/api/users.js";
-import {
-  authMethods,
-  authFackMethods,
-  notificationMethods,
-} from "@/state/helpers";
+// import {
+//   authMethods,
+//   authFackMethods,
+//   notificationMethods,
+// } from "@/state/helpers";
 export default {
   data() {
     return {};
   },
   computed: {
-    notification() {
-      return this.$store ? this.$store.state.notification : null;
-    },
-    notificationAutoCloseDuration() {
-      return this.$store && this.$store.state.notification ? 5 : 0;
-    },
+    // notification() {
+    //   return this.$store ? this.$store.state.notification : null;
+    // },
+    // notificationAutoCloseDuration() {
+    //   return this.$store && this.$store.state.notification ? 5 : 0;
+    // },
   },
 
   methods: {
-    ...authMethods,
-    ...authFackMethods,
-    ...notificationMethods,
+    // ...authMethods,
+    // ...authFackMethods,
+    // ...notificationMethods,
     // Try to log the user in with the username
     // and password they provided.
     async tryToGoogleLogIn() {
       try {
-        await googleLoginUser().then(({ data }) => {
-          console.log("after google login:", data);
-        });
+        await googleLoginUser();
       } catch (error) {
         console.log(error);
       }
