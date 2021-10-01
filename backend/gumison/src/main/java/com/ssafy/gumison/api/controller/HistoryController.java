@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.gumison.api.request.SolutionRequest;
 import com.ssafy.gumison.api.response.SolutionListRes;
 import com.ssafy.gumison.api.response.SolutionRes;
-import com.ssafy.gumison.api.response.UserHistoryRes;
+import com.ssafy.gumison.api.response.HistoryRes;
 import com.ssafy.gumison.api.service.HistoryService;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import com.ssafy.gumison.db.entity.Solution;
@@ -31,8 +31,9 @@ public class HistoryController {
 
   @ApiOperation(value = "유저 히스토리", notes = "히스토리를 보여줍니다.", response = ApiResponseDto.class)
   @GetMapping("/{nickname}")
-  public ApiResponseDto<UserHistoryRes> userHistory(@PathVariable("nickname") String nickname) {
-    UserHistoryRes historyRes = historyService.history(nickname);
+  public ApiResponseDto<HistoryRes> userHistory(@PathVariable("nickname") String nickname) {
+    HistoryRes historyRes = historyService.history(nickname);
+    log.info(historyRes.getUser().getNickname());
     return ApiResponseDto.success(historyRes);
   }
 
@@ -52,7 +53,7 @@ public class HistoryController {
   @ApiOperation(value = "레벨 기록 생성", notes = "성공한 레벨 기록을 생성합니다.", response = ApiResponseDto.class)
   @PostMapping("/")
   public ApiResponseDto<Solution[]> createSolution(@RequestBody SolutionRequest[] solutionRequests) {
-    log.info("[createSolution] : " + Arrays.toString(solutionRequests));
+    log.info("[createSolution] - HistoryController : {}", Arrays.toString(solutionRequests));
     Solution[] solutions = new Solution[solutionRequests.length];
     for (int i = 0; i < solutionRequests.length; i++) {
       Solution solution = historyService.createSolution(solutionRequests[i]);
@@ -62,10 +63,14 @@ public class HistoryController {
   }
 
   @ApiOperation(value = "레벨 기록 수정", notes = "성공한 레벨 기록을 수정합니다.", response = ApiResponseDto.class)
-  @PutMapping("/{solutionId}")
-  public ApiResponseDto<Solution> updateSolution(@PathVariable String solutionId,
-      @RequestBody SolutionRequest solutionRequest) {
-    Solution solution = historyService.updateSolution(solutionId, solutionRequest);
-    return ApiResponseDto.success(solution);
+  @PutMapping("/")
+  public ApiResponseDto<Solution[]> updateSolution(@RequestBody SolutionRequest[] solutionRequests) {
+    log.info("[updateSolution] - HistoryController : {}", Arrays.toString(solutionRequests));
+    Solution[] solutions = new Solution[solutionRequests.length];
+    for (int i = 0; i < solutionRequests.length; i++) {
+      Solution solution = historyService.updateSolution(solutionRequests[i]);
+      solutions[i] = solution;
+    }
+    return ApiResponseDto.success(solutions);
   }
 }

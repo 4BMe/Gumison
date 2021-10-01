@@ -40,4 +40,5 @@ public class RedisConfig {
     redisTemplate.setEnableTransactionSupport(true);
     return redisTemplate;
   }
+
 }

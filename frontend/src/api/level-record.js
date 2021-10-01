@@ -13,11 +13,16 @@ function submit(recordData) {
     return instance.post('/', recordData);
 }
 
+function update(recordData) {
+    return instance.put('/', recordData);
+}
+
 function uploadFile(fileReq){
     return instance.post('upload', fileReq);
 }
 
 export {
-    uploadFile,
     submit,
+    update,
+    uploadFile,
 }

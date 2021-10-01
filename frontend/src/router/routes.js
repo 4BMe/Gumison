@@ -118,25 +118,7 @@ export default [{
         },
     },
 },
-{
-    path: '/forgot-password',
-    name: 'Forgot-password',
-    component: () => import('../views/pages/account/forgot-password'),
-    meta: {
-        beforeResolve(routeTo, routeFrom, next) {
-            // If the user is already logged in
-            if (store.getters['auth/loggedIn']) {
-                // Redirect to the home page instead
-                next({
-                    name: 'home'
-                })
-            } else {
-                // Continue to the login page
-                next()
-            }
-        },
-    },
-},
+
 {
     path: '/logout',
     name: 'logout',
@@ -155,12 +137,17 @@ export default [{
             })
         },
     },
-
 },
-
 {
-    path: '/lock-screen',
-    name: 'lock-screen',
-    component: () => import('../views/pages/account/lock-screen'),
+    path: '/myhistory',
+    name: 'myhistory',
+    component: () => import('../views/pages/history/myhistory'),
+    props: true,
 },
+{
+    path: '/solution',
+    name: 'solution',
+    component: () => import('../views/pages/solution/solution'),
+    props: true,
+}
 ]
