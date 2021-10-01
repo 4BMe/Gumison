@@ -37,14 +37,16 @@ export default [{
     component: () => import('../views/pages/account/profile'),
     meta: {
         beforeResolve(routeTo, routeFrom, next) {
-            // If the user is already logged in
+            /**
+             * tocken이 이미 있으면 profile로 가고,
+             * 없으면 로그인 화면으로 가기
+             */
             const user = store.getters['users/getUser'];
             console.log('[router profile] user: ', user);
             if (user.tocken) {
-                // Redirect to the profile page instead
                 next()
             } else {
-                // Continue to the login page
+
                 next({
                     name: 'login'
                 })
@@ -75,9 +77,11 @@ export default [{
     component: () => import('../views/pages/account/login'),
     meta: {
         beforeResolve(routeTo, routeFrom, next) {
-            // If the user is already logged in
-            if (store.getters['auth/loggedIn']) {
-                // Redirect to the home page instead
+
+            const user = store.getters['users/getUser'];
+            console.log('[router profile] user: ', user);
+            if (user.tocken) {
+                // If the user is already logged in
                 next({
                     name: 'home'
                 })
@@ -139,11 +143,6 @@ export default [{
     meta: {
         authRequired: true,
         beforeResolve(routeTo, routeFrom, next) {
-            // if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
-            //     store.dispatch('auth/logOut')
-            // } else {
-            //     store.dispatch('authfack/logout')
-            // }
             store.commit('users/LOGOUT')
             const authRequiredOnPreviousRoute = routeFrom.matched.some(
                 (route) => route.push('/login')
