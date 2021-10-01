@@ -12,26 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import com.sun.istack.NotNull;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
-@Setter
 @ToString
 @DynamicInsert
-@DynamicUpdate
 public class Contribution {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
