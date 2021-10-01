@@ -84,7 +84,13 @@ export default {
   },
   methods: {
     searchHistory(id) {
-      this.$router.push({name: 'climbing', parmas:{id: `${id}`}})
+      console.log("climbingList - id : " + id);
+      this.$router.push({
+        name: 'climbing',
+        params:{
+          id: id
+          }
+        })
     },
     getList(){
       axios

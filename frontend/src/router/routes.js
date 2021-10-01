@@ -137,4 +137,16 @@ export default [{
         name: 'lock-screen',
         component: () => import('../views/pages/account/lock-screen'),
     },
+    {
+        path: '/myhistory',
+        name: 'myhistory',
+        component: () => import('../views/pages/history/myhistory'),
+        props: true,
+    },
+    {
+        path: '/solution',
+        name: 'solution',
+        component: () => import('../views/pages/solution/solution'),
+        props: true,
+    }
 ]

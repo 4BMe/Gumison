@@ -57,9 +57,6 @@ public class Solution {
   @JoinColumn(name = "level_tier_id")
   private LevelTier levelTier;
 
-  @OneToMany(mappedBy = "solution")
-  private List<SolutionVideo> solutionVideoList = new ArrayList<>();
-
   @NotNull
   @ColumnDefault("0")
   private Integer count;
@@ -67,9 +64,6 @@ public class Solution {
   @NotNull
   @CreatedDate
   private LocalDate date;
-  
-  @NotNull
-  private LocalDateTime dateTime;
 
   @NotNull
   @ColumnDefault("false")

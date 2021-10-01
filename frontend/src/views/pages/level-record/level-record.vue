@@ -30,8 +30,7 @@
 
 <script>
 import LevelRecordLine from './components/level-record-line';
-// import { submit } from '@/api/level-record.js';
-import { upload } from '@/api/video.js';
+import { submit, update } from '@/api/level-record.js';
 import Colors from '@/constant/colors.js';
 
 var today = new Date().toISOString().slice(0,10);
@@ -52,6 +51,7 @@ export default {
   data(){
       return {
         recordSolutionCounts: [],
+        solutionIds: [],
         solutionVideos: '',
         solutionDate: today,
         colors: [],
@@ -66,43 +66,34 @@ export default {
       },
       async submitClick() {
           let recordData = [];
-          for (var i = 0; i < this.colors.length; i++) {
-            if(this.recordSolutionCounts[i] > 0)
-            recordData.push({
-              userId: this.userId,
-              climbingId: this.climbingId,
-              levelTierId: this.levelTiers[i].id,
-              count: this.recordSolutionCounts[i],
-              date: this.solutionDate,
-            })
+          const formData = new FormData();
+          formData.append("userId", this.userId);
+          formData.append("climbingId", this.climbingId);
+          formData.append("date", this.solutionDate);
+          for (let i = 0; i < this.colors.length; i++) {
+            if(this.recordSolutionCounts[i] > 0) {
+              if(this.solutionIds[i] > 0) {
+                recordData.push({
+                  userId: this.userId,
+                  climbingId: this.climbingId,
+                  solutionId: this.solutionIds[i],
+                  levelTierId: this.levelTiers[i].id,
+                  count: this.recordSolutionCounts[i],
+                  date: this.solutionDate,
+                });
+              }
+              else {
+                formData.append("levelTierIds", this.levelTiers[i].id);
+                formData.append("counts", this.recordSolutionCounts[i]);
+              }
+            }
           }
-          for (i = 0; i < recordData.length; i++) {
-            console.log(JSON.stringify(recordData[i]));
+          for(let video of this.solutionVideos){
+            formData.append('videos', video);
           }
 
-          // await submit(recordData)
-          // .then(({data}) => {
-          //   console.log(data);
-          // })
-          // .catch(error => {
-          //   console.log(error);
-          // })
-          
-          if(this.solutionVideos.length > 0) {
-            const videos = new FormData();
-            videos.append('userId', this.userId);
-            for(let video of this.solutionVideos){
-              videos.append('videos', video);
-            }
-            
-            for(let key of videos.keys()) {
-              console.log("key : " + key + " value : " + videos.get(key));
-            }
-            for(let video of this.solutionVideos){
-              console.log(video);
-            }
-
-            await upload(videos)
+          if(this.solutionIds[0] > 0) {
+            await update(recordData)
             .then(({ data }) => {
               console.log(data);
             })
@@ -110,14 +101,30 @@ export default {
               console.log(error);
             })
           }
-      },
+          else {
+            await submit(formData)
+            .then(({ data }) => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+          }
+      }
   },
   mounted() {
     for (var i = 0; i < this.levelTiers.length; i++) {
       this.colors.push(Colors.colors[this.levelTiers[i].level]);
-      if(this.levelTiers[i].solutionDate) {
+      if(this.levelTiers[i].solutionCount > 0)
+        this.recordSolutionCounts.push(this.levelTiers[i].solutionCount);
+      else
+        this.recordSolutionCounts.push(0);
+
+      if(this.levelTiers[i].solutionId > 0)
+        this.solutionIds.push(this.levelTiers[i].solutionId);
+
+      if(this.levelTiers[i].solutionDate) 
         this.solutionDate = this.levelTiers[i].solutionDate;
-      }
     }
   },
 }

@@ -1,4 +1,4 @@
-package com.ssafy.gumison.api.response;
+package com.ssafy.gumison.common.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

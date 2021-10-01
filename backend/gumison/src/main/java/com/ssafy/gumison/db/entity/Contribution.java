@@ -1,44 +1,49 @@
 package com.ssafy.gumison.db.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import org.springframework.data.annotation.CreatedDate;
+
+import org.hibernate.annotations.DynamicInsert;
 
 import com.sun.istack.NotNull;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
-@Setter
-public class SolutionVideo {
+@ToString
+@DynamicInsert
+public class Contribution {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "video_id")
+  @Column(name = "contribution_id")
   private Long id;
 
-  @NotNull
-  @Column(nullable = false)
-  private String uploadId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "level_tier_id")
+  private LevelTier levelTier;
 
   @NotNull
-  @Column(nullable = false)
-  private String uri;
+  private String newTier;
+  
+  @NotNull
+  private String oldTier;
 
   @NotNull
-  @Column(nullable = false)
-  private LocalDateTime dateTime;
+  private LocalDate date;
 }
