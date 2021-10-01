@@ -1,5 +1,6 @@
 package com.ssafy.gumison.api.service;
 
+import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -32,25 +33,9 @@ public class UserServiceImpl implements UserService {
 
     UserSearchRes userSearchRes = new UserSearchRes();
     for (User user : userList) {
-      CommonCode code = commonCodeRepository.findById(user.getTierCode())
-          .orElseThrow(RuntimeException::new);
-      
-      long solCnt = 0;
-      
-      for (Solution solution : user.getSolutionList()) {
-        solCnt += solution.getCount();
-      }
-
-      UserSearchDto dto = UserSearchDto.builder()
-                          .nickname(user.getNickname())
-                          .profile(user.getProfile())
-                          .tier(code.getName().toLowerCase())
-                          .solCnt(solCnt)
-                          .build();
-      
-      userSearchRes.getUsers().add(dto);
+      userSearchRes.getUsers().add(getUserSearchDtoByUser(user));
     }
-    
+
     log.info("Set user search response: {}", userSearchRes);
 
     return userSearchRes;
@@ -63,4 +48,57 @@ public class UserServiceImpl implements UserService {
     return sessionUserDto;
   }
 
+  /**
+   * 유저 닉네임으로 UserSearcDto 반환
+   *
+   * @param nickname 사용자 닉네임
+   * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
+   */
+  @Override
+  public UserSearchDto getUserSearchDtoByNickname(String nickname) {
+    User user = userRepository.findByNickname(nickname)
+        .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname"));
+    return getUserSearchDtoByUser(user);
+  }
+
+  /**
+   * 키워드로 검색한 유저의 전체 수를 반환
+   *
+   * @param keyword 검색 키워드
+   * @return 해당 키워드를 포함한 유저의 수 카운트
+   */
+  @Override
+  public Long getUserCountByKeyword(String keyword) {
+    return userRepository.countByNicknameContaining(keyword);
+  }
+
+  /**
+   * 유저 정보로 UserSearchDto 반환
+   *
+   * @param user 유저 정보
+   * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
+   * @throws RuntimeException 해당 유저의 코드티어에 저장된 값이 CommonCode에 없을 경우
+   */
+  private UserSearchDto getUserSearchDtoByUser(User user) {
+    CommonCode code = commonCodeRepository.findById(user.getTierCode())
+        .orElseThrow(RuntimeException::new);
+
+    long solvedCount = 0;
+
+    for (Solution solution : user.getSolutionList()) {
+      solvedCount += solution.getCount();
+    }
+
+    return UserSearchDto.builder()
+        .nickname(user.getNickname())
+        .profile(user.getProfile())
+        .tier(code.getName().toLowerCase())
+        .solCnt(solvedCount)
+        .build();
+  }
+
 }
+
+
+
+
