@@ -3,19 +3,55 @@ import store from '@/state/store'
 export default [{
     path: '/',
     name: 'home',
-    meta: {
-        authRequired: true,
-    },
     component: () => import('../views/pages/search/search')
+},
+{
+    path: '/userlist/:keyword',
+    name: 'userlist',
+    component: () => import('../views/pages/search/userlist'),
+    props: true,
+},
+{
+    path: '/climbinglist/:keyword',
+    name: 'climbinglist',
+    component: () => import('../views/pages/search/climbingList'),
+    props: true,
+},
+{
+    path: '/climbing/:id',
+    name: 'climbing',
+    component: () => import('../views/pages/climbing/climbing'),
+    props: true,
+    // children:[
+    //     {
+    //         path: '',
+    //         name: 'level',
+    //         component: () => import('../views/pages/climbing/level'),
+    //     },
+
+    // ]
 },
 {
     path: '/profile',
     name: 'profile',
     component: () => import('../views/pages/account/profile'),
-    meta: {
-
-    },
-
+},
+{
+    path: '/level-record',
+    name: 'level-record',
+    component: () => import('../views/pages/level-record/level-record'),
+    props: true
+},
+{
+    path: '/temp',
+    name: 'temp',
+    component: () => import('../views/pages/level-record/temp'),
+},
+{
+    path: '/level-contribution',
+    name: 'level-contribution',
+    component: () => import('../views/pages/level-contribution/level-contribution'),
+    props: true
 },
 {
     path: '/login',
@@ -96,10 +132,12 @@ export default [{
             })
         },
     },
+
 },
+
 {
     path: '/lock-screen',
     name: 'lock-screen',
     component: () => import('../views/pages/account/lock-screen'),
-}
+},
 ]
