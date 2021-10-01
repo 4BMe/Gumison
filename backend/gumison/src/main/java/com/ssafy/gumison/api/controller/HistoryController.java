@@ -53,7 +53,7 @@ public class HistoryController {
   @ApiOperation(value = "레벨 기록 생성", notes = "성공한 레벨 기록을 생성합니다.", response = ApiResponseDto.class)
   @PostMapping("/")
   public ApiResponseDto<Solution[]> createSolution(@RequestBody SolutionRequest[] solutionRequests) {
-    log.info("[createSolution] : " + Arrays.toString(solutionRequests));
+    log.info("[createSolution] - HistoryController : {}", Arrays.toString(solutionRequests));
     Solution[] solutions = new Solution[solutionRequests.length];
     for (int i = 0; i < solutionRequests.length; i++) {
       Solution solution = historyService.createSolution(solutionRequests[i]);
@@ -63,10 +63,14 @@ public class HistoryController {
   }
 
   @ApiOperation(value = "레벨 기록 수정", notes = "성공한 레벨 기록을 수정합니다.", response = ApiResponseDto.class)
-  @PutMapping("/{solutionId}")
-  public ApiResponseDto<Solution> updateSolution(@PathVariable String solutionId,
-      @RequestBody SolutionRequest solutionRequest) {
-    Solution solution = historyService.updateSolution(solutionId, solutionRequest);
-    return ApiResponseDto.success(solution);
+  @PutMapping("/")
+  public ApiResponseDto<Solution[]> updateSolution(@RequestBody SolutionRequest[] solutionRequests) {
+    log.info("[updateSolution] - HistoryController : {}", Arrays.toString(solutionRequests));
+    Solution[] solutions = new Solution[solutionRequests.length];
+    for (int i = 0; i < solutionRequests.length; i++) {
+      Solution solution = historyService.updateSolution(solutionRequests[i]);
+      solutions[i] = solution;
+    }
+    return ApiResponseDto.success(solutions);
   }
 }

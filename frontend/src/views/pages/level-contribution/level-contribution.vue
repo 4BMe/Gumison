@@ -28,6 +28,9 @@
 <script>
 import LevelContributionLine from './components/level-contribution-line';
 import Colors from '@/constant/colors.js';
+import { submit } from '@/api/level-contribution.js';
+
+var today = new Date().toISOString().slice(0,10);
 
 export default {
     name: 'level-contribution',
@@ -47,14 +50,33 @@ export default {
         return {
             colors: [],
             tiers: [],
+            contributionDate: today,
         }
     },
     methods:{
         goBack(){
             this.$router.go(-1);
         },
-        submitClick() {
+        async submitClick() {
             console.log(this.tiers);
+            var contributionData = [];
+            for (var i = 0; i < this.levelTiers.length; i++) {
+                contributionData.push({
+                    levelTierId: this.levelTiers[i].id,
+                    newTier: this.tiers[i],
+                    oldTier: this.levelTiers[i].tier,
+                    userId: this.userId,
+                    date: this.contributionDate,
+                })
+            }
+            console.log(contributionData);
+            await submit(contributionData)
+            .then(({ data }) => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
         },
     },
     mounted(){
