@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.gumison.api.request.SolutionRequest;
 import com.ssafy.gumison.api.response.SolutionListRes;
 import com.ssafy.gumison.api.response.SolutionRes;
-import com.ssafy.gumison.api.response.UserHistoryRes;
+import com.ssafy.gumison.api.response.HistoryRes;
 import com.ssafy.gumison.api.service.HistoryService;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import com.ssafy.gumison.db.entity.Solution;
@@ -31,8 +31,9 @@ public class HistoryController {
 
   @ApiOperation(value = "유저 히스토리", notes = "히스토리를 보여줍니다.", response = ApiResponseDto.class)
   @GetMapping("/{nickname}")
-  public ApiResponseDto<UserHistoryRes> userHistory(@PathVariable("nickname") String nickname) {
-    UserHistoryRes historyRes = historyService.history(nickname);
+  public ApiResponseDto<HistoryRes> userHistory(@PathVariable("nickname") String nickname) {
+    HistoryRes historyRes = historyService.history(nickname);
+    log.info(historyRes.getUser().getNickname());
     return ApiResponseDto.success(historyRes);
   }
 

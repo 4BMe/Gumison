@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.gumison.api.response.ClimbingRes;
 import com.ssafy.gumison.api.response.ClimbingSolutionRes;
 import com.ssafy.gumison.api.service.ClimbingService;
+import com.ssafy.gumison.common.dto.SolutionDto;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import com.ssafy.gumison.db.entity.Climbing;
 import io.swagger.annotations.ApiOperation;
