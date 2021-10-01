@@ -1,6 +1,7 @@
 package com.ssafy.gumison.db.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,9 @@ public class Solution {
   @NotNull
   @CreatedDate
   private LocalDate date;
+  
+  @NotNull
+  private LocalDateTime dateTime;
 
   @NotNull
   @ColumnDefault("false")
@@ -74,4 +78,7 @@ public class Solution {
   @NotNull
   @ColumnDefault("0")
   private Integer accumulateReport;
+  
+  @NotNull
+  private String uploadId;
 }

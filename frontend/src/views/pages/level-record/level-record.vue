@@ -30,7 +30,8 @@
 
 <script>
 import LevelRecordLine from './components/level-record-line';
-import { submit } from '@/api/level-record.js';
+// import { submit } from '@/api/level-record.js';
+import { upload } from '@/api/video.js';
 import Colors from '@/constant/colors.js';
 
 var today = new Date().toISOString().slice(0,10);
@@ -79,13 +80,36 @@ export default {
             console.log(JSON.stringify(recordData[i]));
           }
 
-          await submit(recordData)
-          .then(({data}) => {
-            console.log(data);
-          })
-          .catch(error => {
-            console.log(error);
-          })
+          // await submit(recordData)
+          // .then(({data}) => {
+          //   console.log(data);
+          // })
+          // .catch(error => {
+          //   console.log(error);
+          // })
+          
+          if(this.solutionVideos.length > 0) {
+            const videos = new FormData();
+            videos.append('userId', this.userId);
+            for(let video of this.solutionVideos){
+              videos.append('videos', video);
+            }
+            
+            for(let key of videos.keys()) {
+              console.log("key : " + key + " value : " + videos.get(key));
+            }
+            for(let video of this.solutionVideos){
+              console.log(video);
+            }
+
+            await upload(videos)
+            .then(({ data }) => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+          }
       },
   },
   mounted() {

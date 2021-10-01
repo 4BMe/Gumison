@@ -5,7 +5,13 @@ spring:
     hikari:
       username: gumison
       password: gumison
-      
+  
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  
+  
   jpa:
     hibernate:
       naming:

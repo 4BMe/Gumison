@@ -2,17 +2,17 @@ import axios from 'axios';
 import { BASE_URL } from "@/constant/index"
 
 const instance = axios.create({
-    baseURL: BASE_URL + '/history',
+    baseURL: BASE_URL + '/video',
     headers: {
-      'Content-type': 'application/json',
+      'Content-type': 'multipart/form-data',
     },
     withCredentials: true,
 });
 
-function submit(recordData) {
-    return instance.post('/', recordData);
+function upload(formData) {
+    return instance.post('/', formData);
 }
 
 export {
-    submit,
+    upload,
 }

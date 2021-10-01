@@ -27,12 +27,11 @@ public class SolutionVideo {
   @Column(name = "video_id")
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "solution_id")
-  private Solution solution;
+  @Column(nullable = false)
+  private String uploadId;
 
   @Column(nullable = false)
-  private String url;
+  private String uri;
 
   @Column(nullable = false)
   @CreatedDate
