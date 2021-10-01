@@ -108,6 +108,7 @@
                 />
               </template>
               <!-- 4번탭: 사용자 계정, 로그인 필요 페이지 -->
+
               <b-dropdown-item>
                 <router-link
                   to="/profile"
@@ -116,9 +117,9 @@
                 >
                   Profile
                   <i class="ri-profile-line float-right text-muted"></i>
-
                 </router-link>
               </b-dropdown-item>
+
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item href="/logout">
                 Log out

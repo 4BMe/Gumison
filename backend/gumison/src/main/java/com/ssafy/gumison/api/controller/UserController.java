@@ -57,21 +57,4 @@ public class UserController {
 
     return ApiResponseDto.success(user);
   }
-
-//  @PostMapping("/login")
-//  public ResponseEntity<?> authenticateUser(@Valid @RequestBody UserPrincipal userPrincipal) {
-//
-//    Authentication authentication = authenticationManager.authenticate(
-//        new UsernamePasswordAuthenticationToken(
-//            userPrincipal.getEmail(),
-//            userPrincipal.getPassword()
-//        )
-//    );
-//
-//    SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//    String token = tokenProvider.createToken(authentication);
-//    return ResponseEntity.ok(new AuthResponse(token));
-//  }
-
 }

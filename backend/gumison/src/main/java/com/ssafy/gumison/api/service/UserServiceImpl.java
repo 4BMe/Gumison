@@ -66,6 +66,8 @@ UserServiceImpl implements UserService {
         .orElseThrow(
             () -> new UsernameNotFoundException("User not found with oauthId : " + oauthId));
     UserOauthDto userOauthDto = UserOauthDto.builder()
+        .nickname(user.getNickname())
+        .description(user.getDescription())
         .oAuthId(user.getOauthId())
         .oAuthType(user.getOauthType())
         .profile(user.getProfile())

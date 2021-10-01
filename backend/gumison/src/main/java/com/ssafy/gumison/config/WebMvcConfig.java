@@ -32,15 +32,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
     return source;
   }
 
-  @Override
-  public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**")
-        .allowedOrigins("*")
-        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-        .allowedHeaders("*")
-        .allowCredentials(true)
-        .maxAge(MAX_AGE_SECS);
-  }
+//  @Override
+//  public void addCorsMappings(CorsRegistry registry) {
+//    registry.addMapping("/**")
+//        .allowedOrigins("*")
+//        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+//        .allowedHeaders("*")
+//        .allowCredentials(true)
+//        .maxAge(MAX_AGE_SECS);
+//  }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {

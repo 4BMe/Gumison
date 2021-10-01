@@ -19,6 +19,14 @@
           <i class="ri-pencil-fill"></i>
         </b-button>
       </div>
+      <b-modal
+        id="modal-change-profile"
+        v-model="showModal"
+        :title="$t('chat.tabs.settings.modal.title')"
+        hide-footer
+      >
+        <ChangeProfileModal></ChangeProfileModal>
+      </b-modal>
 
       <h5 class="font-size-16 mb-1 text-truncate">
         {{ nickname }}
@@ -27,7 +35,7 @@
         <p class="mb-4">{{description}}</p>
       </div>
     </div>
-    <ChangeProfileModal></ChangeProfileModal>
+
     <!-- End profile user -->
 
     <!-- Start user-profile-desc -->

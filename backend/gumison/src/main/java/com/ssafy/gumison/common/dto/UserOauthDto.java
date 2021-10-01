@@ -15,13 +15,10 @@ import java.io.Serializable;
 @ToString
 public class UserOauthDto implements Serializable {
 
+  private String nickname;
+  private String description;
   private String oAuthId;
   private String profile;
   private String oAuthType;
 
-  public UserOauthDto(User user) {
-    this.oAuthId = user.getOauthId();
-    this.profile = user.getProfile();
-    this.oAuthType = user.getOauthType();
-  }
 }

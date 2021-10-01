@@ -1,4 +1,4 @@
-import store from '@/state/store'
+import store from '@/store'
 
 export default [{
     path: '/',
@@ -35,6 +35,22 @@ export default [{
     path: '/profile',
     name: 'profile',
     component: () => import('../views/pages/account/profile'),
+    meta: {
+        beforeResolve(routeTo, routeFrom, next) {
+            // If the user is already logged in
+            const user = store.getters['users/getUser'];
+            console.log('[router profile] user: ', user);
+            if (user.tocken) {
+                // Redirect to the profile page instead
+                next()
+            } else {
+                // Continue to the login page
+                next({
+                    name: 'login'
+                })
+            }
+        },
+    },
 },
 {
     path: '/level-record',
@@ -123,11 +139,12 @@ export default [{
     meta: {
         authRequired: true,
         beforeResolve(routeTo, routeFrom, next) {
-            if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
-                store.dispatch('auth/logOut')
-            } else {
-                store.dispatch('authfack/logout')
-            }
+            // if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
+            //     store.dispatch('auth/logOut')
+            // } else {
+            //     store.dispatch('authfack/logout')
+            // }
+            store.commit('users/LOGOUT')
             const authRequiredOnPreviousRoute = routeFrom.matched.some(
                 (route) => route.push('/login')
             )
