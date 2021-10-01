@@ -7,7 +7,7 @@ import java.util.List;
  * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스
  *
  * @author cherrytomato1
- * @version 1.2   deleteUserByNickname 추가
+ * @version 1.3   티어 가중치 추가
  */
 
 public interface RankProvider {
@@ -35,7 +35,7 @@ public interface RankProvider {
    * @param limit       가져올 사용자 수
    * @return 유저 닉네임, 랭크 순위 리스트 (size() == limit)
    */
-  List<UserRankDto> getUserRankByStartOffsetAndLimit(int startOffset, int limit);
+  List<UserRankDto> getUserRankByStartOffsetAndLimit(long startOffset, int limit);
 
   /**
    * ZSet에 저장된 유저 수를 반환
