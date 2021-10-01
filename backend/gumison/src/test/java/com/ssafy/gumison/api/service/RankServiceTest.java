@@ -28,7 +28,7 @@ class RankServiceTest {
     UserRankDto userRankDto = rankService.getUserRankByNickname(NICKNAME);
     //then
     assertNotNull(userRankDto);
-    assertTrue(userRankDto.getRank() >= 0 && userRankDto.getRank() < USER_COUNT);
+    assertTrue(userRankDto.getRank() >= 0 && userRankDto.getRank() <= USER_COUNT);
 
   }
 

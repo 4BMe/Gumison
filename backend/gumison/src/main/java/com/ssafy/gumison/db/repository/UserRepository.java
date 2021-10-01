@@ -18,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
   // ~ where nickname like '%nickname%'
   List<User> findByNicknameContaining(String nickname, Pageable page);
 
+  Long countByNicknameContaining(String keyword);
 }
