@@ -62,10 +62,14 @@ public class HistoryController {
   }
 
   @ApiOperation(value = "레벨 기록 수정", notes = "성공한 레벨 기록을 수정합니다.", response = ApiResponseDto.class)
-  @PutMapping("/{solutionId}")
-  public ApiResponseDto<Solution> updateSolution(@PathVariable String solutionId,
-      @RequestBody SolutionRequest solutionRequest) {
-    Solution solution = historyService.updateSolution(solutionId, solutionRequest);
-    return ApiResponseDto.success(solution);
+  @PutMapping("/")
+  public ApiResponseDto<Solution[]> updateSolution(@RequestBody SolutionRequest[] solutionRequests) {
+    log.info("[updateSolution] - HistoryController");
+    Solution[] solutions = new Solution[solutionRequests.length];
+    for (int i = 0; i < solutionRequests.length; i++) {
+      Solution solution = historyService.updateSolution(solutionRequests[i]);
+      solutions[i] = solution;
+    }
+    return ApiResponseDto.success(solutions);
   }
 }

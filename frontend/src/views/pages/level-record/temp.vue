@@ -68,9 +68,11 @@ export default {
                     tier: 'Master1',
                 },
             ],
+            solutionIds: [],
             levelTiersUpdate: [
                 {
                     id: 22,
+                    solutionId: 44,
                     level: '초록',
                     tier: 'Silver1',
                     solutionCount: 3,
@@ -78,6 +80,7 @@ export default {
                 },
                 {
                     id: 23,
+                    solutionId: 45,
                     level: '파랑',
                     tier: 'Gold3',
                     solutionCount: 5,
@@ -85,6 +88,7 @@ export default {
                 },
                 {
                     id: 24,
+                    solutionId: 46,
                     level: '빨강',
                     tier: 'Platinum4',
                     solutionCount: 8,
@@ -92,6 +96,7 @@ export default {
                 },
                 {
                     id: 25,
+                    solutionId: 47,
                     level: '보라',
                     tier: 'Platinum1',
                     solutionCount: 1,
@@ -121,6 +126,7 @@ export default {
                 params: {
                     userId: this.userId,
                     climbingId: this.climbingId,
+                    solutionIds: [],
                     levelTiers: this.levelTiersUpdate,
                 }
             })

@@ -103,8 +103,8 @@ public class HistoryServiceImpl implements HistoryService {
   }
 
   @Override
-  public Solution updateSolution(String solutionId, SolutionRequest solutionRequest) {
-    Solution originSolution = solutionRepository.findById(Long.parseLong(solutionId))
+  public Solution updateSolution(SolutionRequest solutionRequest) {
+    Solution originSolution = solutionRepository.findById(solutionRequest.getSolutionId())
         .orElseThrow(RuntimeException::new);
 
     User user = userRepository.findById(solutionRequest.getUserId()).orElseThrow(RuntimeException::new);
@@ -112,10 +112,10 @@ public class HistoryServiceImpl implements HistoryService {
         .orElseThrow(RuntimeException::new);
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId()).orElseThrow(RuntimeException::new);
 
-    Solution solution = Solution.builder().id(Long.parseLong(solutionId)).user(user).levelTier(levelTier)
+    Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user).levelTier(levelTier)
         .climbing(climbing).count(solutionRequest.getCount()).date(solutionRequest.getDate())
         .deleteYN(originSolution.getDeleteYN()).accumulateReport(originSolution.getAccumulateReport()).build();
-    log.info("[creatSolution] solution : " + solution);
+    log.info("[updateSolution] solution : " + solution);
     return solutionRepository.save(solution);
   }
 }

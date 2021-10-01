@@ -30,7 +30,7 @@
 
 <script>
 import LevelRecordLine from './components/level-record-line';
-import { submit } from '@/api/level-record.js';
+import { submit, update } from '@/api/level-record.js';
 import Colors from '@/constant/colors.js';
 
 var today = new Date().toISOString().slice(0,10);
@@ -51,6 +51,7 @@ export default {
   data(){
       return {
         recordSolutionCounts: [],
+        solutionIds: [],
         solutionVideos: '',
         solutionDate: today,
         colors: [],
@@ -66,35 +67,66 @@ export default {
       async submitClick() {
           let recordData = [];
           for (var i = 0; i < this.colors.length; i++) {
-            if(this.recordSolutionCounts[i] > 0)
-            recordData.push({
-              userId: this.userId,
-              climbingId: this.climbingId,
-              levelTierId: this.levelTiers[i].id,
-              count: this.recordSolutionCounts[i],
-              date: this.solutionDate,
-            })
+            if(this.recordSolutionCounts[i] > 0) {
+              if(this.solutionIds[i] > 0) {
+                recordData.push({
+                  userId: this.userId,
+                  climbingId: this.climbingId,
+                  solutionId: this.solutionIds[i],
+                  levelTierId: this.levelTiers[i].id,
+                  count: this.recordSolutionCounts[i],
+                  date: this.solutionDate,
+                });
+              }
+              else {
+                recordData.push({
+                  userId: this.userId,
+                  climbingId: this.climbingId,
+                  levelTierId: this.levelTiers[i].id,
+                  count: this.recordSolutionCounts[i],
+                  date: this.solutionDate,
+                });
+              }
+            }
           }
           for (i = 0; i < recordData.length; i++) {
             console.log(JSON.stringify(recordData[i]));
           }
-
-          await submit(recordData)
-          .then(({data}) => {
-            console.log(data);
-          })
-          .catch(error => {
-            console.log(error);
-          })
+          if(this.solutionIds[0] > 0) {
+            await update(recordData)
+            .then(({ data }) => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+          }
+          else {
+            await submit(recordData)
+            .then(({ data }) => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+          }
       },
   },
   mounted() {
     for (var i = 0; i < this.levelTiers.length; i++) {
       this.colors.push(Colors.colors[this.levelTiers[i].level]);
-      if(this.levelTiers[i].solutionDate) {
+      if(this.levelTiers[i].solutionCount > 0)
+        this.recordSolutionCounts.push(this.levelTiers[i].solutionCount);
+      else
+        this.recordSolutionCounts.push(0);
+
+      if(this.levelTiers[i].solutionId > 0)
+        this.solutionIds.push(this.levelTiers[i].solutionId);
+
+      if(this.levelTiers[i].solutionDate) 
         this.solutionDate = this.levelTiers[i].solutionDate;
-      }
     }
+    console.log(this.solutionIds);
   },
 }
 </script>
