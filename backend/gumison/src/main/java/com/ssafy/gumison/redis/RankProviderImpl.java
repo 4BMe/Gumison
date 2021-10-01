@@ -1,8 +1,7 @@
 package com.ssafy.gumison.redis;
 
-import com.ssafy.gumison.common.dto.UserExpDto;
+import com.ssafy.gumison.common.dto.UserExpTierDto;
 import com.ssafy.gumison.common.dto.UserRankDto;
-import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.common.enums.RedisKey;
 import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
@@ -28,7 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class RankProviderImpl implements RankProvider {
 
-  private final Long MAX_EXP = (long) 0xffff_ffff;
+  private final Long MAX_EXP = 0xFFFF_FFFFL;
+
+  private final Long TIER_BASE_SCORE = 0x1FF_FFFFL;
 
   private final String KEY_PREFIX = RedisKey.GUMISON_CACHE.name();
 
@@ -54,24 +55,28 @@ public class RankProviderImpl implements RankProvider {
   @Transactional
   public Long loadAllUserExpIntoRankZSet() {
 
-    List<UserExpDto> userExpDtoList = userRepositorySupport.findNicknamesAndExpAll();
+    List<UserExpTierDto> userExpTierDtoList = userRepositorySupport.findNicknamesAndExpAll();
 
-    log.info("Load all user exp into ZSet, size - {}", userExpDtoList.size());
-    userExpDtoList.forEach(userExpDto -> {
-      Long accumulateExp = userExpDto.getAccumulateExp();
-      String nickname = userExpDto.getNickname();
-      if (nickname == null || accumulateExp == null) {
-        log.error("illegal user information, user nickname - {}, user Exp - {}", nickname,
-            accumulateExp);
+    log.info("Load all user exp into ZSet, size - {}", userExpTierDtoList.size());
+    userExpTierDtoList.forEach(userExpTierDto -> {
+      String nickname = userExpTierDto.getNickname();
+      Long accumulateExp = userExpTierDto.getAccumulateExp();
+      Long tierCode = userExpTierDto.getTierCode();
+
+      if (nickname == null || accumulateExp == null || tierCode == null) {
+        log.error("illegal user information, user nickname - {}, user Exp - {}, tier code - {}",
+            nickname,
+            accumulateExp, tierCode);
         return;
 //        throw new RuntimeException("illegal user information");
       }
 
       zSetOperations
-          .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, MAX_EXP - accumulateExp);
+          .add(KEY_PREFIX + RedisKey.RANK.name(), nickname,
+              MAX_EXP - (tierCode * TIER_BASE_SCORE + accumulateExp));
     });
 
-    this.userCount = (long) userExpDtoList.size();
+    this.userCount = (long) userExpTierDtoList.size();
     return userCount;
   }
 
