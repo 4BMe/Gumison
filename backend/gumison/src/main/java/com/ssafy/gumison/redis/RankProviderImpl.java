@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스의 구현체
  *
  * @author cherrytomato1
- * @version 1.2   deleteUserByNickname 추가
+ * @version 1.3   티어 가중치 추가
  */
 @Component
 @Slf4j
@@ -29,7 +29,7 @@ public class RankProviderImpl implements RankProvider {
 
   private final Long MAX_EXP = 0xFFFF_FFFFL;
 
-  private final Long TIER_BASE_SCORE = 0x1FF_FFFFL;
+  private final Long TIER_BASE_SCORE = 0x2FF_FFFFL;
 
   private final String KEY_PREFIX = RedisKey.GUMISON_CACHE.name();
 
@@ -52,7 +52,6 @@ public class RankProviderImpl implements RankProvider {
    * @return 입력된 유저의 수
    */
   @Override
-  @Transactional
   public Long loadAllUserExpIntoRankZSet() {
 
     List<UserExpTierDto> userExpTierDtoList = userRepositorySupport.findNicknamesAndExpAll();
@@ -68,12 +67,13 @@ public class RankProviderImpl implements RankProvider {
             nickname,
             accumulateExp, tierCode);
         return;
-//        throw new RuntimeException("illegal user information");
       }
 
+      long score = MAX_EXP - ((tierCode % 200) * TIER_BASE_SCORE + accumulateExp);
+
+//      zSetOperations.
       zSetOperations
-          .add(KEY_PREFIX + RedisKey.RANK.name(), nickname,
-              MAX_EXP - (tierCode * TIER_BASE_SCORE + accumulateExp));
+          .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, score);
     });
 
     this.userCount = (long) userExpTierDtoList.size();
@@ -105,11 +105,11 @@ public class RankProviderImpl implements RankProvider {
    * @return 유저 닉네임, 랭크 순위 리스트 (size() == limit)
    */
   @Override
-  public List<UserRankDto> getUserRankByStartOffsetAndLimit(int startOffset, int limit) {
+  public List<UserRankDto> getUserRankByStartOffsetAndLimit(long startOffset, int limit) {
 
-    int endOffset = startOffset + limit;
+    long endOffset = startOffset + limit;
     Optional<Set<Object>> setOptional = Optional.ofNullable(zSetOperations
-        .range(KEY_PREFIX + RedisKey.RANK, startOffset, endOffset < userCount ? limit : -1));
+        .range(KEY_PREFIX + RedisKey.RANK, startOffset, endOffset < userCount ? endOffset : -1));
 
     if (!setOptional.isPresent()) {
       throw new RuntimeException("redis is used in pipeline or transaction");
@@ -117,6 +117,8 @@ public class RankProviderImpl implements RankProvider {
 
     List<UserRankDto> userRankDtoList = new ArrayList<>(limit);
     AtomicLong rank = new AtomicLong(startOffset + 1);
+    log.info("load user rank start offset - {}, limit - {}, rankdefault -{}", startOffset, limit,
+        rank);
     setOptional.get()
         .forEach(v -> userRankDtoList.add(UserRankDto.of((String) v, rank.getAndIncrement())));
 

@@ -35,8 +35,7 @@ import org.slf4j.LoggerFactory;
 public class User {
 
   @Id
-  @GenericGenerator(name = "userIdGenerator", strategy = "com.ssafy.gumison.common.util.HashIdGenerator")
-  @GeneratedValue(generator = "userIdGenerator")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
   private Long id;
 

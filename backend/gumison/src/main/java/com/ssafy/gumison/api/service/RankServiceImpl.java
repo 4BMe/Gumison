@@ -45,8 +45,8 @@ public class RankServiceImpl implements RankService {
     if (page > getMaxPageCount() || page <= 0) {
       throw new IllegalArgumentException(String.format("page number %s is invalid", page));
     }
-    int startOffset = (page - 1) / MAX_USER_PER_PAGE;
-    return rankProvider.getUserRankByStartOffsetAndLimit(startOffset, MAX_USER_PER_PAGE);
+    long startOffset = (long) (page - 1) * MAX_USER_PER_PAGE ;
+    return rankProvider.getUserRankByStartOffsetAndLimit(startOffset, MAX_USER_PER_PAGE - 1);
   }
 
   /**
