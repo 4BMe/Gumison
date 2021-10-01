@@ -1,10 +1,8 @@
 package com.ssafy.gumison.common.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 /*
   User nickname과 exp만을 전달하는 Dto
@@ -12,12 +10,14 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
-public class UserExpDto {
+@Builder
+public class UserExpTierDto {
 
   private final String nickname;
   private final Long accumulateExp;
+  private final Long tierCode;
 
-  public static UserExpDto of(String nickname, Long accumulateExp) {
-    return new UserExpDto(nickname, accumulateExp);
+  public static UserExpTierDto of(String nickname, Long accumulateExp, Long tierCode) {
+    return new UserExpTierDto(nickname, accumulateExp, tierCode);
   }
 }
