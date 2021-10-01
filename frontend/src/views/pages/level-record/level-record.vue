@@ -21,10 +21,17 @@
             </div>
           </b-card-body>
       </b-card>
-          <div class="d-flex justify-content-center">
-                <input type="file" value="동영상 업로드" ref="solutionVideos" class="btn btn-outline-success ml-3" accept="video/*" multiple @change="handleFileUpload()">
-                <input type="button" value="등록" class="btn btn-outline-primary float-right mr-3 ml-3" @click="submitClick()">
+          <div class="d-flex">
+            <input
+              type="file"
+              value="동영상 업로드"
+              ref="solutionVideos"
+              class="btn btn-outline-success ml-3"
+              accept="video/*"
+              @change="handleFileUpload()"
+              multiple>
           </div>
+          <input type="button" value="등록" class="btn btn-outline-primary float-right mt-3 mr-4 ml-3" @click="submitClick()">
   </div>
 </template>
 
@@ -65,7 +72,6 @@ export default {
         this.$router.go(-1);
       },
       async submitClick() {
-          let recordData = [];
           const formData = new FormData();
           formData.append("userId", this.userId);
           formData.append("climbingId", this.climbingId);
@@ -73,19 +79,10 @@ export default {
           for (let i = 0; i < this.colors.length; i++) {
             if(this.recordSolutionCounts[i] > 0) {
               if(this.solutionIds[i] > 0) {
-                recordData.push({
-                  userId: this.userId,
-                  climbingId: this.climbingId,
-                  solutionId: this.solutionIds[i],
-                  levelTierId: this.levelTiers[i].id,
-                  count: this.recordSolutionCounts[i],
-                  date: this.solutionDate,
-                });
+                formData.append("solutionIds",this.solutionIds[i]);
               }
-              else {
-                formData.append("levelTierIds", this.levelTiers[i].id);
-                formData.append("counts", this.recordSolutionCounts[i]);
-              }
+              formData.append("levelTierIds", this.levelTiers[i].id);
+              formData.append("counts", this.recordSolutionCounts[i]);
             }
           }
           for(let video of this.solutionVideos){
@@ -93,7 +90,7 @@ export default {
           }
 
           if(this.solutionIds[0] > 0) {
-            await update(recordData)
+            await update(formData)
             .then(({ data }) => {
               console.log(data);
             })

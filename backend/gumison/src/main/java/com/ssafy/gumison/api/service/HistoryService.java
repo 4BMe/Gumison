@@ -17,5 +17,5 @@ public interface HistoryService {
 
   public List<Solution> createSolution(SolutionRequest solutionRequest);
   
-  public Solution updateSolution(SolutionRequest solutionRequest);
+  public List<Solution> updateSolution(SolutionRequest solutionRequest);
 }

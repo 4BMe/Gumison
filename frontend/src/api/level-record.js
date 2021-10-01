@@ -13,8 +13,8 @@ function submit(formData) {
     return instance.post('/', formData);
 }
 
-function update(recordData) {
-    return instance.put('/', recordData);
+function update(formData) {
+    return instance.put('/', formData);
 }
 export {
     submit,

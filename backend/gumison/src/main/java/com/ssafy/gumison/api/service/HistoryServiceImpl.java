@@ -177,18 +177,26 @@ public class HistoryServiceImpl implements HistoryService {
   }
 
   @Override
-  public Solution updateSolution(SolutionRequest solutionRequest) {
-//    Solution originSolution = solutionRepository.findById(solutionRequest.getSolutionId())
-//        .orElseThrow(RuntimeException::new);
-//    User user = userRepository.findById(solutionRequest.getUserId()).orElseThrow(RuntimeException::new);
-//    LevelTier levelTier = levelTierRepository.findById(solutionRequest.getLevelTierIds())
-//        .orElseThrow(RuntimeException::new);
-//    Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId()).orElseThrow(RuntimeException::new);
-//    Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user).levelTier(levelTier)
-//        .climbing(climbing).count(solutionRequest.getCounts()).date(solutionRequest.getDate())
-//        .deleteYN(originSolution.getDeleteYN()).accumulateReport(originSolution.getAccumulateReport()).build();
-//    log.info("[updateSolution] solution : " + solution);
-//    return solutionRepository.save(solution);
-    return null;
+  public List<Solution> updateSolution(SolutionRequest solutionRequest) {
+    log.info("[updateSolution] - HistoryService : {}", solutionRequest);
+    List<Solution> solutions = new ArrayList<>();
+
+    User user = userRepository.findById(solutionRequest.getUserId()).orElseThrow(RuntimeException::new);
+    Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId()).orElseThrow(RuntimeException::new);
+    LocalDateTime now = LocalDateTime.now();
+    List<Long> levelTierIds = solutionRequest.getLevelTierIds();
+    List<Integer> counts = solutionRequest.getCounts();
+    for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
+      Long levelTierId = levelTierIds.get(i);
+      LevelTier levelTier = levelTierRepository.findById(levelTierId).orElseThrow(RuntimeException::new);
+
+      Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user).levelTier(levelTier).climbing(climbing).count(counts.get(i))
+          .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
+      solutions.add(solution);
+    }
+    if (!solutionRequest.getVideos().isEmpty()) {
+      uploadVideos(user.getId(), now, solutionRequest.getVideos());
+    }
+    return solutionRepository.saveAll(solutions);
   }
 }
