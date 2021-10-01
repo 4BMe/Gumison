@@ -8,6 +8,7 @@ import com.ssafy.gumison.db.entity.Solution;
 public interface SolutionRepository extends JpaRepository<Solution, Long> {
 
   List<Solution> findByUserId(Long userId, Pageable pageable);
-  
+
+  List<Solution> findByClimbingIdAndLevelTierId(Long climingId, Long levelTierId,Pageable pageable);
   
 }
