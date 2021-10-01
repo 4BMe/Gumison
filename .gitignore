@@ -227,9 +227,6 @@ hs_err_pid*
 # TODO: where does this rule come from?
 docs/_book
 
-# generated file ignore
-generated/
-
 ### Vuejs ###
 # Recommended template: Node.gitignore
 

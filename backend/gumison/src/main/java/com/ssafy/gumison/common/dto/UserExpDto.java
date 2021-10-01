@@ -11,12 +11,11 @@ import lombok.Setter;
  */
 
 @AllArgsConstructor
-@Setter
 @Getter
 public class UserExpDto {
 
-  private String nickname;
-  private Long accumulateExp;
+  private final String nickname;
+  private final Long accumulateExp;
 
   public static UserExpDto of(String nickname, Long accumulateExp) {
     return new UserExpDto(nickname, accumulateExp);
