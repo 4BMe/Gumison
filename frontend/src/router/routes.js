@@ -47,15 +47,12 @@ export default [{
         component: () => import('../views/pages/level-record/temp'),
     },
     {
-<<<<<<< HEAD
-=======
         path: '/level-contribution',
         name: 'level-contribution',
         component: () => import('../views/pages/level-contribution/level-contribution'),
         props: true
     },
     {
->>>>>>> develop
         path: '/login',
         name: 'login',
         component: () => import('../views/pages/account/login'),
