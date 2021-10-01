@@ -1,19 +1,18 @@
 <template>
   <div>
     Oauth2 Redirect
+    <ChangeProfileModal></ChangeProfileModal>
   </div>
 </template>
 
 <script>
-/**
- * Oauth2 Redirect
- */
+import ChangeProfileModal from "./components/change-profile-modal.vue";
 export default {
   name: "oauth2-redirect",
   data() {
     return {};
   },
-  components: {},
+  components: { ChangeProfileModal },
   methods: {},
 };
 </script>
