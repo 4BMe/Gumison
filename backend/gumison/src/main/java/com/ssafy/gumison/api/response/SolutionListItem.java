@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class SolutionListItem {
+  private Long id;
   private String tier;
   private String climbingName;
   private String level;

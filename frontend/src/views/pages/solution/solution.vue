@@ -1,0 +1,146 @@
+<template>
+  <div>
+    <div class="mt-4 px-4 pb-4 pt-4">
+      <h4 class="mb-3 text-center align-self-center">{{ data.solution.climbingName }}</h4>
+    </div>
+    <div>
+      <div class="px-2">
+        <div class="container-fluid row">
+          <div class="px-4 col-1 chat-user-img online align-self-center" id="userCard">
+            <div v-if="data.profile">
+              <img
+                :src="profile"
+                class="rounded-circle avatar-xs"
+                id="profile"
+                alt="profile"
+              />
+            </div>
+            <div class="avatar-xs" v-else>
+              <span
+                class="avatar-title rounded-circle bg-soft-primary text-primary"
+                >{{ data.nickname.charAt(0) }}
+              </span>
+            </div>
+          </div>
+          <div class="media-body ml-4 p-0 align-self-center">
+            <h5 class="text-truncate font-size-15 mb-1">
+              <img
+                :src="require(`@/assets/images/tier/`+data.tier+`.png`)"
+                alt="sol-tier-img"
+                id="sol-tier-img"
+                class="img-fluid rounded-circle sm-tier-img"
+              /> 
+              {{ data.nickname }}
+            </h5>
+          </div>
+          <div class="col-2 p-0 no-padding chat-user-img online align-self-center">
+          </div>
+          <div class="col-4 chat-user-img online align-self-center">
+            <h5 class="text-truncate font-size-15 mb-1">
+              {{ data.solution.date }}
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-2 p-2" id="solution">
+      <div class="m-3 p-3" id="level">
+        <div class="container-fluid row m-0 p-0">
+          <div class="col-3 m-0 p-0"/>
+          <div class="col-6 m-0 p-0 container-fluid row text-center align-self-center">
+            <h5 class="col-4 m-0 p-0 text-center align-self-center font-size-15">
+                <img
+                  :src="require(`@/assets/images/tier/`+data.solution.tier+`.png`)"
+                  alt="sol-tier-img"
+                  id="sol-tier-img"
+                  class="img-fluid rounded-circle sm-tier-img"
+                /> 
+            </h5>
+            <div class="col-1 m-0 p-0"/>
+            <div class="col-2 rounded-circle level-record-color m-0 p-0" id="color"></div>
+            <div class="col-1 m-0 p-0"/>
+            <!-- <div class="col-4 m-0 p-0 text-center align-self-center">
+              {{data.solution.level}}
+            </div> -->
+            <div class="col-4 m-0 p-0 text-center align-self-center">
+              {{data.solution.count}}
+            </div>
+          </div>
+          <div class="col-3 m-0 p-0"/>
+        </div>
+      </div>
+      <div id="video">
+        <div v-if="data.solution.solutionVideoList.length!=0">
+        {{data.solution.solutionVideoList}}
+        </div>
+      </div>
+      <div id="button">
+        <div class="container-fluid row m-0 p-0">
+          <div class="col-5 m-0 p-0" />
+          <button class="btn btn-outline-success ml-1"
+                  @click="searchHistory('기여')">
+            기여
+          </button>
+          <button class="btn btn-outline-danger ml-1"
+                  @click="searchHistory('기여')">
+            수정
+          </button>
+          <button class="btn btn-outline-info ml-1"
+                  @click="searchHistory('기여')">
+            삭제
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+// import axios from "axios";
+// import { BASE_URL } from "@/constant/index"
+
+/**
+ * Profile component
+ */
+export default {
+  components: {
+  },
+  name: 'solution',
+  props: {
+    data: {
+      type: Object,
+      require: true
+    },
+    color:{
+      type: String,
+      require: true
+    },
+    isData: {
+      type: Boolean,
+      require: true
+    },
+  },
+  data() {
+    return {
+    };
+  },
+  created() {
+  },
+  mounted() {
+    this.$nextTick(function (){
+      document.getElementById('color').style="border: 1px solid; background-color: " + this.color;
+    })
+  },
+  methods: {
+    searchHistory(param) {
+      console.log(param);
+    },
+  },
+};
+</script>
+<style>
+#sol-tier-img {
+  width: 23px;
+  height: 23px;
+}
+</style>
