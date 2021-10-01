@@ -12,7 +12,7 @@ public interface ClimbingService {
 
   List<Climbing> getClimbingList(String climbingName, int pageNumber);
   
-  ClimbingRes getClimbing(String climbingId);
+  ClimbingRes getClimbingDetail(Long climbingId);
 
-  ClimbingSolutionRes getLevelSolution(String climbingId, int pageNumber);
+  List<ClimbingSolutionRes> getLevelSolution(Long climbingId, Long levelTierId, int pageNumber);
 }
