@@ -134,9 +134,11 @@ public class HistoryServiceImpl implements HistoryService {
         .orElseThrow(RuntimeException::new);
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId())
         .orElseThrow(RuntimeException::new);
-    Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user).levelTier(levelTier)
+    Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user)
+        .levelTier(levelTier)
         .climbing(climbing).count(solutionRequest.getCount()).date(solutionRequest.getDate())
-        .deleteYN(originSolution.getDeleteYN()).accumulateReport(originSolution.getAccumulateReport()).build();
+        .deleteYN(originSolution.getDeleteYN())
+        .accumulateReport(originSolution.getAccumulateReport()).build();
     log.info("[updateSolution] solution : " + solution);
     return solutionRepository.save(solution);
   }

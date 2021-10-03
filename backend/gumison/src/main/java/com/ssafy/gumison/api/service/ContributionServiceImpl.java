@@ -29,9 +29,11 @@ public class ContributionServiceImpl implements ContributionService {
     log.info("[createContribution] - ContributionService : {}", contributionRequest);
     LevelTier levelTier = levelTierRepository.findById(contributionRequest.getLevelTierId())
         .orElseThrow(RuntimeException::new);
-    User user = userRepository.findById(contributionRequest.getUserId()).orElseThrow(RuntimeException::new);
+    User user = userRepository.findById(contributionRequest.getUserId())
+        .orElseThrow(RuntimeException::new);
     LocalDate today = LocalDate.now();
-    Contribution contribution = Contribution.builder().levelTier(levelTier).newTier(contributionRequest.getNewTier())
+    Contribution contribution = Contribution.builder().levelTier(levelTier)
+        .newTier(contributionRequest.getNewTier())
         .oldTier(contributionRequest.getOldTier()).user(user).date(today).build();
     Contribution ret = contributionRepository.save(contribution);
     return ret;

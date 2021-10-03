@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 소셜로그인 성공 시 후속 조치를 진행할 UserService 인터페이스 구현체 등록
         .userService(customOAuth2UserService)// 리소스 서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능 명시
         .and()
-        .successHandler( oAuth2AuthenticationSuccessHandler)// 토큰을 파라미터로 넘겨줌
+        .successHandler(oAuth2AuthenticationSuccessHandler)// 토큰을 파라미터로 넘겨줌
         .failureHandler(oAuth2AuthenticationFailureHandler);//리다이렉트 하면서 에러메시지 전달
 
     // Add our custom Token based authentication filter
@@ -64,14 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
 
-
-  
- //swagger 관련 리소스 시큐리티 필터 제거
- @Override
- public void configure(WebSecurity web) throws Exception {
-   web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
-       "/webjars/**", "/swagger/**", "/swagger-ui/**");
- }
+  //swagger 관련 리소스 시큐리티 필터 제거
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
+        "/webjars/**", "/swagger/**", "/swagger-ui/**");
+  }
 
   //JWT
   @Bean
