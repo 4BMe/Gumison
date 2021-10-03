@@ -1,45 +1,50 @@
 <template>
-  <div>
-    <ClimbingCard 
-        :item="climbingInfo" />
-
+  <div v-if="isData">
+    <ClimbingDetail 
+      :climbing="climbingDetail.climbing"
+      :hours="climbingDetail.hours" />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import { BASE_URL } from "@/constant/index"
-import ClimbingCard from "@/views/pages/climbing/climbingCard";
+import { getClimingDetail } from "@/api/climbing";
+import ClimbingDetail from "@/views/pages/climbing/climbingDetail";
 
 export default {
   name: "climbing",
   components: {
-    ClimbingCard,
+    ClimbingDetail,
   },
   props: {
-    id:{
-        type: String,
-        require: true,
-    }
+    climbingId: {},
   },
   data() {
-      return {
-          climbingInfo: {},
-      }
+    return {
+      climbingDetail: { },
+      isData: false,
+    };
+  },
+  created() {
   },
   mounted() {
-    console.log(this.id)
-    // 클라이밍장 영업시간까지 가져오기
-    axios
-      .get(`${BASE_URL}/climbing/detail/${this.id}`)
+    this.getClimbing();
+    console.log("climbing vue");
+  },
+  methods: {
+    getClimbing(){
+      // 클라이밍장 영업시간까지 가져오기
+      getClimingDetail(this.climbingId)
       .then(({ data }) => {
-        this.climbingInfo = data.data;
-        console.log(data)
+        this.climbingDetail = data.data;
+        this.isData = true;
+        this.$emit('climbing-level', this.climbingDetail.levelTiers);
+        console.log(this.climbingDetail);
       })
       .catch((err) => {
         console.log("에러: " + err);
       });
+    }
   },
 };
 </script>
