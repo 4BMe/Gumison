@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.ssafy.gumison.api.response.UserSearchRes;
-import com.ssafy.gumison.common.dto.UserOauthDto;
+import com.ssafy.gumison.common.dto.UserBaseDto;
 import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.db.entity.CommonCode;
 import com.ssafy.gumison.db.entity.Solution;
@@ -22,9 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service("UserService")
 @RequiredArgsConstructor
-public class
-
-UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final CommonCodeRepository commonCodeRepository;
@@ -46,15 +44,13 @@ UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserOauthDto getOauthUserByOauthId(String oauthId) {
+  public UserBaseDto getOauthUserByOauthId(String oauthId) {
     User user = userRepository.findByOauthId(oauthId)
         .orElseThrow(
             () -> new UsernameNotFoundException("User not found with oauthId : " + oauthId));
-    UserOauthDto userOauthDto = UserOauthDto.builder()
+    UserBaseDto userOauthDto = UserBaseDto.builder()
         .nickname(user.getNickname())
         .description(user.getDescription())
-        .oAuthId(user.getOauthId())
-        .oAuthType(user.getOauthType())
         .profile(user.getProfile())
         .build();
     log.info("getOauthUserByOauthId: {}", user);
@@ -97,6 +93,7 @@ UserServiceImpl implements UserService {
     return userRepository.countByNicknameContaining(keyword);
   }
 
+
   /**
    * 유저 정보로 UserSearchDto 반환
    *
@@ -119,6 +116,29 @@ UserServiceImpl implements UserService {
         .profile(user.getProfile())
         .tier(code.getName().toLowerCase())
         .solCnt(solvedCount)
+        .build();
+  }
+
+
+  @Override
+  public UserBaseDto updateUserByNickname(String nickname, UserBaseDto userBaseDto) {
+
+    User user = userRepository.findByNickname(nickname)
+        .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname"));
+    try{
+      user.setNickname(userBaseDto.getNickname());
+      user.setDescription(userBaseDto.getDescription());
+      user.setProfile(userBaseDto.getProfile());
+
+      userRepository.save(user);
+
+    }catch(Exception e){
+      log.error("[updateUserByNickname] ",e);
+    }
+    return UserBaseDto.builder()
+        .nickname(user.getNickname())
+        .description(user.getDescription())
+        .profile(user.getProfile())
         .build();
   }
 

@@ -99,24 +99,12 @@ export default [{
     component: () => import('../views/pages/account/oauth2-redirect'),
 
 },
+
 {
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/pages/account/register'),
-    meta: {
-        beforeResolve(routeTo, routeFrom, next) {
-            // If the user is already logged in
-            if (store.getters['auth/loggedIn']) {
-                // Redirect to the home page instead
-                next({
-                    name: 'home'
-                })
-            } else {
-                // Continue to the login page
-                next()
-            }
-        },
-    },
+    path: '/change-profile',
+    name: 'change-profile',
+    component: () => import('../views/pages/account/components/change-profile-item'),
+
 },
 
 {

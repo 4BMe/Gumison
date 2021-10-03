@@ -1,12 +1,10 @@
 package com.ssafy.gumison.api.service;
 
 import com.ssafy.gumison.api.response.UserSearchRes;
-import com.ssafy.gumison.common.dto.UserOauthDto;
+import com.ssafy.gumison.common.dto.UserBaseDto;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import com.ssafy.gumison.common.dto.UserSearchDto;
-import com.ssafy.gumison.db.entity.User;
-import javax.servlet.http.HttpSession;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
@@ -15,9 +13,21 @@ public interface UserService {
 
   UserSearchRes getUserList(String nickname, int pageNumber);
 
-  UserOauthDto getOauthUserByOauthId(String oauthId);
+  /**
+   * oauthUserId로 사용자 정보 UserOauthDto 반환
+   * @param oauthId
+   * @return { 닉네임, 사용자 소개, 프로필 사진, oAuthId, oAuthType }
+   */
+  UserBaseDto getOauthUserByOauthId(String oauthId);
+
+  /**
+   * TokenAuthenticationFilter 만들 때 사용
+   * UserDetails 반환
+   *
+   * @param oauthId 소셜 로그인 key값
+   * @return userName, password
+   */
   UserDetails loadUserByOauthId(String oauthId);
-  SessionUserDto getCurrentUser(HttpSession httpSession);
 
   /**
    * 유저 닉네임으로 UserSearcDto 반환
@@ -35,4 +45,11 @@ public interface UserService {
    */
   Long getUserCountByKeyword(String keyword);
 
+  /**
+   * 닉네임으로 유저 정보(닉네임, 프로필 사진, 소개글) 변경
+   * @param nickname 변경 전닉네임
+   * @param userBaseDto (변경 후 닉네임, 프로필 사진, 소개글)
+   * @return 변경된 유저 정보 (닉네임, 프로필 사진, 소개글)
+   */
+  UserBaseDto updateUserByNickname(String nickname, UserBaseDto userBaseDto);
 }
