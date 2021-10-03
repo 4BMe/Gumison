@@ -3,7 +3,19 @@
     <div>
         <h5 class="border-bottom border-light pl-2 pb-2"> Level </h5>
     </div>
+    <!-- <simplebar style="max-height: 150px; min-height: 150px"> -->
     <ul class="list-unstyled chat-list chat-user-list">
+      <li class="border-bottom border-light">
+        <div class="row">
+          <div class="col-5 p-1">
+            <h5 class="text-center font-size-15"
+            >색</h5>
+          </div>
+          <h5 class="col-4 p-1 text-center font-size-15">
+              티어
+          </h5>
+        </div>
+      </li>
       <li
         v-for="(levelTier, index) in levelTiers"
         :key="index"
@@ -17,16 +29,19 @@
 
       </li>
     </ul>
+    <!-- </simplebar> -->
   </div>
 </template>
 
 <script>
 import { getClimingDetail } from "@/api/climbing";
+// import simplebar from "simplebar-vue"; 
 import LevelLine from './levelLine.vue';
 
 export default {
   components: { 
-    LevelLine 
+    LevelLine,
+    // simplebar 
   },
   props: {
   },
