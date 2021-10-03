@@ -47,14 +47,15 @@ public class UserController {
       @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
   @GetMapping("/oauth2/login")
-  public ApiResponseDto<UserBaseDto> getCurrentUser(@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
-    log.info("getCurrentUser: userPrincipal - {}",  userPrincipal);
-    UserBaseDto user=null;
-    try{
+  public ApiResponseDto<UserBaseDto> getCurrentUser(
+      @ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
+    log.info("getCurrentUser: userPrincipal - {}", userPrincipal);
+    UserBaseDto user = null;
+    try {
       user = userService.getOauthUserByOauthId(userPrincipal.getEmail());
       return ApiResponseDto.success(user);
-    }catch(Exception e){
-      log.error("[getCurrentUser] ",  e);
+    } catch (Exception e) {
+      log.error("[getCurrentUser] ", e);
     }
     return ApiResponseDto.fail(user, "사용자 정보를 가져오는데 실패했습니다.");
   }
@@ -64,19 +65,19 @@ public class UserController {
       @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "페이지 없음"),
       @ApiResponse(code = 500, message = "서버 오류")})
   @GetMapping("{nickname}")
-  public ApiResponseDto<Boolean> isValidNickname (@PathVariable("nickname") String nickname) {
-    Boolean isValid=false;
-    try{
-      UserSearchDto userSearchDto=userService.getUserSearchDtoByNickname(nickname);
-      if(userSearchDto!=null){
-        return ApiResponseDto.fail(isValid, nickname+ "은 이미 사용중인 닉네임입니다.");
+  public ApiResponseDto<Boolean> isValidNickname(@PathVariable("nickname") String nickname) {
+    Boolean isValid = false;
+    try {
+      UserSearchDto userSearchDto = userService.getUserSearchDtoByNickname(nickname);
+      if (userSearchDto != null) {
+        return ApiResponseDto.fail(isValid, nickname + "은 이미 사용중인 닉네임입니다.");
       }
 
-    }catch(Exception e){
+    } catch (Exception e) {
       log.error("[isValidNickname] ", e);
     }
-    isValid=true;
-    return ApiResponseDto.success(isValid, nickname+"은 사용할 수 있는 닉네임입니다.");
+    isValid = true;
+    return ApiResponseDto.success(isValid, nickname + "은 사용할 수 있는 닉네임입니다.");
   }
 
   @ApiOperation(value = "사용자 정보 변경", notes = "닉네임으로 사용자 정보를 변경합니다.", response = ApiResponseDto.class)
@@ -85,11 +86,12 @@ public class UserController {
       @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
   @PutMapping("{nickname}")
-  public ApiResponseDto<UserBaseDto> updateUserByNickname (@PathVariable("nickname") String nickname,@RequestBody UserBaseDto userBaseDto ) {
-    UserBaseDto updateUser=null;
-    try{
-      updateUser=userService.updateUserByNickname(nickname, userBaseDto);
-    }catch(Exception e){
+  public ApiResponseDto<UserBaseDto> updateUserByNickname(@PathVariable("nickname") String nickname,
+      @RequestBody UserBaseDto userBaseDto) {
+    UserBaseDto updateUser = null;
+    try {
+      updateUser = userService.updateUserByNickname(nickname, userBaseDto);
+    } catch (Exception e) {
       log.error("[updateUserByNickname] ", e);
     }
     return ApiResponseDto.fail(updateUser, "사용자 정보를 가져오는데 실패했습니다.");

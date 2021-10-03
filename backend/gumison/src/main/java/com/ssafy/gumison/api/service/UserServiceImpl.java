@@ -125,15 +125,15 @@ public class UserServiceImpl implements UserService {
 
     User user = userRepository.findByNickname(nickname)
         .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname"));
-    try{
+    try {
       user.setNickname(userBaseDto.getNickname());
       user.setDescription(userBaseDto.getDescription());
       user.setProfile(userBaseDto.getProfile());
 
       userRepository.save(user);
 
-    }catch(Exception e){
-      log.error("[updateUserByNickname] ",e);
+    } catch (Exception e) {
+      log.error("[updateUserByNickname] ", e);
     }
     return UserBaseDto.builder()
         .nickname(user.getNickname())
