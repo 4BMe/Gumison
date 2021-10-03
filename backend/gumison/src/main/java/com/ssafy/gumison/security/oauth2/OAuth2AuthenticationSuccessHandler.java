@@ -34,7 +34,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
       Authentication authentication) throws IOException, ServletException {
     String targetUrl = determineTargetUrl(request, response, authentication);
     if (response.isCommitted()) {
-      log.info("[onAuthenticationSuccess] Response has already been committed. Unable to redirect to " + targetUrl);
+      log.info(
+          "[onAuthenticationSuccess] Response has already been committed. Unable to redirect to "
+              + targetUrl);
       return;
     }
 
@@ -74,14 +76,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
   private boolean isAuthorizedRedirectUri(String uri) {
     URI clientRedirectUri = URI.create(uri);
 
-    return appConfig.getOauth2().getAuthorizedRedirectUris().stream().anyMatch(authorizedRedirectUri -> {
-      // Only validate host and port. Let the clients use different paths if they want to
-      URI authorizedURI = URI.create(authorizedRedirectUri);
-      if (authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-          && authorizedURI.getPort() == clientRedirectUri.getPort()) {
-        return true;
-      }
-      return false;
-    });
+    return appConfig.getOauth2().getAuthorizedRedirectUris().stream()
+        .anyMatch(authorizedRedirectUri -> {
+          // Only validate host and port. Let the clients use different paths if they want to
+          URI authorizedURI = URI.create(authorizedRedirectUri);
+          if (authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
+              && authorizedURI.getPort() == clientRedirectUri.getPort()) {
+            return true;
+          }
+          return false;
+        });
   }
 }

@@ -3,6 +3,7 @@ package com.ssafy.gumison.security.oauth2.user;
 import com.ssafy.gumison.common.exception.OAuth2AuthenticationProcessingException;
 import java.util.Map;
 import com.ssafy.gumison.common.enums.AuthTypeName;
+
 public class OAuth2UserInfoFactory {
 
   public static OAuth2UserInfo getOAuth2UserInfo(String registrationId,

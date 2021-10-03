@@ -12,7 +12,8 @@ public class ResourceNotFoundException extends RuntimeException {
   private Object value;
 
   public ResourceNotFoundException(String resource, String key, Object value) {
-    super(String.format("resource not found : resource - %s, key - %s value - '%s'", resource, key, value));
+    super(String
+        .format("resource not found : resource - %s, key - %s value - '%s'", resource, key, value));
     this.resource = resource;
     this.key = key;
     this.value = value;

@@ -16,8 +16,8 @@ public interface UserService {
   UserSearchRes getUserList(String nickname, int pageNumber);
 
   UserOauthDto getOauthUserByOauthId(String oauthId);
+
   UserDetails loadUserByOauthId(String oauthId);
-  SessionUserDto getCurrentUser(HttpSession httpSession);
 
   /**
    * 유저 닉네임으로 UserSearcDto 반환
