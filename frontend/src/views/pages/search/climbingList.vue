@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     searchHistory(id) {
+      console.log("climbingList - id : " + id);
       this.$router.push({path:`/climbing/${id}`})
     },
 
