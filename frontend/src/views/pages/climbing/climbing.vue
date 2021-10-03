@@ -29,7 +29,6 @@ export default {
   },
   mounted() {
     this.getClimbing();
-    console.log("climbing vue");
   },
   methods: {
     getClimbing(){
@@ -39,7 +38,6 @@ export default {
         this.climbingDetail = data.data;
         this.isData = true;
         this.$emit('climbing-level', this.climbingDetail.levelTiers);
-        console.log(this.climbingDetail);
       })
       .catch((err) => {
         console.log("에러: " + err);
