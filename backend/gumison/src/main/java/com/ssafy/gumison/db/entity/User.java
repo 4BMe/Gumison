@@ -46,33 +46,27 @@ public class User {
 
   private String profile;
 
-  @Column(nullable = false)
+  @NotNull
   private String oauthId;
 
-  @Column(nullable = false)
+  @NotNull
   private String oauthType;
 
   @OneToMany(mappedBy = "user")
   @JsonIgnore
   private List<Solution> solutionList = new ArrayList<>();
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("0")
   private Long accumulateExp;
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("0")
   private Integer accumulateVideo;
 
-  @Column(nullable = false)
+  @NotNull
   @ColumnDefault("201")
   private Long tierCode;
-
-  public User(String oauthId, String oauthType, String profile) {
-    this.oauthId = oauthId;
-    this.oauthType = oauthType;
-    this.profile = profile;
-  }
 
   public User update(String profile) {
     this.profile = profile;
