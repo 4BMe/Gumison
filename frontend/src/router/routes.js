@@ -1,9 +1,19 @@
 import store from '@/state/store'
 
-export default [{
+export default [
+    {
         path: '/',
         name: 'home',
         component: () => import('../views/pages/search/search')
+    },
+    {
+        path: '/temp',
+        name: 'temp',
+        component: () => import('../views/pages/level-record/temp'),
+    },
+    {
+        path: '/profile',
+        name: 'profile',
     },
     {
         path: '/userlist/:keyword',
@@ -18,33 +28,29 @@ export default [{
         props: true,
     },
     {
-        path: '/climbing/:id',
+        path: '/climbing/:climbingId',
         name: 'climbing',
         component: () => import('../views/pages/climbing/climbing'),
         props: true,
-        // children:[
-        //     {
-        //         path: '',
-        //         name: 'level',
-        //         component: () => import('../views/pages/climbing/level'),
-        //     },
-
-        // ]
-    },
-    {
-        path: '/profile',
-        name: 'profile',
+        children:[
+            {
+                path: '',
+                name: 'level',
+                component: () => import('../views/pages/climbing/level'),
+            },
+            {
+                path: ':solutionId',
+                name: 'climbingSolution',
+                component: () => import('../views/pages/climbing/solution/climbingSolution'),
+                props: '',
+            },
+        ]
     },
     {
         path: '/level-record',
         name: 'level-record',
         component: () => import('../views/pages/level-record/level-record'),
         props: true
-    },
-    {
-        path: '/temp',
-        name: 'temp',
-        component: () => import('../views/pages/level-record/temp'),
     },
     {
         path: '/level-contribution',

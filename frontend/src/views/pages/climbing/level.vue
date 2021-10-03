@@ -1,7 +1,7 @@
 <template>
-  <div class="px-5" v-if="isData">
+  <div class="px-3" v-if="isData">
     <div>
-        <h5 class="border-bottom border-light pl-2 pb-2"> level </h5>
+        <h5 class="border-bottom border-light pl-2 pb-2"> Level </h5>
     </div>
     <ul class="list-unstyled chat-list chat-user-list">
       <li
@@ -55,9 +55,7 @@ export default {
     },
 
     searchSolutions(solutionId){
-      console.log(solutionId)
-      this.$router.push({ name: 'solution', params: {solutionId: solutionId}});
-      
+      this.$router.push({ name: 'climbingSolution', params: {solutionId: solutionId}});
     }
   },
 }

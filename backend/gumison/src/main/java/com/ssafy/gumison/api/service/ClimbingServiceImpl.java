@@ -70,7 +70,7 @@ public class ClimbingServiceImpl implements ClimbingService {
           .id(solution.getId())
           .nickname(solution.getUser().getNickname())
           .level(codeNameConvert(solution.getLevelTier().getLevelCode()))
-          .tier(codeNameConvert(solution.getLevelTier().getTierCode()))
+          .tier(codeNameConvert(solution.getLevelTier().getTierCode()).toLowerCase())
           .count(solution.getCount())
           .date(solution.getDate())
           .build()

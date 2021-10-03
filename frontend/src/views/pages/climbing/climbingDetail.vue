@@ -50,7 +50,7 @@
                         :key="index"
                     >
                         <p class="text-muted mb-1">
-                            {{ hour.day }}   {{ hour.startTime }} ~ {{ hour.endTime }}
+                            {{ hour.day }} &nbsp;  {{ hour.startTime }} ~ {{ hour.endTime }}
                         </p>
                     </div>
                 </b-card-body>
