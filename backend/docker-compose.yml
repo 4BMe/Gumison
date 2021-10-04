@@ -1,10 +1,50 @@
-version: "3.7"
-
+version: "3.4"
 services:
-  redis:
-    image: redis:latest
-    container_name: redis
+  backend:
+    container_name: backend
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+      target: prod
+    volumes:
+      - ./log:/log
+    environment:
+      TZ: "Asia/Seoul"
+      SPRING_PROFILES_ACTIVE: "prod"
+      server.address: 0.0.0.0
+    networks:
+      - internal_network
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ../frontend
+      target: production-stage
     ports:
-      - 6379:6379
-    labels:
-      - "mode=standalone"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - backend
+      - certbot
+    networks:
+      - internal_network
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - internal_network
+
+networks:
+  internal_network:
