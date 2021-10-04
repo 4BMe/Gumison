@@ -19,8 +19,8 @@ public class SolutionRes {
     res.nickname = user.getNickname();
     res.tier = tier;
     res.solution = SolutionDto.builder().climbingName(solution.getClimbing().getClimbingName())
-        .level(levelName).tier(tierName).solutionVideoList(solution.getSolutionVideoList())
-        .count(solution.getCount()).date(solution.getDate()).build();
+        .level(levelName).tier(tierName).count(solution.getCount()).date(solution.getDate())
+        .build();
     return res;
   }
 }

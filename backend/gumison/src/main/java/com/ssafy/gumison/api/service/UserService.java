@@ -1,8 +1,9 @@
 package com.ssafy.gumison.api.service;
 
 import com.ssafy.gumison.api.response.UserSearchRes;
-import com.ssafy.gumison.common.dto.SessionUserDto;
+import com.ssafy.gumison.common.dto.UserOauthDto;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.db.entity.User;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,9 @@ public interface UserService {
 
   UserSearchRes getUserList(String nickname, int pageNumber);
 
-  SessionUserDto getCurrentUser(HttpSession httpSession);
+  UserOauthDto getOauthUserByOauthId(String oauthId);
+
+  UserDetails loadUserByOauthId(String oauthId);
 
   /**
    * 유저 닉네임으로 UserSearcDto 반환
