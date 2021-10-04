@@ -7,7 +7,7 @@ import "@/assets/scss/app.scss";
 import i18n from './i18n'
 import store from './store'
 import { initFirebaseBackend } from './authUtils'
-import Alertiy from 'vue-alertify'
+import Alertify from 'vue-alertify'
 import { configureFakeBackend } from './helpers/fake-backend';
 
 const firebaseConfig = {
@@ -32,7 +32,7 @@ Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
-Vue.use(Alertiy)
+Vue.use(Alertify)
 
 new Vue({
   router,

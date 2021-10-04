@@ -32,21 +32,21 @@ export default [{
     // ]
 },
 {
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../views/pages/account/profile'),
+    path: '/myhistory',
+    name: 'myhistory',
+    component: () => import('../views/pages/history/myhistory'),
     meta: {
         beforeResolve(routeTo, routeFrom, next) {
             /**
-             * tocken이 이미 있으면 profile로 가고,
+             * tocken이 이미 있으면 myhistory 로 가고,
              * 없으면 로그인 화면으로 가기
              */
-            const user = store.getters['users/getUser'];
-            console.log('[router profile] user: ', user);
-            if (user.tocken) {
+            const tocken = store.getters['users/getToken'];
+            console.log('[route myhistory click] tocken: ', tocken)
+            if (tocken) {
+                console.log('[route myhistory click] tocken tocken : ', tocken)
                 next()
             } else {
-
                 next({
                     name: 'login'
                 })
@@ -91,6 +91,7 @@ export default [{
             }
         },
     },
+    props: true,
 },
 
 {
@@ -126,12 +127,12 @@ export default [{
         },
     },
 },
-{
-    path: '/myhistory',
-    name: 'myhistory',
-    component: () => import('../views/pages/history/myhistory'),
-    props: true,
-},
+// {
+//     path: '/myhistory',
+//     name: 'myhistory',
+//     component: () => import('../views/pages/history/myhistory'),
+//     props: true,
+// },
 {
     path: '/solution',
     name: 'solution',

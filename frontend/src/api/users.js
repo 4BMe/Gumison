@@ -3,7 +3,7 @@ import { BASE_URL } from "@/constant/index";
 import { GOOGLE_OAUTH_URL } from "@/constant/index";
 import store from '@/store'
 
-const oauth = axios.create({
+const instance = axios.create({
     baseURL: `${BASE_URL}/users/`,
     headers: {
         'Content-type': 'application/json',
@@ -11,7 +11,7 @@ const oauth = axios.create({
     withCredentials: true,
 });
 
-const instance = axios.create({
+const oauth = axios.create({
     baseURL: `${BASE_URL}/users/`,
     headers: {
         'Content-type': 'application/json',
@@ -25,15 +25,15 @@ function googleLoginUser() {
 }
 
 function getUser() {
-    return oauth.get('oauth2/login')
+    return instance.get('oauth2/login')
 }
 
 function getUserByNickname(nickname) {
-    return instance.get(nickname)
+    return oauth.get(nickname)
 }
 
 function updateUserByOauthId(oauthId, updateUserData) {
-    return instance.put(oauthId, updateUserData)
+    return oauth.put(oauthId, updateUserData)
 }
 
 export {
