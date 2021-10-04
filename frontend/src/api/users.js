@@ -15,7 +15,7 @@ const instance = axios.create({
     baseURL: `${BASE_URL}/users/`,
     headers: {
         'Content-type': 'application/json',
-        'Authorization': `${store.getters["token/getHeaders"]}`,
+        'Authorization': `Bearer ${store.getters["users/getToken"]}`,
     },
     withCredentials: true,
 })
@@ -32,13 +32,13 @@ function getUserByNickname(nickname) {
     return instance.get(nickname)
 }
 
-function updateUser(originNicname, updateUserData) {
-    return instance.put(originNicname, updateUserData)
+function updateUserByOauthId(oauthId, updateUserData) {
+    return instance.put(oauthId, updateUserData)
 }
 
 export {
     googleLoginUser,
     getUser,
     getUserByNickname,
-    updateUser
+    updateUserByOauthId
 }

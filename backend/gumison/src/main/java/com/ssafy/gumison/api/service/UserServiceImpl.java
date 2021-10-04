@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
         .nickname(user.getNickname())
         .description(user.getDescription())
         .profile(user.getProfile())
+        .oauthId(user.getOauthId())
         .build();
     log.info("getOauthUserByOauthId: {}", user);
     return userOauthDto;
@@ -121,10 +122,10 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public UserBaseDto updateUserByNickname(String nickname, UserBaseDto userBaseDto) {
+  public UserBaseDto updateUserByOauthId(String oauthId, UserBaseDto userBaseDto) {
 
-    User user = userRepository.findByNickname(nickname)
-        .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname"));
+    User user = userRepository.findByOauthId(oauthId)
+        .orElseThrow(() -> new ResourceNotFoundException("User", oauthId, "oauthId"));
     try {
       user.setNickname(userBaseDto.getNickname());
       user.setDescription(userBaseDto.getDescription());
@@ -133,12 +134,13 @@ public class UserServiceImpl implements UserService {
       userRepository.save(user);
 
     } catch (Exception e) {
-      log.error("[updateUserByNickname] ", e);
+      log.error("[updateUserByOAuthId] ", e);
     }
     return UserBaseDto.builder()
         .nickname(user.getNickname())
         .description(user.getDescription())
         .profile(user.getProfile())
+        .oauthId(user.getOauthId())
         .build();
   }
 

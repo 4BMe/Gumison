@@ -36,7 +36,7 @@ public class ApiResponseDto<T> {
 
   public ApiResponseDto(ApiResponseCode code, T data, String message) {
     this(code);
-    this.data=data;
+    this.data = data;
     this.message = message;
   }
 

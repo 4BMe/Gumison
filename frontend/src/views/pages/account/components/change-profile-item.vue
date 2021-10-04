@@ -110,7 +110,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import store from "@/store";
-import { getUserByNickname, updateUser } from "@/api/users.js";
+import { getUserByNickname, updateUserByOauthId } from "@/api/users.js";
 export default {
   name: "ChangeProfileModal",
   components: {},
@@ -138,9 +138,6 @@ export default {
     user() {
       return store.getters["users/getUser"];
     },
-    // profile() {
-    //   return this.user.profile;
-    // },
     nickname() {
       return this.user.nickname ? this.user.nickname : "닉네임을 입력하세요.";
     },
@@ -148,6 +145,9 @@ export default {
       return this.user.description
         ? this.user.description
         : "소개글을 입력하세요.";
+    },
+    oauthId() {
+      return this.user.oauthId;
     },
   },
 
@@ -230,10 +230,27 @@ export default {
 
     //oauthId로 사용자 정보 저장하는방식으로 변경하기
     saveUser() {
-      console.log("update user: ", this.nickname, this.profileDetail);
-      updateUser(this.nickname, this.profileDetail)
+      let userData = {
+        profile: this.profileDetail.profile.name,
+        nickname: this.profileDetail.nickname
+          ? this.profileDetail.nickname
+          : this.nickname,
+        description: this.profileDetail.description
+          ? this.profileDetail.description
+          : this.description,
+        oauthId: this.oauthId,
+      };
+      console.log("[update user, saveUser] userData: ", userData);
+      updateUserByOauthId(this.oauthId, userData)
         .then(({ data }) => {
           console.log(data);
+          let updateUserData = {
+            nickname: data.data.nickname,
+            description: data.data.description,
+            profile: data.data.profile,
+            oauthId: data.data.oauthId,
+          };
+          store.commit("users/UPDATE_USER", updateUserData);
         })
         .catch((error) => {
           console.log(error);

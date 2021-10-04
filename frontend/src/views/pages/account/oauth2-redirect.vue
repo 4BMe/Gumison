@@ -28,8 +28,10 @@ export default {
               nickname: data.data.nickname,
               description: data.data.description,
               profile: data.data.profile,
+              oauthId: data.data.oauthId,
               tocken: token,
             };
+            console.log("[setUser] user: ", user);
             store.commit("users/SET_USER", user);
             if (!user.nickname || !user.description) {
               this.$router.push({ name: "change-profile" });

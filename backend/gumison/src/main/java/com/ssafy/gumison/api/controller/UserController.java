@@ -85,15 +85,17 @@ public class UserController {
       @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "페이지 없음"),
       @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
-  @PutMapping("{nickname}")
-  public ApiResponseDto<UserBaseDto> updateUserByNickname(@PathVariable("nickname") String nickname,
+  @PutMapping("{oauthId}")
+  public ApiResponseDto<UserBaseDto> updateUserByoauthId(@PathVariable("oauthId") String oauthId,
       @RequestBody UserBaseDto userBaseDto) {
     UserBaseDto updateUser = null;
+    log.info("[updateUserByoauthId] oauthId: {}, userBaseDto:{}", oauthId, userBaseDto);
     try {
-      updateUser = userService.updateUserByNickname(nickname, userBaseDto);
+      updateUser = userService.updateUserByOauthId(oauthId, userBaseDto);
+      return ApiResponseDto.success(updateUser, "수정된 사용자 정보를 가져왔습니다.");
     } catch (Exception e) {
-      log.error("[updateUserByNickname] ", e);
+      log.error("[updateUserByoauthId] ", e);
     }
-    return ApiResponseDto.fail(updateUser, "사용자 정보를 가져오는데 실패했습니다.");
+    return ApiResponseDto.fail(updateUser, "사용자 정보 변경에 실패했습니다.");
   }
 }

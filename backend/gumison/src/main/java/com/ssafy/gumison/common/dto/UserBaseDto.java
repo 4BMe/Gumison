@@ -18,5 +18,6 @@ public class UserBaseDto implements Serializable {
   private String nickname;
   private String description;
   private String profile;
+  private String oauthId;
 
 }
