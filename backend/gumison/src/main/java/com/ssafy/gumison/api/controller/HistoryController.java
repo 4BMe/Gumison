@@ -55,7 +55,8 @@ public class HistoryController {
 
   @ApiOperation(value = "레벨 기록 생성", notes = "성공한 레벨 기록을 생성합니다.", response = ApiResponseDto.class)
   @PostMapping("/")
-  public ApiResponseDto<List<Solution>> createSolution(@ModelAttribute SolutionRequest solutionRequest) {
+  public ApiResponseDto<List<Solution>> createSolution(
+      @ModelAttribute SolutionRequest solutionRequest) {
     log.info("[createSolution] - HistoryController : {}", solutionRequest);
     List<Solution> solutions = historyService.createSolution(solutionRequest);
     return ApiResponseDto.success(solutions);
@@ -63,7 +64,8 @@ public class HistoryController {
 
   @ApiOperation(value = "레벨 기록 수정", notes = "성공한 레벨 기록을 수정합니다.", response = ApiResponseDto.class)
   @PutMapping("/")
-  public ApiResponseDto<List<Solution>> updateSolution(@ModelAttribute SolutionRequest solutionRequest) {
+  public ApiResponseDto<List<Solution>> updateSolution(
+      @ModelAttribute SolutionRequest solutionRequest) {
     log.info("[updateSolution] - HistoryController : {}", solutionRequest);
     List<Solution> solutions = historyService.updateSolution(solutionRequest);
     return ApiResponseDto.success(solutions);

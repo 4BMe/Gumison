@@ -16,6 +16,6 @@ public interface HistoryService {
   public SolutionRes solution(String solutionId);
 
   public List<Solution> createSolution(SolutionRequest solutionRequest);
-  
+
   public List<Solution> updateSolution(SolutionRequest solutionRequest);
 }

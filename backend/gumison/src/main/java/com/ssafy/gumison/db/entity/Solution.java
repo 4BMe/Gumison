@@ -72,7 +72,7 @@ public class Solution {
   @NotNull
   @ColumnDefault("0")
   private Integer accumulateReport;
-  
+
   @NotNull
   private String uploadId;
 }

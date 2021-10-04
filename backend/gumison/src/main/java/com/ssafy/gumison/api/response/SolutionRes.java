@@ -12,13 +12,15 @@ public class SolutionRes {
   private String tier;
   private SolutionDto solution;
 
-  public static SolutionRes of(User user, String tier, Solution solution, String tierName, String levelName) {
+  public static SolutionRes of(User user, String tier, Solution solution, String tierName,
+      String levelName) {
     SolutionRes res = new SolutionRes();
     res.profile = user.getProfile();
     res.nickname = user.getNickname();
     res.tier = tier;
-    res.solution = SolutionDto.builder().climbingName(solution.getClimbing().getClimbingName()).level(levelName)
-        .tier(tierName).count(solution.getCount()).date(solution.getDate()).build();
+    res.solution = SolutionDto.builder().climbingName(solution.getClimbing().getClimbingName())
+        .level(levelName).tier(tierName).count(solution.getCount()).date(solution.getDate())
+        .build();
     return res;
   }
 }
