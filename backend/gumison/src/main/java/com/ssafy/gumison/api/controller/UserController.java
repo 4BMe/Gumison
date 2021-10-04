@@ -77,7 +77,7 @@ public class UserController {
       log.error("[isValidNickname] ", e);
     }
     isValid = true;
-    return ApiResponseDto.success(isValid, nickname + "은 사용할 수 있는 닉네임입니다.");
+    return ApiResponseDto.success(isValid);
   }
 
   @ApiOperation(value = "사용자 정보 변경", notes = "닉네임으로 사용자 정보를 변경합니다.", response = ApiResponseDto.class)
@@ -92,7 +92,7 @@ public class UserController {
     log.info("[updateUserByoauthId] oauthId: {}, userBaseDto:{}", oauthId, userBaseDto);
     try {
       updateUser = userService.updateUserByOauthId(oauthId, userBaseDto);
-      return ApiResponseDto.success(updateUser, "수정된 사용자 정보를 가져왔습니다.");
+      return ApiResponseDto.success(updateUser);
     } catch (Exception e) {
       log.error("[updateUserByoauthId] ", e);
     }
