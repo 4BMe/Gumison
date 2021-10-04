@@ -4,7 +4,7 @@ services:
     container_name: backend
     build:
       dockerfile: Dockerfile
-      context: ./backend
+      context: ./gumison
       target: prod
     volumes:
       - ./log:/log
