@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h4 class="mb-0">사용자 랭킹</h4>
     <simplebar class="chat-message-list" id="chat-list" ref="current">
       <ul
         class="list-unstyled chat-list chat-user-list"
@@ -85,7 +86,7 @@
 // import axios from "axios";
 // import { BASE_URL } from "@/constant/index"
 import simplebar from "simplebar-vue";
-import {getUserRankList} from "@/api/rank";
+import { getUserRankListByKeywordAndPage, getUserRankListByPage } from "@/api/rank";
 
 export default {
   name: 'rank-list',
@@ -104,6 +105,13 @@ export default {
     },
   },
 
+  
+  data() {
+    return {
+      userRankList: [],
+    };
+  },
+
   computed: {
     keyword:{
       get(){
@@ -117,17 +125,15 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      userRankList: [],
-    };
-  },
   watch:{
     keyword : function(val, oldVal){
       console.log("[rank-list] watch - keyword", val + " " + oldVal)
+      this.getList();
     },
     page : function(val, oldVal){
+      
       console.log("[rank-list] watch - page", val + " " + oldVal)
+      this.getList();
     }
   },
   created() {
@@ -137,7 +143,9 @@ export default {
   },
   methods: {
     getList(){
-      getUserRankList(this.keyword, this.page);
+      this.userRankList = 
+        this.keyword.length === 0 ? getUserRankListByPage(this.page) 
+        : getUserRankListByKeywordAndPage(this.keyword, this.page);
     }
   },
 };

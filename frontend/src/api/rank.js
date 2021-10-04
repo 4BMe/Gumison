@@ -9,11 +9,47 @@ const instance = axios.create({
     withCredentials: true,
 });
 
-function getUserRankList(recordData) {
-    return instance.post('/', recordData);
+function getUserRankList(path){
+    instance
+        .get(path)
+        .then(function(response){
+            console.log(response.data.data.userRankList);
+            if(response.status != 200){
+                console.log("[getUserRankList] fail, code : " + response.status);
+                console.log("fail message : " + response.data.message);
+                return null;
+            }
+            console.log("[getUserRankList] success");
+            return response.data.data.userRankList;
+        })
+}
+
+function getUserRankListByKeywordAndPage(keyword, page) {
+    return getUserRankList('/search/' + keyword + "/" + page);
+}
+
+function getUserRankListByPage(page) {
+    return getUserRankList('/' + page);
+}
+
+function getUserRankListByNickname(nickname) {
+    instance
+        .get('/detail' + nickname)
+        .then(function(response){
+            
+            if(response.status != 200){
+                console.log("[getUserRankList] fail, code : " + response.status);
+                console.log("fail message : " + response.data.message);
+                return null;
+            }
+            console.log("[getUserRankList] success");
+            return response.data.data.userRank;
+        })
 }
 
 
 export {
-    getUserRankList,
+    getUserRankListByKeywordAndPage,
+    getUserRankListByPage,
+    getUserRankListByNickname,
 }
