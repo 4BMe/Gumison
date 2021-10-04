@@ -1,9 +1,12 @@
 package com.ssafy.gumison.api.request;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,16 +15,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SolutionRequest {
   private Long solutionId;
+  private Long userId;
+  private Long climbingId;
   private Integer accumulateReport;
-  private Integer count;
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate date;
   private Boolean deleteYn;
-  private Long climbingId;
-  private Long levelTierId;
-  private Long userId;
+  private List<Long> levelTierIds;
+  private List<Integer> counts;
+  private List<MultipartFile> videos;
 }

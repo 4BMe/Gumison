@@ -4,20 +4,19 @@ import { BASE_URL } from "@/constant/index"
 const instance = axios.create({
     baseURL: BASE_URL + '/history',
     headers: {
-      'Content-type': 'application/json',
+      'Content-type': 'multipart/form-data',
     },
     withCredentials: true,
 });
 
-function submit(recordData) {
-    return instance.post('/', recordData);
+function submit(formData) {
+    return instance.post('/', formData);
 }
 
-function uploadFile(fileReq){
-    return instance.post('upload', fileReq);
+function update(formData) {
+    return instance.put('/', formData);
 }
-
 export {
-    uploadFile,
     submit,
+    update,
 }

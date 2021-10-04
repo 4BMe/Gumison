@@ -19,7 +19,6 @@ export default {
   },
   props: {
     id:{
-        type: String,
         require: true,
     }
   },

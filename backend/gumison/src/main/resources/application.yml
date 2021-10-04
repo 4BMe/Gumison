@@ -1,11 +1,17 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://3.35.156.99:3306/user_test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    url: jdbc:mysql://3.35.156.99:3306/gumison?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
     hikari:
       username: gumison
       password: gumison
-      
+  
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  
+  
   jpa:
     hibernate:
       naming:
@@ -39,13 +45,23 @@ spring:
           google:
             client-id: 728431963124-aa22v5qq2de7vik5lhj75rkekgge2sh2.apps.googleusercontent.com
             client-secret: _o70Bb9pPLVOZFanRBU-lfFV
+            redirectUri: "http://localhost:8888/oauth2/callback/google"
             scope: profile, email
+
+
+app:
+  auth:
+    tokenSecret: 7F79A5C4F6869E43C17FFBEADAF26
+    tokenExpirationMsec: 864000000
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:9000/oauth2/redirect
+
 
 logging:
   level:
     root: INFO
     org.springframework: WARN
-    org.apache=WARN:
     com.ssafy.gumison: INFO
 
 server:

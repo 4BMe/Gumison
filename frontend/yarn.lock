@@ -8349,6 +8349,11 @@
   "resolved" "https://registry.npmjs.org/shell-quote/-/shell-quote-1.7.2.tgz"
   "version" "1.7.2"
 
+"shvl@^2.0.3":
+  "integrity" "sha512-V7C6S9Hlol6SzOJPnQ7qzOVEWUQImt3BNmmzh40wObhla3XOYMe4gGiYzLrJd5TFa+cI2f9LKIRJTTKZSTbWgw=="
+  "resolved" "https://registry.npmjs.org/shvl/-/shvl-2.0.3.tgz"
+  "version" "2.0.3"
+
 "side-channel@^1.0.4":
   "version" "1.0.4"
   dependencies:
@@ -9440,12 +9445,25 @@
 "vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.5.17", "vue@^2.5.18", "vue@^2.5.2", "vue@^2.6.10", "vue@^2.6.11", "vue@^2.6.12":
   "version" "2.6.14"
 
+"vue3-google-oauth2@^1.0.6":
+  "integrity" "sha512-ebUW3V1jejImw2z9nggjczPj4jUnZArNq+kgTdLdGuf6k/zQDDCeGTLmTUiy5gSXMbzVz9PQWiVEj8eX6y/I0Q=="
+  "resolved" "https://registry.npmjs.org/vue3-google-oauth2/-/vue3-google-oauth2-1.0.6.tgz"
+  "version" "1.0.6"
+
 "vuelidate@^0.7.6":
   "integrity" "sha512-suzIuet1jGcyZ4oUSW8J27R2tNrJ9cIfklAh63EbAkFjE380iv97BAiIeolRYoB9bF9usBXCu4BxftWN1Dkn3g=="
   "resolved" "https://registry.npmjs.org/vuelidate/-/vuelidate-0.7.6.tgz"
   "version" "0.7.6"
 
-"vuex@^3.5.1":
+"vuex-persistedstate@^4.1.0":
+  "integrity" "sha512-3SkEj4NqwM69ikJdFVw6gObeB0NHyspRYMYkR/EbhR0hbvAKyR5gksVhtAfY1UYuWUOCCA0QNGwv9pOwdj+XUQ=="
+  "resolved" "https://registry.npmjs.org/vuex-persistedstate/-/vuex-persistedstate-4.1.0.tgz"
+  "version" "4.1.0"
+  dependencies:
+    "deepmerge" "^4.2.2"
+    "shvl" "^2.0.3"
+
+"vuex@^3.0 || ^4.0.0-rc", "vuex@^3.5.1":
   "version" "3.6.2"
 
 "watchpack-chokidar2@^2.0.1":

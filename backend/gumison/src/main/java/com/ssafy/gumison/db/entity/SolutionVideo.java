@@ -1,14 +1,15 @@
 package com.ssafy.gumison.db.entity;
 
 import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import org.springframework.data.annotation.CreatedDate;
+
+import com.sun.istack.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,14 +28,15 @@ public class SolutionVideo {
   @Column(name = "video_id")
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "solution_id")
-  private Solution solution;
-
+  @NotNull
   @Column(nullable = false)
-  private String url;
+  private String uploadId;
 
+  @NotNull
   @Column(nullable = false)
-  @CreatedDate
-  private LocalDateTime date;
+  private String uri;
+
+  @NotNull
+  @Column(nullable = false)
+  private LocalDateTime dateTime;
 }

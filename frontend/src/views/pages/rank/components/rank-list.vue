@@ -1,6 +1,6 @@
 <template>
   <div>
-    <simplebar class="chat-message-list" id="chat-list" ref="current">
+    <simplebar class="chat-group-list" id="chat-list" ref="current">
 
       <ul
         class="list-unstyled chat-list chat-user-list"
@@ -32,7 +32,7 @@
             <div class="media">
               <div class="avatar-xs overflow-hidden" >
                   <span
-                    class="avatar-title rounded-circle bg-warning text-primary"
+                    class="avatar-title rounded-circle bg-warning text-primary align-self-center"
                     >{{ $t(item.rank)}}
                   </span>
               </div>
@@ -159,6 +159,7 @@ export default {
         return;
       }
       this.userRankList = await getUserRankListByKeywordAndPage(this.keyword, this.page);
+      console.log(this.userRankList);
       this.dataLoaded = true;
     }
   },

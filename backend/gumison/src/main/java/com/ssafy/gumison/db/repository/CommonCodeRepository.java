@@ -13,4 +13,7 @@ public interface CommonCodeRepository extends JpaRepository<CommonCode, Long> {
 
   @Query(value = "select name from common_code where code = ?;", nativeQuery = true)
   String findName(Long code);
+
+  @Query(value = "select tier_exp from common_code where code = ?;", nativeQuery = true)
+  Long findExp(Long code);
 }

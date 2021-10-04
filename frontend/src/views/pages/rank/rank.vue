@@ -1,8 +1,5 @@
 <template>
   <div class="height-full">
-    <div class="px-4 pt-4">
-      <h4 class="mb-0">사용자 랭킹</h4>
-    </div>
 
     <RankSearchBar
       :rankKeyword = "rankKeyword"

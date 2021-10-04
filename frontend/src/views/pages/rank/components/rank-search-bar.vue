@@ -1,12 +1,12 @@
 <template>
-    <div class="p-4">
+    <div class="p-4 ">
       <div class="search-box chat-search-box">
-        <div class="input-group bg-light input-group-lg rounded-lg">
+        <div class="input-group bg-light input-group-lg rounded-lg ">
 
           <input
             type="text"
-            class="form-control bg-light pl-0"
-            placeholder="사용자를 입력하세요"
+            class="form-control bg-light pl-0 ml-3"
+            placeholder="닉네임을 입력하세요"
             v-model="keyword"
             @keyup.enter="searchUserRank()"
           />
@@ -37,6 +37,7 @@ export default {
 
   },
 
+/*
   computed: {
     keyword:{
       get(){
@@ -50,15 +51,19 @@ export default {
         })
       }
     },
+  },
+  */
 
+    data(){
+    return{
+      keyword : "",
+    }
   },
   methods: {
     searchUserRank(){
-
         this.$emit("searchKeyword", { 
-        
-        keyword: this.keyword,
-        page: 1
+          keyword: this.keyword,
+          page: 1
         })
     }
 

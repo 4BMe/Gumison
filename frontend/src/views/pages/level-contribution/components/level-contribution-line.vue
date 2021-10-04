@@ -5,7 +5,7 @@
         <div class="col-2"></div>
         <div class="col-6 row">
             <div class="col-4"><i class="ri-arrow-left-s-fill" @click="tierDown()"></i></div>
-            <div class="col-4"><img :src="require(`@/assets/images/tier/` + this.lineTier.toLocaleLowerCase() + `.png`)" alt="tier" class="img-fluid rounded-circle sm-tier-img"></div>
+            <div class="col-4"><img :src="require(`@/assets/images/tier/` + this.lineTier.toLowerCase() + `.png`)" alt="tier" class="img-fluid rounded-circle sm-tier-img"></div>
             <div class="col-4"><i class="ri-arrow-right-s-fill" @click="tierUp()"></i></div>
         </div>
     </div>
