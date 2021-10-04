@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.ssafy.gumison.api.response.UserSearchRes;
-import com.ssafy.gumison.common.dto.UserBaseDto;
+import com.ssafy.gumison.common.dto.UserOauthDto;
 import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.db.entity.CommonCode;
 import com.ssafy.gumison.db.entity.Solution;
@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserBaseDto getOauthUserByOauthId(String oauthId) {
+  public UserOauthDto getOauthUserByOauthId(String oauthId) {
     User user = userRepository.findByOauthId(oauthId)
         .orElseThrow(
             () -> new UsernameNotFoundException("User not found with oauthId : " + oauthId));
-    UserBaseDto userOauthDto = UserBaseDto.builder()
+    UserOauthDto userOauthDto = UserOauthDto.builder()
         .nickname(user.getNickname())
         .description(user.getDescription())
         .profile(user.getProfile())
@@ -122,21 +122,21 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public UserBaseDto updateUserByOauthId(String oauthId, UserBaseDto userBaseDto) {
+  public UserOauthDto updateUserByOauthId(String oauthId, UserOauthDto userOauthDto) {
 
     User user = userRepository.findByOauthId(oauthId)
         .orElseThrow(() -> new ResourceNotFoundException("User", oauthId, "oauthId"));
     try {
-      user.setNickname(userBaseDto.getNickname());
-      user.setDescription(userBaseDto.getDescription());
-      user.setProfile(userBaseDto.getProfile());
+      user.setNickname(userOauthDto.getNickname());
+      user.setDescription(userOauthDto.getDescription());
+      user.setProfile(userOauthDto.getProfile());
 
       userRepository.save(user);
 
     } catch (Exception e) {
       log.error("[updateUserByOAuthId] ", e);
     }
-    return UserBaseDto.builder()
+    return UserOauthDto.builder()
         .nickname(user.getNickname())
         .description(user.getDescription())
         .profile(user.getProfile())

@@ -1,7 +1,7 @@
 package com.ssafy.gumison.api.service;
 
 import com.ssafy.gumison.api.response.UserSearchRes;
-import com.ssafy.gumison.common.dto.UserBaseDto;
+import com.ssafy.gumison.common.dto.UserOauthDto;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import com.ssafy.gumison.common.dto.UserSearchDto;
@@ -19,7 +19,7 @@ public interface UserService {
    * @param oauthId
    * @return { 닉네임, 사용자 소개, 프로필 사진, oAuthId, oAuthType }
    */
-  UserBaseDto getOauthUserByOauthId(String oauthId);
+  UserOauthDto getOauthUserByOauthId(String oauthId);
 
   /**
    * TokenAuthenticationFilter 만들 때 사용 UserDetails 반환
@@ -49,8 +49,8 @@ public interface UserService {
    * 닉네임으로 유저 정보(닉네임, 프로필 사진, 소개글) 변경
    *
    * @param oauthId     사용자의 oAuthId
-   * @param userBaseDto (변경 후 닉네임, 프로필 사진, 소개글)
+   * @param userOauthDto (변경 후 닉네임, 프로필 사진, 소개글)
    * @return 변경된 유저 정보 (닉네임, 프로필 사진, 소개글)
    */
-  UserBaseDto updateUserByOauthId(String oauthId, UserBaseDto userBaseDto);
+  UserOauthDto updateUserByOauthId(String oauthId, UserOauthDto userOauthDto);
 }

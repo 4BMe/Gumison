@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @ToString
-public class UserBaseDto implements Serializable {
+public class UserOauthDto implements Serializable {
 
   private String nickname;
   private String description;

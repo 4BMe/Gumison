@@ -1,8 +1,7 @@
 package com.ssafy.gumison.api.controller;
 
-import com.ssafy.gumison.common.dto.UserBaseDto;
+import com.ssafy.gumison.common.dto.UserOauthDto;
 import com.ssafy.gumison.common.dto.UserSearchDto;
-import com.ssafy.gumison.db.entity.User;
 import com.ssafy.gumison.security.CurrentUser;
 import com.ssafy.gumison.security.UserPrincipal;
 import io.swagger.annotations.Api;
@@ -47,10 +46,10 @@ public class UserController {
       @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
   @GetMapping("/oauth2/login")
-  public ApiResponseDto<UserBaseDto> getCurrentUser(
+  public ApiResponseDto<UserOauthDto> getCurrentUser(
       @ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
     log.info("getCurrentUser: userPrincipal - {}", userPrincipal);
-    UserBaseDto user = null;
+    UserOauthDto user = null;
     try {
       user = userService.getOauthUserByOauthId(userPrincipal.getEmail());
       return ApiResponseDto.success(user);
@@ -86,12 +85,12 @@ public class UserController {
       @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
   @PutMapping("{oauthId}")
-  public ApiResponseDto<UserBaseDto> updateUserByoauthId(@PathVariable("oauthId") String oauthId,
-      @RequestBody UserBaseDto userBaseDto) {
-    UserBaseDto updateUser = null;
-    log.info("[updateUserByoauthId] oauthId: {}, userBaseDto:{}", oauthId, userBaseDto);
+  public ApiResponseDto<UserOauthDto> updateUserByoauthId(@PathVariable("oauthId") String oauthId,
+      @RequestBody UserOauthDto userOauthDto) {
+    UserOauthDto updateUser = null;
+    log.info("[updateUserByoauthId] oauthId: {}, userBaseDto:{}", oauthId, userOauthDto);
     try {
-      updateUser = userService.updateUserByOauthId(oauthId, userBaseDto);
+      updateUser = userService.updateUserByOauthId(oauthId, userOauthDto);
       return ApiResponseDto.success(updateUser);
     } catch (Exception e) {
       log.error("[updateUserByoauthId] ", e);
