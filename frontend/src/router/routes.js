@@ -91,6 +91,11 @@ export default [{
         },
     },
     {
+        path: '/rank-list',
+        name: 'rank-list',
+        component: () => import('../views/pages/rank/rank'),
+    },
+    {
         path: '/forgot-password',
         name: 'Forgot-password',
         component: () => import('../views/pages/account/forgot-password'),
