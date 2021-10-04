@@ -68,7 +68,6 @@ public class ClimbingServiceImpl implements ClimbingService {
     for (Solution solution : solutionList) {
       solutionResList.add(
           ClimbingSolutionRes.builder()
-<<<<<<< HEAD
           .id(solution.getId())
           .nickname(solution.getUser().getNickname())
           .level(codeNameConvert(solution.getLevelTier().getLevelCode()))
@@ -76,15 +75,6 @@ public class ClimbingServiceImpl implements ClimbingService {
           .count(solution.getCount())
           .date(solution.getDate())
           .build()
-=======
-              .id(solution.getId())
-              .nickname(solution.getUser().getNickname())
-              .level(codeNameConvert(solution.getLevelTier().getLevelCode()))
-              .tier(codeNameConvert(solution.getLevelTier().getTierCode()))
-              .count(solution.getCount())
-              .date(solution.getDate())
-              .build()
->>>>>>> develop
       );
     }
 
