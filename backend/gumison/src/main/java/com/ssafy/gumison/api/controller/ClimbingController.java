@@ -54,6 +54,9 @@ public class ClimbingController {
       @PathVariable Long levelTierId, @PathVariable int pageNumber) {
     List<ClimbingSolutionRes> climbingSolutionRes =
         climbingService.getLevelSolution(climbingId, levelTierId, pageNumber);
+    
+    log.info("Get climbing solution list - {}", climbingSolutionRes);
+    
     return ApiResponseDto.success(climbingSolutionRes);
   }
 

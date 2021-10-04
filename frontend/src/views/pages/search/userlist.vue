@@ -1,8 +1,5 @@
 <template>
   <div class="px-2">
-    <div class="px-4 pt-4">
-      <h4 class="mb-0">거미손</h4>
-    </div>
     <SearchBar 
       currName = '사용자'
       currType = 'userlist'

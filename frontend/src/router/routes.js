@@ -1,35 +1,15 @@
 import store from '@/store'
 
-export default [{
+export default [
+{
     path: '/',
     name: 'home',
     component: () => import('../views/pages/search/search')
 },
 {
-    path: '/userlist/:keyword',
-    name: 'userlist',
-    component: () => import('../views/pages/search/userlist'),
-    props: true,
-},
-{
-    path: '/climbinglist/:keyword',
-    name: 'climbinglist',
-    component: () => import('../views/pages/search/climbingList'),
-    props: true,
-},
-{
-    path: '/climbing/:id',
-    name: 'climbing',
-    component: () => import('../views/pages/climbing/climbing'),
-    props: true,
-    // children:[
-    //     {
-    //         path: '',
-    //         name: 'level',
-    //         component: () => import('../views/pages/climbing/level'),
-    //     },
-
-    // ]
+    path: '/temp',
+    name: 'temp',
+    component: () => import('../views/pages/level-record/temp'),
 },
 {
     path: '/myhistory',
@@ -55,15 +35,41 @@ export default [{
     },
 },
 {
+    path: '/userlist/:keyword',
+    name: 'userlist',
+    component: () => import('../views/pages/search/userlist'),
+    props: true,
+},
+{
+    path: '/climbinglist/:keyword',
+    name: 'climbinglist',
+    component: () => import('../views/pages/search/climbingList'),
+    props: true,
+},
+{
+    path: '/climbing/:climbingId',
+    name: 'climbing',
+    component: () => import('../views/pages/climbing/climbing'),
+    props: true,
+    children:[
+        {
+            path: '',
+            name: 'level',
+            component: () => import('../views/pages/climbing/level'),
+        },
+        {
+            path: ':solutionId',
+            name: 'climbingSolution',
+            component: () => import('../views/pages/climbing/solution/climbingSolution'),
+            props: '',
+        },
+    ]
+},
+{
     path: '/level-record',
     name: 'level-record',
     component: () => import('../views/pages/level-record/level-record'),
     props: true
-},
-{
-    path: '/temp',
-    name: 'temp',
-    component: () => import('../views/pages/level-record/temp'),
 },
 {
     path: '/level-contribution',
