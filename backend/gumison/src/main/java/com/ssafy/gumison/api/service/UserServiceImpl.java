@@ -1,14 +1,15 @@
 package com.ssafy.gumison.api.service;
 
+import com.ssafy.gumison.security.UserPrincipal;
 import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.ssafy.gumison.api.response.UserSearchRes;
-import com.ssafy.gumison.common.dto.SessionUserDto;
+import com.ssafy.gumison.common.dto.UserOauthDto;
 import com.ssafy.gumison.common.dto.UserSearchDto;
 import com.ssafy.gumison.db.entity.CommonCode;
 import com.ssafy.gumison.db.entity.Solution;
@@ -21,10 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service("UserService")
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class
+
+UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final CommonCodeRepository commonCodeRepository;
+  private final HttpSession httpSession;
 
   @Override
   public UserSearchRes getUserList(String nickname, int pageNumber) {
@@ -42,10 +46,31 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public SessionUserDto getCurrentUser(HttpSession httpSession) {
-    SessionUserDto sessionUserDto = (SessionUserDto) httpSession.getAttribute("user");
-    log.info("Load session user {}", sessionUserDto);
-    return sessionUserDto;
+  public UserOauthDto getOauthUserByOauthId(String oauthId) {
+    User user = userRepository.findByOauthId(oauthId)
+        .orElseThrow(
+            () -> new UsernameNotFoundException("User not found with oauthId : " + oauthId));
+    UserOauthDto userOauthDto = UserOauthDto.builder()
+        .nickname(user.getNickname())
+        .description(user.getDescription())
+        .oAuthId(user.getOauthId())
+        .oAuthType(user.getOauthType())
+        .profile(user.getProfile())
+        .build();
+    log.info("getOauthUserByOauthId: {}", user);
+    return userOauthDto;
+  }
+
+
+  @Override
+  public UserDetails loadUserByOauthId(String oauthId) {
+    User user = userRepository.findByOauthId(oauthId)
+        .orElseThrow(
+            () -> new UsernameNotFoundException("User not found with oauthId : " + oauthId));
+
+    log.info("loadUserByOauthId: {}", user);
+
+    return UserPrincipal.create(user);
   }
 
   /**

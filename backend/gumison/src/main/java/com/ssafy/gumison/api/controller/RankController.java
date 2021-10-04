@@ -100,7 +100,8 @@ public class RankController {
     try {
       lastPageNumber = userRankSearchKeywordRepository.getUserSearchKeywordCount(keyword);
     } catch (RuntimeException e) {
-      lastPageNumber = userService.getUserCountByKeyword(keyword) / rankService.getUserSizePerPage() + 1;
+      lastPageNumber =
+          userService.getUserCountByKeyword(keyword) / rankService.getUserSizePerPage() + 1;
       userRankSearchKeywordRepository.setUserSearchKeywordCount(keyword, lastPageNumber);
     }
 

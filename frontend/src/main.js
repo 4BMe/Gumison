@@ -2,13 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import Vuelidate from 'vuelidate'
-
 import router from './router'
-
 import "@/assets/scss/app.scss";
 import i18n from './i18n'
-
-import store from '@/state/store'
+import store from './store'
 import { initFirebaseBackend } from './authUtils'
 
 import { configureFakeBackend } from './helpers/fake-backend';

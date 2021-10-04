@@ -72,41 +72,32 @@ export default {
             levelTiersUpdate: [
                 {
                     id: 22,
-                    solutionId: 44,
+                    solutionId: 60,
                     level: '초록',
                     tier: 'Silver1',
                     solutionCount: 3,
-                    solutionDate: '2021-09-15'
+                    solutionDate: '2021-10-01'
                 },
                 {
                     id: 23,
-                    solutionId: 45,
-                    level: '파랑',
-                    tier: 'Gold3',
-                    solutionCount: 5,
-                    solutionDate: '2021-09-15'
+                    solutionId: 61,
+                    level: '초록',
+                    tier: 'Silver1',
+                    solutionCount: 2,
+                    solutionDate: '2021-10-01'
                 },
                 {
                     id: 24,
-                    solutionId: 46,
-                    level: '빨강',
-                    tier: 'Platinum4',
-                    solutionCount: 8,
-                    solutionDate: '2021-09-15'
-                },
-                {
-                    id: 25,
-                    solutionId: 47,
-                    level: '보라',
-                    tier: 'Platinum1',
-                    solutionCount: 1,
-                    solutionDate: '2021-09-15'
+                    solutionId: 62,
+                    level: '초록',
+                    tier: 'Silver1',
+                    solutionCount: 5,
+                    solutionDate: '2021-10-01'
                 },
             ],
-            // levelTierIds: [19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-            // levels: ['흰색', '노랑', '주황', '초록', '파랑', '빨강', '보라', '회색', '갈색', '검정'],
-            // solutionCounts: [0, 0, 0, 3, 5, 8, 1, 0, 0, 0],
-            // solutionDate: '2021-09-15',
+            solutionVideos: [
+                
+            ]
         }
     },
     methods: {

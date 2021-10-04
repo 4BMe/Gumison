@@ -1,6 +1,7 @@
 package com.ssafy.gumison.db.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,9 +57,6 @@ public class Solution {
   @JoinColumn(name = "level_tier_id")
   private LevelTier levelTier;
 
-  @OneToMany(mappedBy = "solution")
-  private List<SolutionVideo> solutionVideoList = new ArrayList<>();
-
   @NotNull
   @ColumnDefault("0")
   private Integer count;
@@ -74,4 +72,7 @@ public class Solution {
   @NotNull
   @ColumnDefault("0")
   private Integer accumulateReport;
+
+  @NotNull
+  private String uploadId;
 }
