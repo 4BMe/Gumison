@@ -1,8 +1,10 @@
 package com.ssafy.gumison.api.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.gumison.api.request.SolutionRequest;
+import com.ssafy.gumison.api.response.HistoryRes;
 import com.ssafy.gumison.api.response.SolutionListRes;
 import com.ssafy.gumison.api.response.SolutionRes;
-import com.ssafy.gumison.api.response.HistoryRes;
 import com.ssafy.gumison.api.service.HistoryService;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import com.ssafy.gumison.db.entity.Solution;
@@ -53,27 +55,19 @@ public class HistoryController {
 
   @ApiOperation(value = "레벨 기록 생성", notes = "성공한 레벨 기록을 생성합니다.", response = ApiResponseDto.class)
   @PostMapping("/")
-  public ApiResponseDto<Solution[]> createSolution(
-      @RequestBody SolutionRequest[] solutionRequests) {
-    log.info("[createSolution] - HistoryController : {}", Arrays.toString(solutionRequests));
-    Solution[] solutions = new Solution[solutionRequests.length];
-    for (int i = 0; i < solutionRequests.length; i++) {
-      Solution solution = historyService.createSolution(solutionRequests[i]);
-      solutions[i] = solution;
-    }
+  public ApiResponseDto<List<Solution>> createSolution(
+      @ModelAttribute SolutionRequest solutionRequest) {
+    log.info("[createSolution] - HistoryController : {}", solutionRequest);
+    List<Solution> solutions = historyService.createSolution(solutionRequest);
     return ApiResponseDto.success(solutions);
   }
 
   @ApiOperation(value = "레벨 기록 수정", notes = "성공한 레벨 기록을 수정합니다.", response = ApiResponseDto.class)
   @PutMapping("/")
-  public ApiResponseDto<Solution[]> updateSolution(
-      @RequestBody SolutionRequest[] solutionRequests) {
-    log.info("[updateSolution] - HistoryController : {}", Arrays.toString(solutionRequests));
-    Solution[] solutions = new Solution[solutionRequests.length];
-    for (int i = 0; i < solutionRequests.length; i++) {
-      Solution solution = historyService.updateSolution(solutionRequests[i]);
-      solutions[i] = solution;
-    }
+  public ApiResponseDto<List<Solution>> updateSolution(
+      @ModelAttribute SolutionRequest solutionRequest) {
+    log.info("[updateSolution] - HistoryController : {}", solutionRequest);
+    List<Solution> solutions = historyService.updateSolution(solutionRequest);
     return ApiResponseDto.success(solutions);
   }
 }
