@@ -12,21 +12,21 @@ export default [
     component: () => import('../views/pages/level-record/temp'),
 },
 {
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../views/pages/account/profile'),
+    path: '/myhistory',
+    name: 'myhistory',
+    component: () => import('../views/pages/history/myhistory'),
     meta: {
         beforeResolve(routeTo, routeFrom, next) {
             /**
-             * tocken이 이미 있으면 profile로 가고,
+             * tocken이 이미 있으면 myhistory 로 가고,
              * 없으면 로그인 화면으로 가기
              */
-            const user = store.getters['users/getUser'];
-            console.log('[router profile] user: ', user);
-            if (user.tocken) {
+            const tocken = store.getters['users/getToken'];
+            console.log('[route myhistory click] tocken: ', tocken)
+            if (tocken) {
+                console.log('[route myhistory click] tocken tocken : ', tocken)
                 next()
             } else {
-
                 next({
                     name: 'login'
                 })
@@ -97,6 +97,7 @@ export default [
             }
         },
     },
+    props: true,
 },
 
 {
@@ -105,24 +106,12 @@ export default [
     component: () => import('../views/pages/account/oauth2-redirect'),
 
 },
+
 {
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/pages/account/register'),
-    meta: {
-        beforeResolve(routeTo, routeFrom, next) {
-            // If the user is already logged in
-            if (store.getters['auth/loggedIn']) {
-                // Redirect to the home page instead
-                next({
-                    name: 'home'
-                })
-            } else {
-                // Continue to the login page
-                next()
-            }
-        },
-    },
+    path: '/change-profile',
+    name: 'change-profile',
+    component: () => import('../views/pages/account/components/change-profile-item'),
+
 },
 
 {
@@ -144,12 +133,12 @@ export default [
         },
     },
 },
-{
-    path: '/myhistory',
-    name: 'myhistory',
-    component: () => import('../views/pages/history/myhistory'),
-    props: true,
-},
+// {
+//     path: '/myhistory',
+//     name: 'myhistory',
+//     component: () => import('../views/pages/history/myhistory'),
+//     props: true,
+// },
 {
     path: '/solution',
     name: 'solution',

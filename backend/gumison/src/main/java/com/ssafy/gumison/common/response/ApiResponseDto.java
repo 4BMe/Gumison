@@ -13,6 +13,8 @@ public class ApiResponseDto<T> {
       new ApiResponseDto<>(ApiResponseCode.SUCCESS);
   public static final ApiResponseDto<String> DEFAULT_UNAUTHORIZED =
       new ApiResponseDto<>(ApiResponseCode.UNAUTHORIZED);
+  public static final ApiResponseDto<String> DEFAULT_FAIL =
+      new ApiResponseDto<>(ApiResponseCode.FAIL);
 
   private ApiResponseCode code;
   private T data;
@@ -32,7 +34,17 @@ public class ApiResponseDto<T> {
     this.message = message;
   }
 
+  public ApiResponseDto(ApiResponseCode code, T data, String message) {
+    this(code);
+    this.data = data;
+    this.message = message;
+  }
+
   public static <T> ApiResponseDto<T> success(T data) {
     return new ApiResponseDto<>(ApiResponseCode.SUCCESS, data);
+  }
+
+  public static <T> ApiResponseDto<T> fail(T data, String message) {
+    return new ApiResponseDto<>(ApiResponseCode.FAIL, data, message);
   }
 }
