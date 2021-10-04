@@ -9,27 +9,26 @@ const instance = axios.create({
     withCredentials: true,
 });
 
-function getUserRankList(path){
-    instance
-        .get(path)
-        .then(function(response){
-            console.log(response.data.data.userRankList);
-            if(response.status != 200){
-                console.log("[getUserRankList] fail, code : " + response.status);
-                console.log("fail message : " + response.data.message);
-                return null;
-            }
-            console.log("[getUserRankList] success");
-            return response.data.data.userRankList;
-        })
+async function getUserRankList(path){
+    const response = await instance.get(path);
+
+    if(response.status != 200){
+        console.log("[getUserRankList] fail, code : " + response.status);
+        console.log("fail message : " + response.data.message);
+        return null;
+    }
+    console.log("[getUserRankList] success");
+    return response.data.data.userRankList;
 }
 
-function getUserRankListByKeywordAndPage(keyword, page) {
-    return getUserRankList('/search/' + keyword + "/" + page);
+async function getUserRankListByKeywordAndPage(keyword, page) {
+    const ret = await getUserRankList('/search/' + keyword + "/" + page);
+    return ret;
 }
 
-function getUserRankListByPage(page) {
-    return getUserRankList('/' + page);
+async function getUserRankListByPage(page) {
+    const ret = await getUserRankList('/' + page);
+    return ret;
 }
 
 function getUserRankListByNickname(nickname) {

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h4 class="mb-0">사용자 랭킹</h4>
     <simplebar class="chat-message-list" id="chat-list" ref="current">
+
       <ul
         class="list-unstyled chat-list chat-user-list"
-        v-if="userRankList.length == 0"
+        v-if="dataLoaded && userRankList.length === 0"
       >
         <li>
           <a href="javascript:void(0);">
@@ -21,6 +21,7 @@
           </div>
         </li>
       </ul>
+
       <ul class="list-unstyled chat-list chat-user-list" v-else>
         <li
           v-for="(item, index) in userRankList"
@@ -29,6 +30,12 @@
         >
           <a href="javascript:void(0);">
             <div class="media">
+              <div class="avatar-xs overflow-hidden" >
+                  <span
+                    class="avatar-title rounded-circle bg-warning text-primary"
+                    >{{ $t(item.rank)}}
+                  </span>
+              </div>
               <div class="chat-user-img online align-self-center mr-3">
                 <div v-if="item.profile">
                   <img
@@ -97,11 +104,11 @@ export default {
   props: {
     rankKeyword: {
       type: String,
-      default: ""
+      default: "",
     },
 
     rankPage: {
-      default: 1
+      default: 1,
     },
   },
 
@@ -109,6 +116,7 @@ export default {
   data() {
     return {
       userRankList: [],
+      dataLoaded : false,
     };
   },
 
@@ -142,10 +150,16 @@ export default {
   mounted() {
   },
   methods: {
-    getList(){
-      this.userRankList = 
-        this.keyword.length === 0 ? getUserRankListByPage(this.page) 
-        : getUserRankListByKeywordAndPage(this.keyword, this.page);
+    async getList() {
+      this.dataLoaded = false;
+      console.log("[get-list]", this.keyword, this.page, this.keyword.length);
+
+      if(this.keyword == null || this.keyword.replace(" ", "").length === 0){
+        this.userRankList = await getUserRankListByPage(this.page);
+        return;
+      }
+      this.userRankList = await getUserRankListByKeywordAndPage(this.keyword, this.page);
+      this.dataLoaded = true;
     }
   },
 };
