@@ -29,7 +29,7 @@ export default {
               description: data.data.description,
               profile: data.data.profile,
               oauthId: data.data.oauthId,
-              tocken: token,
+              token: token,
             };
             console.log("[setUser] user: ", user);
             store.commit("users/SET_USER", user);

@@ -18,13 +18,13 @@ export default [
     meta: {
         beforeResolve(routeTo, routeFrom, next) {
             /**
-             * tocken이 이미 있으면 myhistory 로 가고,
+             * token이 이미 있으면 myhistory 로 가고,
              * 없으면 로그인 화면으로 가기
              */
-            const tocken = store.getters['users/getToken'];
-            console.log('[route myhistory click] tocken: ', tocken)
-            if (tocken) {
-                console.log('[route myhistory click] tocken tocken : ', tocken)
+            const token = store.getters['users/getToken'];
+            console.log('[route myhistory click] token: ', token)
+            if (token) {
+                console.log('[route myhistory click] token token : ', token)
                 next()
             } else {
                 next({
@@ -86,7 +86,7 @@ export default [
 
             const user = store.getters['users/getUser'];
             console.log('[router profile] user: ', user);
-            if (user.tocken) {
+            if (user.token) {
                 // If the user is already logged in
                 next({
                     name: 'home'
