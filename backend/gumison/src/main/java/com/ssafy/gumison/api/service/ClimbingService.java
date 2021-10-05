@@ -14,5 +14,5 @@ public interface ClimbingService {
   
   ClimbingRes getClimbingDetail(Long climbingId);
 
-  List<ClimbingSolutionRes> getLevelSolution(Long climbingId, Long levelTierId, int pageNumber);
+  ClimbingSolutionRes getLevelSolution(Long climbingId, Long levelTierId, int pageNumber);
 }

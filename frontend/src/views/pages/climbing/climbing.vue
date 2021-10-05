@@ -1,19 +1,23 @@
 <template>
   <div v-if="isData">
-    <ClimbingDetail 
-      :climbing="climbingDetail.climbing"
-      :hours="climbingDetail.hours" />
-    <router-view></router-view>
+    <simplebar class="climbing">
+      <ClimbingDetail 
+        :climbing="climbingDetail.climbing"
+        :hours="climbingDetail.hours" />
+      <router-view></router-view>
+    </simplebar>
   </div>
 </template>
 
 <script>
+import simplebar from "simplebar-vue";
 import { getClimingDetail } from "@/api/climbing";
 import ClimbingDetail from "@/views/pages/climbing/climbingDetail";
 
 export default {
   name: "climbing",
   components: {
+    simplebar,
     ClimbingDetail,
   },
   props: {
@@ -47,4 +51,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.climbing{
+  height: calc(100vh - 70px);
+}
+</style>

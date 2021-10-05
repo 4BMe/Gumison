@@ -5,13 +5,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.ssafy.gumison.api.response.ClimbingRes;
 import com.ssafy.gumison.api.response.ClimbingSolutionRes;
+import com.ssafy.gumison.common.dto.ClimbingSolutionDto;
 import com.ssafy.gumison.common.dto.HoursDto;
 import com.ssafy.gumison.common.dto.LevelTierDto;
 import com.ssafy.gumison.common.enums.HoursDay;
@@ -60,30 +61,25 @@ public class ClimbingServiceImpl implements ClimbingService {
   }
 
   @Override
-  public List<ClimbingSolutionRes> getLevelSolution(Long climbingId, Long levelTierId,
-      int pageNumber) {
-    List<ClimbingSolutionRes> solutionResList = new ArrayList<>();
+  public ClimbingSolutionRes getLevelSolution(Long climbingId, Long levelTierId, int pageNumber) {
+    Page<Solution> solutionPage = getSolutionList(climbingId, levelTierId, pageNumber);
 
-    List<Solution> solutionList = getSolutionList(climbingId, levelTierId, pageNumber);
-    for (Solution solution : solutionList) {
-      solutionResList.add(
-          ClimbingSolutionRes.builder()
-          .id(solution.getId())
+    List<ClimbingSolutionDto> climbingDtoList = new ArrayList<>();
+    for (Solution solution : solutionPage.getContent()) {
+      climbingDtoList.add(ClimbingSolutionDto.builder().id(solution.getId())
           .nickname(solution.getUser().getNickname())
           .level(codeNameConvert(solution.getLevelTier().getLevelCode()))
           .tier(codeNameConvert(solution.getLevelTier().getTierCode()).toLowerCase())
-          .count(solution.getCount())
-          .date(solution.getDate())
-          .build()
-      );
+          .count(solution.getCount()).date(solution.getDate()).build());
     }
 
-    return solutionResList;
+    return ClimbingSolutionRes.builder().climbingSolutions(climbingDtoList)
+        .totalElements(solutionPage.getTotalElements()).build();
   }
 
-  private List<Solution> getSolutionList(Long climbingId, Long levelTierId, int pageNumber) {
-    PageRequest page = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "date"));
-    return solutionRepository.findByClimbingIdAndLevelTierId(climbingId, levelTierId, page);
+  private Page<Solution> getSolutionList(Long climbingId, Long levelTierId, int pageNumber) {
+    PageRequest pageRequest = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "id"));
+    return solutionRepository.findByClimbingIdAndLevelTierId(climbingId, levelTierId, pageRequest);
   }
 
   private List<HoursDto> getHoursDtoList(List<Hours> hoursList) {

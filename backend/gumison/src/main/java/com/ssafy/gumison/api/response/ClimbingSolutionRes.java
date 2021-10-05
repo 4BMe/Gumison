@@ -1,9 +1,7 @@
 package com.ssafy.gumison.api.response;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import com.ssafy.gumison.db.entity.SolutionVideo;
+import com.ssafy.gumison.common.dto.ClimbingSolutionDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,16 +11,8 @@ import lombok.ToString;
 @ToString
 public class ClimbingSolutionRes {
 
-  private Long id;
+  private List<ClimbingSolutionDto> climbingSolutions;
   
-  private String nickname;
-  
-  private String level;
-  
-  private String tier;
-  
-  private Integer count;
-  
-  private LocalDate date;
+  private long totalElements; 
   
 }
