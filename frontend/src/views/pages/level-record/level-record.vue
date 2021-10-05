@@ -1,17 +1,6 @@
 <template>
   <div class="height-full">
       <b-card no-body class="border custom-accordion">
-        <b-card-header>
-          <div class="d-flex flex-row">
-            <a href="javascript: void(0);" @click="goBack()">
-              <i class="ri-arrow-left-line mr-2"></i>
-            </a>
-            <h5 class="font-size-15 m-0">
-              <i class="ri-user-2-line mr-2 mb-1 align-middle d-inline-block"></i>
-                레벨 기록하기
-            </h5>
-          </div>
-        </b-card-header>
           <b-card-body>
             <div class="mb-3">
               <input type="date" id="input-date" v-model="solutionDate" class="form-control"/>
@@ -32,6 +21,7 @@
               multiple>
           </div>
           <input type="button" value="등록" class="btn btn-outline-primary float-right mt-3 mr-4 ml-3" @click="submitClick()">
+          <br><br><br><br><br><br><br>
   </div>
 </template>
 
@@ -40,16 +30,12 @@ import LevelRecordLine from './components/level-record-line';
 import { submit, update } from '@/api/level-record.js';
 import Colors from '@/constant/colors.js';
 
+
 var today = new Date().toISOString().slice(0,10);
 
 export default {
   props: {
-    userId:{
-      default: 0
-    },
-    climbingId: {
-      default: 0
-    },
+    climbingId: {},
     levelTiers: {},
   },
   components: {
@@ -57,6 +43,7 @@ export default {
   },
   data(){
       return {
+        oauthId: this.$store.state.users.user.oauthId,
         recordSolutionCounts: [],
         solutionIds: [],
         solutionVideos: '',
@@ -64,6 +51,7 @@ export default {
         colors: [],
       }
   },
+
   methods: {
       handleFileUpload() {
           this.solutionVideos = this.$refs.solutionVideos.files;
@@ -73,7 +61,7 @@ export default {
       },
       async submitClick() {
           const formData = new FormData();
-          formData.append("userId", this.userId);
+          formData.append("oauthId", this.oauthId);
           formData.append("climbingId", this.climbingId);
           formData.append("date", this.solutionDate);
           for (let i = 0; i < this.colors.length; i++) {
