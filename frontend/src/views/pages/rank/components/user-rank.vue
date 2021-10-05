@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getUserRankListByNickname } from "@/api/rank";
+import { getUserRankByNickname } from "@/api/rank";
 
 export default {
   name: "user-rank",
@@ -76,7 +76,7 @@ export default {
         this.user = null;
         return;
       }
-      let ret = await getUserRankListByNickname(nickname);
+      let ret = await getUserRankByNickname(nickname);
       console.log(ret);
       this.user = ret.userRank;
     },
