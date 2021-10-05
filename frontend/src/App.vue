@@ -120,7 +120,7 @@
             >
               <template v-slot:button-content>
                 <img
-                  src="@/assets/images/users/avatar-1.jpg"
+                  :src="profile"
                   alt
                   class="profile-user rounded-circle"
                 />
@@ -138,9 +138,20 @@
                 </router-link>
               </b-dropdown-item>
 
-              <b-dropdown-divider></b-dropdown-divider>
-              <b-dropdown-item href="/logout">
+              <b-dropdown-item
+                href="/logout"
+                v-if="user.nickname"
+              >
+                <b-dropdown-divider></b-dropdown-divider>
                 Log out
+                <i class="ri-logout-circle-r-line float-right text-muted"></i>
+              </b-dropdown-item>
+              <b-dropdown-item
+                href="/login"
+                v-if="!user.nickname"
+              >
+                <b-dropdown-divider></b-dropdown-divider>
+                Log in
                 <i class="ri-logout-circle-r-line float-right text-muted"></i>
               </b-dropdown-item>
             </b-dropdown>
@@ -210,6 +221,11 @@ export default {
     user() {
       return store.getters["users/getUser"];
     },
+    profile() {
+      return this.user.profile
+        ? this.user.profile
+        : require("@/assets/images/logo-gumison.png");
+    },
   },
   mounted() {
     var curPage = document.location.href;
@@ -229,10 +245,7 @@ export default {
   methods: {
     goToMypage() {
       if (this.user.nickname) {
-        console.log(
-          "[route myhistory click] token token : ",
-          this.user.nickname
-        );
+        console.log("[route myhistory click] nickname : ", this.user.nickname);
         return { name: "myhistory", params: { nickname: this.user.nickname } };
       } else {
         return "/login";

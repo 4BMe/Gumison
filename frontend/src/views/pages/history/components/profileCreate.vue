@@ -92,7 +92,10 @@ export default {
             oauthId: data.data.oauthId,
           };
           store.commit("users/UPDATE_USER", updateUserData);
-          this.$router.push({ name: "myhistory" });
+          this.$router.push({
+            name: "myhistory",
+            params: { nickname: updateUserData.nickname },
+          });
         })
         .catch((error) => {
           console.log(error);
