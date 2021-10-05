@@ -85,13 +85,9 @@ export default {
   methods: {
     searchHistory(id) {
       console.log("climbingList - id : " + id);
-      this.$router.push({
-        name: 'climbing',
-        params:{
-          id: id
-          }
-        })
+      this.$router.push({path:`/climbing/${id}`})
     },
+
     getList(){
       axios
         .get(`${BASE_URL}/climbing/search/${this.keyword}/${this.pageNumber}`)
@@ -132,13 +128,6 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.VueCarousel-slide > div {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-</style>
 
 <style>
 .sm-tier-img {

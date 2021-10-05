@@ -28,15 +28,17 @@ public class TokenProvider {
     Date expiryDate = new Date(now.getTime() + appConfig.getAuth().getTokenExpirationMsec());
 
     log.info("Create token");
-    
+
     return Jwts.builder().setSubject(userPrincipal.getUsername()).setIssuedAt(new Date())
-        .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, appConfig.getAuth().getTokenSecret())
+        .setExpiration(expiryDate)
+        .signWith(SignatureAlgorithm.HS512, appConfig.getAuth().getTokenSecret())
         .compact();
   }
 
   public String getUserIdFromToken(String token) {
     Claims claims =
-        Jwts.parser().setSigningKey(appConfig.getAuth().getTokenSecret()).parseClaimsJws(token).getBody();
+        Jwts.parser().setSigningKey(appConfig.getAuth().getTokenSecret()).parseClaimsJws(token)
+            .getBody();
 
     return claims.getSubject();
   }

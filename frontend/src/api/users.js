@@ -1,15 +1,24 @@
 import axios from 'axios';
 import { BASE_URL } from "@/constant/index";
 import { GOOGLE_OAUTH_URL } from "@/constant/index";
+import store from '@/store'
 
 const instance = axios.create({
     baseURL: `${BASE_URL}/users/`,
     headers: {
         'Content-type': 'application/json',
-        //스토어에서 토큰값 가져오기
     },
     withCredentials: true,
 });
+
+const oauth = axios.create({
+    baseURL: `${BASE_URL}/users/`,
+    headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${store.getters["users/getToken"]}`,
+    },
+    withCredentials: true,
+})
 
 function googleLoginUser() {
     return window.location.href = `${GOOGLE_OAUTH_URL}`;
@@ -19,7 +28,17 @@ function getUser() {
     return instance.get('oauth2/login')
 }
 
+function getUserByNickname(nickname) {
+    return oauth.get(nickname)
+}
+
+function updateUserByOauthId(oauthId, updateUserData) {
+    return oauth.put(oauthId, updateUserData)
+}
+
 export {
     googleLoginUser,
-    getUser
+    getUser,
+    getUserByNickname,
+    updateUserByOauthId
 }

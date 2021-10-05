@@ -129,7 +129,7 @@
 
               <b-dropdown-item>
                 <router-link
-                  to="/profile"
+                  to="/myhistory"
                   v-on:click.native="activetab = 4"
                   v-bind:class="[activetab === 4 ? 'active' : '']"
                 >

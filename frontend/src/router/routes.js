@@ -1,9 +1,38 @@
 import store from '@/store'
 
-export default [{
+export default [
+{
     path: '/',
     name: 'home',
     component: () => import('../views/pages/search/search')
+},
+{
+    path: '/temp',
+    name: 'temp',
+    component: () => import('../views/pages/level-record/temp'),
+},
+{
+    path: '/myhistory',
+    name: 'myhistory',
+    component: () => import('../views/pages/history/myhistory'),
+    meta: {
+        beforeResolve(routeTo, routeFrom, next) {
+            /**
+             * tocken이 이미 있으면 myhistory 로 가고,
+             * 없으면 로그인 화면으로 가기
+             */
+            const tocken = store.getters['users/getToken'];
+            console.log('[route myhistory click] tocken: ', tocken)
+            if (tocken) {
+                console.log('[route myhistory click] tocken tocken : ', tocken)
+                next()
+            } else {
+                next({
+                    name: 'login'
+                })
+            }
+        },
+    },
 },
 {
     path: '/userlist/:keyword',
@@ -18,52 +47,29 @@ export default [{
     props: true,
 },
 {
-    path: '/climbing/:id',
+    path: '/climbing/:climbingId',
     name: 'climbing',
     component: () => import('../views/pages/climbing/climbing'),
     props: true,
-    // children:[
-    //     {
-    //         path: '',
-    //         name: 'level',
-    //         component: () => import('../views/pages/climbing/level'),
-    //     },
-
-    // ]
-},
-{
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../views/pages/account/profile'),
-    meta: {
-        beforeResolve(routeTo, routeFrom, next) {
-            /**
-             * tocken이 이미 있으면 profile로 가고,
-             * 없으면 로그인 화면으로 가기
-             */
-            const user = store.getters['users/getUser'];
-            console.log('[router profile] user: ', user);
-            if (user.tocken) {
-                next()
-            } else {
-
-                next({
-                    name: 'login'
-                })
-            }
+    children:[
+        {
+            path: '',
+            name: 'level',
+            component: () => import('../views/pages/climbing/level'),
         },
-    },
+        {
+            path: ':solutionId',
+            name: 'climbingSolution',
+            component: () => import('../views/pages/climbing/solution/climbingSolution'),
+            props: '',
+        },
+    ]
 },
 {
     path: '/level-record',
     name: 'level-record',
     component: () => import('../views/pages/level-record/level-record'),
     props: true
-},
-{
-    path: '/temp',
-    name: 'temp',
-    component: () => import('../views/pages/level-record/temp'),
 },
 {
     path: '/level-contribution',
@@ -91,6 +97,7 @@ export default [{
             }
         },
     },
+    props: true,
 },
 
 {
@@ -99,24 +106,12 @@ export default [{
     component: () => import('../views/pages/account/oauth2-redirect'),
 
 },
+
 {
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/pages/account/register'),
-    meta: {
-        beforeResolve(routeTo, routeFrom, next) {
-            // If the user is already logged in
-            if (store.getters['auth/loggedIn']) {
-                // Redirect to the home page instead
-                next({
-                    name: 'home'
-                })
-            } else {
-                // Continue to the login page
-                next()
-            }
-        },
-    },
+    path: '/change-profile',
+    name: 'change-profile',
+    component: () => import('../views/pages/account/components/change-profile-item'),
+
 },
 
 {
@@ -138,12 +133,12 @@ export default [{
         },
     },
 },
-{
-    path: '/myhistory',
-    name: 'myhistory',
-    component: () => import('../views/pages/history/myhistory'),
-    props: true,
-},
+// {
+//     path: '/myhistory',
+//     name: 'myhistory',
+//     component: () => import('../views/pages/history/myhistory'),
+//     props: true,
+// },
 {
     path: '/solution',
     name: 'solution',

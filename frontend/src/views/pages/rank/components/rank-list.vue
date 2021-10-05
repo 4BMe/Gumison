@@ -8,7 +8,7 @@
     >
       <ul
         class="list-unstyled chat-list chat-user-list"
-        v-if="dataLoaded && userRankList.length === 0"
+        v-if="userRankList.length === 0"
       >
         <li>
           <a href="javascript:void(0);">
@@ -24,10 +24,14 @@
       </ul>
 
       <ul class="list-unstyled chat-list chat-user-list" v-else>
+        <li>
+          <UserRank />
+        </li>
         <li
           v-for="(item, index) in userRankList"
           :key="index"
           @click="searchHistory(item.nickname)"
+          class="bg-light"
         >
           <a href="javascript:void(0);">
             <div class="media">
@@ -89,6 +93,7 @@
 // import axios from "axios";
 // import { BASE_URL } from "@/constant/index"
 import simplebar from "simplebar-vue";
+import UserRank from "./user-rank";
 
 import {
   getUserRankListByKeywordAndPage,
@@ -99,6 +104,7 @@ export default {
   name: "rank-list",
   components: {
     simplebar,
+    UserRank,
   },
 
   props: {
