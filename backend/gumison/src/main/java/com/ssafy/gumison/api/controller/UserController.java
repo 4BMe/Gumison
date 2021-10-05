@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -79,7 +80,7 @@ public class UserController {
     return ApiResponseDto.success(isValid);
   }
 
-  @ApiOperation(value = "사용자 정보 변경", notes = "닉네임으로 사용자 정보를 변경합니다.", response = ApiResponseDto.class)
+  @ApiOperation(value = "사용자 정보 변경", notes = "oauthId로 사용자 정보를 변경합니다.", response = ApiResponseDto.class)
   @ApiResponses({@ApiResponse(code = 200, message = "성공"),
       @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "페이지 없음"),
       @ApiResponse(code = 500, message = "서버 오류")})
@@ -96,5 +97,24 @@ public class UserController {
       log.error("[updateUserByoauthId] ", e);
     }
     return ApiResponseDto.fail(updateUser, "사용자 정보 변경에 실패했습니다.");
+  }
+
+  @ApiOperation(value = "회원 탈퇴", notes = "oauthId로 사용자 정보를 삭제합니다.", response = ApiResponseDto.class)
+  @ApiResponses({@ApiResponse(code = 200, message = "성공"),
+      @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "페이지 없음"),
+      @ApiResponse(code = 500, message = "서버 오류")})
+  @PreAuthorize("hasRole('USER')")
+  @DeleteMapping("{oauthId}")
+  public ApiResponseDto<Boolean> deleteUserByoauthId(@PathVariable("oauthId") String oauthId) {
+    Boolean isValid = false;
+    try {
+      userService.deleteUserByOauthId(oauthId);
+      isValid = true;
+      return ApiResponseDto.success(isValid);
+
+    } catch (Exception e) {
+      log.error("[deleteUserByoauthId] ", e);
+    }
+    return ApiResponseDto.fail(isValid, "사용자 정보를 삭제하는데 실패했습니다.");
   }
 }

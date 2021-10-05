@@ -29,12 +29,12 @@ export default {
               description: data.data.description,
               profile: data.data.profile,
               oauthId: data.data.oauthId,
-              tocken: token,
+              token: token,
             };
             console.log("[setUser] user: ", user);
             store.commit("users/SET_USER", user);
             if (!user.nickname || !user.description) {
-              this.$router.push({ name: "change-profile" });
+              this.$router.push({ name: "profile-create" });
             } else {
               this.$router.push({ name: "home" });
             }

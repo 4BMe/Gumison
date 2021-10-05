@@ -74,9 +74,9 @@
 import axios from "axios";
 import { BASE_URL } from "@/constant/index";
 import Colors from "@/constant/colors.js";
-import UserInfo from "@/views/pages/history/userInfo";
-import HistoryList from "@/views/pages/history/historyList";
-
+import UserInfo from "./components/userInfo";
+import HistoryList from "./components/historyList";
+import store from "@/store";
 export default {
   name: "myhistory",
   components: {
@@ -87,8 +87,8 @@ export default {
     return {
       isData: false,
       user: {
-        profile: null,
-        nickname: null,
+        profile: store.getters["users/getUser"].profile,
+        nickname: store.getters["users/getUser"].nickname,
         description: null,
         tier: null,
         exp: null,
@@ -99,11 +99,11 @@ export default {
       pageNumber: 0,
     };
   },
-  async created() {},
+  computed: {},
   async mounted() {
     console.log("myhistory");
     await axios
-      .get(`${BASE_URL}/history/dummy2`)
+      .get(`${BASE_URL}/history/${this.user.nickname}`)
       .then(({ data }) => {
         this.user = data.data.user;
         this.solutionList = data.data.solutionList;
