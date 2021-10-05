@@ -66,3 +66,11 @@ logging:
 
 server:
   port: 8888
+  ssl:
+    enabled: true
+    key-store: classpath:gumisonkey.jks # 1번에서 생성한 Key store 경로와 파일명을 적어줍니다. 
+    key-store-password: gumison  # 1번에서 생성한 Key store의 비밀번호를 적어줍니다.
+    key-password: gumison # 1번에서 생성한 키스토어의 마지막의 키 비밀번호
+    key-alias: gumison # 키 스토어 별칭
+    trust-store: classpath:gumison.ts # 2번에서 생성한 Trust-Store 경로
+    trust-store-password: gumison # Trust-Store 비밀번호
