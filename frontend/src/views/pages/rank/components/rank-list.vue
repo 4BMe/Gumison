@@ -1,32 +1,33 @@
 <template>
   <div>
-    <simplebar
-      class="chat-group-list"
-      v-if="dataLoaded"
-      id="chat-list"
-      ref="current"
+    <ul
+      class="list-unstyled chat-list chat-user-list"
+      v-if="userRankList.length === 0"
     >
-      <ul
-        class="list-unstyled chat-list chat-user-list"
-        v-if="userRankList.length === 0"
-      >
-        <li>
-          <a href="javascript:void(0);">
-            <div class="media">
-              <div class="media-body overflow-hidden">
-                <p class="chat-user-message text-truncate mb-0 pt-">
-                  "{{ keyword }}"을/를 찾을 수 없습니다.
-                </p>
-              </div>
+      <li>
+        <a href="javascript:void(0);">
+          <div class="media">
+            <div class="media-body overflow-hidden">
+              <p class="chat-user-message text-truncate mb-0 pt-">
+                "{{ keyword }}"을/를 찾을 수 없습니다.
+              </p>
             </div>
-          </a>
-        </li>
-      </ul>
+          </div>
+        </a>
+      </li>
+    </ul>
 
-      <ul class="list-unstyled chat-list chat-user-list" v-else>
-        <li>
-          <UserRank />
-        </li>
+    <ul class="list-unstyled chat-list chat-user-list" v-else>
+      <li>
+        <UserRank />
+      </li>
+      <simplebar
+        class="m-0"
+        :class="rankCss"
+        v-if="dataLoaded"
+        id="chat-list"
+        ref="current"
+      >
         <li
           v-for="(item, index) in userRankList"
           :key="index"
@@ -85,8 +86,8 @@
             </div>
           </a>
         </li>
-      </ul>
-    </simplebar>
+      </simplebar>
+    </ul>
     <!-- End chat-message-list -->
   </div>
 </template>
@@ -122,6 +123,7 @@ export default {
     return {
       userRankList: [],
       dataLoaded: false,
+      rankCss: this.$store.state.users.user.nickname == ''? 'rank-list-logout' : 'rank-list-login',
     };
   },
 
@@ -176,7 +178,22 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.rank-list-login {
+  height: calc(100vh - 540px);
+
+  @media (max-width: 991.98px) {
+    height: calc(100vh - 280px);
+  }
+}
+
+.rank-list-logout {
+  height: calc(100vh - 540px);
+
+  @media (max-width: 991.98px) {
+    height: calc(100vh - 200px);
+  }
+}
 .sm-tier-img {
   width: 23px;
 }
