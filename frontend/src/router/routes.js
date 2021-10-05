@@ -12,27 +12,10 @@ export default [
     component: () => import('../views/pages/level-record/temp'),
 },
 {
-    path: '/myhistory',
+    path: '/myhistory/:nickname',
     name: 'myhistory',
     component: () => import('../views/pages/history/myhistory'),
-    meta: {
-        beforeResolve(routeTo, routeFrom, next) {
-            /**
-             * token이 이미 있으면 myhistory 로 가고,
-             * 없으면 로그인 화면으로 가기
-             */
-            const token = store.getters['users/getToken'];
-            console.log('[route myhistory click] token: ', token)
-            if (token) {
-                console.log('[route myhistory click] token token : ', token)
-                next()
-            } else {
-                next({
-                    name: 'login'
-                })
-            }
-        },
-    },
+    props: true,
 },
 {
     path: '/userlist/:keyword',
@@ -58,13 +41,13 @@ export default [
             component: () => import('../views/pages/climbing/level'),
         },
         {
-            path: ':solutionId',
+            path: 'solution:solutionId',
             name: 'climbingSolution',
             component: () => import('../views/pages/climbing/solution/climbingSolution'),
             props: '',
         },
         {
-            path: '/level-record',
+            path: 'level-record',
             name: 'level-record',
             component: () => import('../views/pages/level-record/level-record'),
             meta: {
@@ -88,7 +71,7 @@ export default [
             props: true,
         },
         {
-            path: '/level-contribution',
+            path: '/level-contribution/:climbingId',
             name: 'level-contribution',
             component: () => import('../views/pages/level-contribution/level-contribution'),
             meta: {
@@ -169,12 +152,6 @@ export default [
         },
     },
 },
-// {
-//     path: '/myhistory',
-//     name: 'myhistory',
-//     component: () => import('../views/pages/history/myhistory'),
-//     props: true,
-// },
 {
     path: '/solution',
     name: 'solution',

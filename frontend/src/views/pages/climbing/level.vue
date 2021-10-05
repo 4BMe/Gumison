@@ -6,45 +6,45 @@
           <input type="button" value="기록하기" class="btn btn-outline-info btn-sm mb-3" @click="levelRecord()">
         </div>
     </div>
-    <!-- <simplebar style="max-height: 150px; min-height: 150px"> -->
-    <ul class="list-unstyled chat-list chat-user-list">
-      <li class="border-bottom border-light">
-        <div class="row">
-          <div class="col-5 p-1">
-            <h5 class="text-center font-size-15"
-            >색</h5>
+    <simplebar class="level-list" id="chat-list" ref="current">
+      <ul class="list-unstyled chat-list chat-user-list">
+        <li class="border-bottom border-light">
+          <div class="row m-0">
+            <div class="col-5 p-1">
+              <h5 class="text-center font-size-15"
+              >색</h5>
+            </div>
+            <h5 class="col-4 p-1 text-center font-size-15">
+                티어
+            </h5>
           </div>
-          <h5 class="col-4 p-1 text-center font-size-15">
-              티어
-          </h5>
-        </div>
-      </li>
-      <li
-        v-for="(levelTier, index) in levelTiers"
-        :key="index"
-        @click="searchSolutions(levelTier.id)"
-      >
-      <a  href="javascript:void(0);">
-        <LevelLine
-          :levelTier="levelTier"
-        />
-      </a>
+        </li>
+        <li
+          v-for="(levelTier, index) in levelTiers"
+          :key="index"
+          @click="searchSolutions(levelTier.id)"
+        >
+        <a  href="javascript:void(0);">
+          <LevelLine
+            :levelTier="levelTier"
+          />
+        </a>
 
-      </li>
-    </ul>
-    <!-- </simplebar> -->
+        </li>
+      </ul>
+    </simplebar>
   </div>
 </template>
 
 <script>
 import { getClimingDetail } from "@/api/climbing";
-// import simplebar from "simplebar-vue"; 
+import simplebar from "simplebar-vue"; 
 import LevelLine from './levelLine.vue';
 
 export default {
   components: { 
     LevelLine,
-    // simplebar 
+    simplebar 
   },
   props: {
   },
@@ -73,7 +73,7 @@ export default {
     },
 
     searchSolutions(solutionId){
-      this.$router.push({ name: 'climbingSolution', params: {solutionId: solutionId}});
+      this.$router.push({ name: 'climbingSolution', params: {solutionId: solutionId}, hash: '#list-top'});
     },
 
     levelRecord(){
@@ -90,6 +90,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.level-list{
+    height: calc(100vh - 400px);
+}
 </style>

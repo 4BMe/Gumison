@@ -1,53 +1,90 @@
 <template>
-  <b-container fluid class="row">
-    <img
-      :src="require(`@/assets/images/tier/` + item.tier + `.png`)"
-      id="solution-tier-img"
-      class="col-2 img-fluid rounded-circle sm-tier-img m-0"
-    />
-    <h5 class="col-3 text-center align-self-center font-size-13 m-0">
-      {{ item.nickname }}
-    </h5>
-    <div
-      class="col-1 rounded-circle level-record-color m-0 p-0"
-      :style="{ background: color[item.level] }"
-    ></div>
-    <h5 class="col-2 text-center align-self-center font-size-13 m-0">
-      {{ item.count }}
-    </h5>
-    <h5 class="col-4 text-center align-self-center font-size-13 m-0">
-      {{ item.date }}
-    </h5>
-  </b-container>
+  <simplebar class="solution-list mb-2">
+    <table
+      class="table table-hover text-center align-self-center font-size-13 m-0"
+      id="list-top"
+    >
+      <thead>
+        <tr>
+          <th scope="col">티어</th>
+          <th scope="col">닉네임</th>
+          <th scope="col">색</th>
+          <th scope="col">횟수</th>
+          <th scope="col">날짜</th>
+        </tr>
+      </thead>
+      <tbody  v-if="!solutionList.length">
+        <tr>
+          <td colspan="5"> 해당 solution이 없습니다. </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr
+          v-for="(item, index) in solutionList"
+          :key="index"
+          @click="searchHistory(item, index)"
+          class="mb-2"
+        >
+          <td>
+            <img
+              :src="require(`@/assets/images/tier/` + item.tier + `.png`)"
+              class="sm-tier-img m-0"
+            />
+          </td>
+          <td>
+            <div class="mt-1">{{ item.nickname }}</div>
+          </td>
+          <td>
+            <div
+              class="border border-dark rounded-circle mx-auto"
+              style="height: 30px; width: 30px"
+              :style="{ background: color[item.level] }"
+            ></div>
+          </td>
+          <td>
+            <div class="mt-1">{{ item.count }}</div>
+          </td>
+          <td>
+            <div class="mt-1">{{ item.date }}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </simplebar>
 </template>
 
 <script>
-import Colors from '@/constant/colors.js';
+import simplebar from "simplebar-vue";
+import Colors from "@/constant/colors.js";
 
 export default {
+  components: {
+    simplebar,
+  },
   props: {
-    item: {
-      type: Object,
-      require: true,
+    solutionList: Array,
+  },
+  watch: {
+    solutionList() {
+      location.href = '#list-top';
     },
   },
   data() {
     return {
-        color:{},
+      color: {},
     };
   },
   mounted() {
-      this.color = Colors.colors;
+    this.color = Colors.colors;
   },
-  watch: {},
   methods: {},
 };
 </script>
 <style>
-#solution-tier-img {
-  width: 10%;
-  height: 10%;
+.sm-tier-img {
+  width: 30px;
 }
+
 .h5 {
   width: 10%;
   height: 10%;

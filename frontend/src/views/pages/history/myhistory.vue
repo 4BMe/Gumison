@@ -83,6 +83,9 @@ export default {
     UserInfo,
     HistoryList,
   },
+  props:{
+    nickname: String,
+  },
   data() {
     return {
       isData: false,
@@ -103,18 +106,18 @@ export default {
   async mounted() {
     console.log("myhistory");
     await axios
-      .get(`${BASE_URL}/history/dummy2`)
-      .then(({ data }) => {
-        this.user = data.data.user;
-        this.solutionList = data.data.solutionList;
-        for (var i = 0; i < this.solutionList.length; i++) {
-          this.colors.push(Colors.colors[this.solutionList[i].level]);
-        }
-        this.isData = true;
-      })
-      .catch((err) => {
-        console.log("에러: " + err);
-      });
+        .get(`${BASE_URL}/history/${this.nickname}`)
+        .then(({ data }) => {
+          this.user = data.data.user;
+          this.solutionList = data.data.solutionList;
+          for (var i = 0; i < this.solutionList.length; i++) {
+            this.colors.push(Colors.colors[this.solutionList[i].level]);
+          }
+          this.isData=true;
+        })
+        .catch((err) => {
+          console.log("에러: " + err);
+        });
   },
   methods: {
     searchHistory(solution, index) {
