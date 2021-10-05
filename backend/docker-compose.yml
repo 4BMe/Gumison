@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
       context: ./gumison
       target: prod
+    ports:
+      - "8888:8888"
     volumes:
       - ./log:/log
     environment:
