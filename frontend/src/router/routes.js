@@ -15,23 +15,6 @@ export default [
         path: '/myhistory',
         name: 'myhistory',
         component: () => import('../views/pages/history/myhistory'),
-        meta: {
-            beforeResolve(routeTo, routeFrom, next) {
-                /**
-                 * token이 이미 있으면 myhistory 로 가고,
-                 * 없으면 로그인 화면으로 가기
-                 */
-                const token = store.getters['users/getToken'];
-                if (token) {
-                    console.log('[route myhistory click] token token : ', token)
-                    next()
-                } else {
-                    next({
-                        name: 'login'
-                    })
-                }
-            },
-        },
     },
     {
         path: '/level-record',

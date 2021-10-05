@@ -111,7 +111,7 @@
 
               <b-dropdown-item>
                 <router-link
-                  to="/myhistory"
+                  :to="goToMypage()"
                   v-on:click.native="activetab = 4"
                   v-bind:class="[activetab === 4 ? 'active' : '']"
                 >
@@ -178,11 +178,17 @@
 </template>
 
 <script>
+import store from "@/store";
 export default {
   data() {
     return {
       activetab: 1,
     };
+  },
+  computed: {
+    token() {
+      return store.getters["users/getToken"];
+    },
   },
   mounted() {
     var curPage = document.location.href;
@@ -198,6 +204,16 @@ export default {
         this.activtab = 4;
         break;
     }
+  },
+  methods: {
+    goToMypage() {
+      if (this.token) {
+        console.log("[route myhistory click] token token : ", this.token);
+        return "/myhistory";
+      } else {
+        return "/login";
+      }
+    },
   },
 };
 </script>
