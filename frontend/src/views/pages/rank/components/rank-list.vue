@@ -1,7 +1,11 @@
 <template>
   <div>
-    <simplebar class="chat-group-list" id="chat-list" ref="current">
-
+    <simplebar
+      class="chat-group-list"
+      v-if="dataLoaded"
+      id="chat-list"
+      ref="current"
+    >
       <ul
         class="list-unstyled chat-list chat-user-list"
         v-if="dataLoaded && userRankList.length === 0"
@@ -16,9 +20,6 @@
               </div>
             </div>
           </a>
-          <div class="media">
-            <div class="chat-user-img online align-self-center mr-3"></div>
-          </div>
         </li>
       </ul>
 
@@ -26,15 +27,12 @@
         <li
           v-for="(item, index) in userRankList"
           :key="index"
-          @click="searchHistory(item)"
+          @click="searchHistory(item.nickname)"
         >
           <a href="javascript:void(0);">
             <div class="media">
-              <div class="avatar-xs overflow-hidden" >
-                  <span
-                    class="avatar-title rounded-circle bg-warning text-primary align-self-center"
-                    >{{ $t(item.rank)}}
-                  </span>
+              <div class="overflow-hidden mr-3 align-self-center">
+                <span class="text-primary">{{ item.rank }} </span>
               </div>
               <div class="chat-user-img online align-self-center mr-3">
                 <div v-if="item.profile">
@@ -55,9 +53,7 @@
               <div class="media-body overflow-hidden">
                 <h5 class="text-truncate font-size-15 mb-1">
                   <img
-                    :src="
-                      require(`@/assets/images/tier/` + item.tier + `.png`)
-                    "
+                    :src="require(`@/assets/images/tier/` + item.tier + `.png`)"
                     alt="user-img"
                     class="img-fluid rounded-circle sm-tier-img"
                   />
@@ -93,10 +89,14 @@
 // import axios from "axios";
 // import { BASE_URL } from "@/constant/index"
 import simplebar from "simplebar-vue";
-import { getUserRankListByKeywordAndPage, getUserRankListByPage } from "@/api/rank";
+
+import {
+  getUserRankListByKeywordAndPage,
+  getUserRankListByPage,
+} from "@/api/rank";
 
 export default {
-  name: 'rank-list',
+  name: "rank-list",
   components: {
     simplebar,
   },
@@ -112,56 +112,62 @@ export default {
     },
   },
 
-  
   data() {
     return {
       userRankList: [],
-      dataLoaded : false,
+      dataLoaded: false,
     };
   },
 
   computed: {
-    keyword:{
-      get(){
-        console.log("[rank-list] - props keyword " + this.rankKeyword);
+    keyword: {
+      get() {
         return this.rankKeyword;
-      }
+      },
     },
-    page:{
-      get(){
+    page: {
+      get() {
         return this.rankPage;
-      }
-    }
+      },
+    },
   },
-  watch:{
-    keyword : function(val, oldVal){
-      console.log("[rank-list] watch - keyword", val + " " + oldVal)
+  watch: {
+    keyword: function(val, oldVal) {
+      console.log("[rank-list] watch - keyword", val + " " + oldVal);
       this.getList();
     },
-    page : function(val, oldVal){
-      
-      console.log("[rank-list] watch - page", val + " " + oldVal)
+    page: function(val, oldVal) {
+      console.log("[rank-list] watch - page", val + " " + oldVal);
       this.getList();
-    }
+    },
   },
   created() {
     this.getList();
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     async getList() {
       this.dataLoaded = false;
+      this.$emit("setDataLoaded", false);
       console.log("[get-list]", this.keyword, this.page, this.keyword.length);
 
-      if(this.keyword == null || this.keyword.replace(" ", "").length === 0){
-        this.userRankList = await getUserRankListByPage(this.page);
-        return;
-      }
-      this.userRankList = await getUserRankListByKeywordAndPage(this.keyword, this.page);
-      console.log(this.userRankList);
+      const ret = await this.getListResponse();
+      this.userRankList = ret.userRankList;
       this.dataLoaded = true;
-    }
+      this.setLastPage(ret.lastPageNumber);
+      this.$emit("setDataLoaded", true);
+    },
+
+    async getListResponse() {
+      if (this.keyword == null || this.keyword.replace(" ", "").length === 0) {
+        return await getUserRankListByPage(this.page);
+      }
+      return await getUserRankListByKeywordAndPage(this.keyword, this.page);
+    },
+
+    setLastPage(lastPage) {
+      this.$emit("setLastPage", lastPage);
+    },
   },
 };
 </script>

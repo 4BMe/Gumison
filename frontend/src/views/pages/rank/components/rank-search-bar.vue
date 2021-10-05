@@ -1,43 +1,40 @@
 <template>
-    <div class="p-4 ">
-      <div class="search-box chat-search-box">
-        <div class="input-group bg-light input-group-lg rounded-lg ">
+  <div class="p-4 ">
+    <div class="search-box chat-search-box">
+      <div class="input-group bg-light input-group-lg rounded-lg ">
+        <input
+          type="text"
+          class="form-control bg-light pl-0 ml-3"
+          placeholder="닉네임을 입력하세요"
+          v-model="keyword"
+          @keyup.enter="searchUserRank()"
+        />
 
-          <input
-            type="text"
-            class="form-control bg-light pl-0 ml-3"
-            placeholder="닉네임을 입력하세요"
-            v-model="keyword"
-            @keyup.enter="searchUserRank()"
-          />
-
-          <div class="input-group-prepend">
-            <button
-              class="btn btn-link text-decoration-none text-muted"
-              type="button"
-              @click="searchUserRank()"
-            >
-              <i class="ri-search-line search-icon font-size-18"></i>
-            </button>
-          </div>
+        <div class="input-group-prepend">
+          <button
+            class="btn btn-link text-decoration-none text-muted"
+            type="button"
+            @click="searchUserRank()"
+          >
+            <i class="ri-search-line search-icon font-size-18"></i>
+          </button>
         </div>
       </div>
-      <!-- end search-box -->
     </div>
+    <!-- end search-box -->
+  </div>
 </template>
 
 <script>
-export default { 
-
-  props:{
+export default {
+  props: {
     rankKeyword: {
       type: String,
-      default: ""
+      default: "",
     },
-
   },
 
-/*
+  /*
   computed: {
     keyword:{
       get(){
@@ -54,26 +51,25 @@ export default {
   },
   */
 
-    data(){
-    return{
-      keyword : "",
-    }
+  data() {
+    return {
+      keyword: "",
+    };
   },
   methods: {
-    searchUserRank(){
-        this.$emit("searchKeyword", { 
-          keyword: this.keyword,
-          page: 1
-        })
-    }
-
+    searchUserRank() {
+      this.$emit("searchKeyword", {
+        keyword: this.keyword,
+        page: 1,
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
-.align-middle{
-  position:absolute;
+.align-middle {
+  position: absolute;
   width: 100%;
   top: 40%;
 }
