@@ -31,12 +31,14 @@
           v-for="(item, index) in userRankList"
           :key="index"
           @click="searchHistory(item.nickname)"
-          class="bg-light"
         >
           <a href="javascript:void(0);">
             <div class="media">
-              <div class="overflow-hidden mr-3 align-self-center">
-                <span class="text-primary">{{ item.rank }} </span>
+              <div class="avatar-xs overflow-hidden mr-3 align-self-center">
+                <span
+                  class=" avatar-title text-primary rounded-circle bg-transparent align-center"
+                  >{{ item.rank }}
+                </span>
               </div>
               <div class="chat-user-img online align-self-center mr-3">
                 <div v-if="item.profile">
@@ -90,8 +92,6 @@
 </template>
 
 <script>
-// import axios from "axios";
-// import { BASE_URL } from "@/constant/index"
 import simplebar from "simplebar-vue";
 import UserRank from "./user-rank";
 

@@ -36,7 +36,7 @@ async function getUserRankListByPage(page) {
 }
 
 async function getUserRankListByNickname(nickname) {
-  return await getAxiosRequest("/detail" + nickname);
+  return await getAxiosRequest("/detail/" + nickname);
 }
 
 export {
