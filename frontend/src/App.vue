@@ -58,6 +58,24 @@
               </router-link>
             </li>
 
+            <!-- 2번탭: 랭크 페이지 -->
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Rank"
+            >
+              <router-link
+                to="/rank-list"
+                class="nav-link"
+                id="pills-rank-tab"
+                v-on:click.native="activetab = 2"
+                v-bind:class="[activetab === 2 ? 'active' : '']"
+              >
+                <i class="ri-list-ordered"></i>
+              </router-link>
+            </li>
+
             <!-- 3번탭: 사용자, 클라이밍장 검색 페이지 -->
             <!-- <li
               class="nav-item"

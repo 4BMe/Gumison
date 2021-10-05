@@ -86,7 +86,7 @@ export default {
           message: "",
           time: currentDate.getHours() + ":" + currentDate.getMinutes(),
         });
-          this.handleScroll();
+        this.handleScroll();
         this.showModal = false;
       }
       this.submitted = false;
@@ -345,9 +345,3 @@ export default {
   padding-right: 5px;
 }
 </style>
-
-
-
-
-
-
