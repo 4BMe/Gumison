@@ -190,12 +190,9 @@ export default {
     console.log(routeUrl[3]);
     switch (routeUrl[3]) {
       case "":
-        this.activetab = 1;
-        break;
-      case "temp":
       case "level-record":
       case "level-contribution":
-        this.activetab = 3;
+        this.activetab = 1;
         break;
       case "profile":
         this.activtab = 4;

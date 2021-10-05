@@ -84,7 +84,7 @@ export default {
           climbingId: climbingId,
           levelTiers: this.levelTiers,
         }
-      })
+      }).catch();
     }
   },
 }
