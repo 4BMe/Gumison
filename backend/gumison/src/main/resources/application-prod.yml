@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/gumison?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    url: jdbc:mysql://3.35.156.99:3306/gumison?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
     hikari:
       username: gumison
       password: gumison
@@ -35,7 +35,7 @@ spring:
         max-idle: 10
         min-idle: 2
     port: 6379
-    host: redis
+    host: 3.35.156.99
     password: gumison
 
   security:
