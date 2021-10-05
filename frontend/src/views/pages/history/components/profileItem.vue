@@ -82,12 +82,11 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
-import store from "@/store";
 import { getUserByNickname } from "@/api/users.js";
 export default {
   name: "profileItem",
   components: {},
-  props: ["profileDetail", "profile"],
+  props: ["profileDetail", "profile", "user", "nickname", "description"],
   data() {
     return {
       submitted: false,
@@ -99,20 +98,6 @@ export default {
       selectedImage: null,
       image: null,
     };
-  },
-
-  computed: {
-    user() {
-      return store.getters["users/getUser"];
-    },
-    nickname() {
-      return this.user.nickname ? this.user.nickname : "닉네임을 입력하세요.";
-    },
-    description() {
-      return this.user.description
-        ? this.user.description
-        : "소개글을 입력하세요.";
-    },
   },
 
   validations: {

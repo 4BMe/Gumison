@@ -11,6 +11,9 @@
       <ProfileItem
         :profileDetail='profileDetail'
         :profile='profile'
+        :user='user'
+        :nickname='nickname'
+        :description='description'
       ></ProfileItem>
       <div class="text-right pt-5 mt-3">
         <b-button
@@ -27,6 +30,7 @@
   </div>
 </template>
 <script>
+import { required } from "vuelidate/lib/validators";
 import store from "@/store";
 import { updateUserByOauthId } from "@/api/users.js";
 import ProfileItem from "./profileItem.vue";
@@ -49,11 +53,24 @@ export default {
     user() {
       return store.getters["users/getUser"];
     },
+    nickname() {
+      return this.user.nickname ? this.user.nickname : "닉네임을 입력하세요.";
+    },
+    description() {
+      return this.user.description
+        ? this.user.description
+        : "소개글을 입력하세요.";
+    },
+  },
+  validations: {
+    profileDetail: {
+      nickname: { required },
+    },
   },
   methods: {
     saveUser() {
       let userData = {
-        profile: this.profileDetail.profile.name
+        profile: this.profileDetail.profile
           ? this.profileDetail.profile.name
           : this.profile,
         nickname: this.profileDetail.nickname

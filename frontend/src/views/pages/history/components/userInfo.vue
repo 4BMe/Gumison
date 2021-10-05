@@ -119,6 +119,7 @@ export default {
   data() {
     return {
       expPercent: 0,
+      profile: this.$store.state.users.user.profile,
     };
   },
   created() {

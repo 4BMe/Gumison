@@ -62,7 +62,8 @@ export default {
         if (status != 200) {
           this.$alertify.error("탈퇴에 실패했습니다.");
         } else {
-          this.$alertify.success("탈퇴 성공했습니다.");
+          this.$alertify.success("회원탈퇴했습니다.");
+          store.commit("users/LOGOUT");
           this.$router.push({ name: "home" });
         }
       });
