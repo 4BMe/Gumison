@@ -1,18 +1,12 @@
 <template>
-  <!-- <b-modal
-    id="modal-change-profile"
-    v-model="showModal"
-    :title="$t('chat.tabs.settings.modal.title')"
-    hide-footer
-  > -->
-  <form @submit.prevent="updateprofile">
+  <form>
     <div class="form-group mb-4">
       <label for="updateProfile-input">
         프로필
       </label>
       <b-form-file
         id="file-small"
-        placeholder="프로필 이미지를 선택하세요."
+        :placeholder="profile"
         v-on:change="changeImage"
         :class="{
                 'is-invalid': submitted && $v.profileDetail.image.$error,
@@ -42,8 +36,9 @@
         type="text"
         class="form-control"
         id="updateNickname-input"
-        placeholder="닉네임을 입력하세요."
+        :placeholder="nickname"
         v-model="profileDetail.nickname"
+        @blur="onBlur"
         :class="{
                 'is-invalid': submitted && $v.profileDetail.nickname.$error,
               }"
@@ -59,14 +54,14 @@
     </div>
 
     <div class="form-group mb-4">
-      <label for="updateName-input">
+      <label for="updateDescription-input">
         소개글
       </label>
       <input
         type="text"
         class="form-control"
         id="updateDescription-input"
-        placeholder="소개글을 입력하세요."
+        :placeholder="description"
         v-model="profileDetail.description"
         :class="{
                 'is-invalid': submitted && $v.profileDetail.description.$error,
@@ -82,84 +77,47 @@
       </div>
     </div>
 
-    <div class="text-right pt-5 mt-3">
-      <b-button
-        variant="link"
-        @click="showModal = false"
-      >{{
-              $t("chat.tabs.settings.modal.form.button.close")
-            }}</b-button>
-      <b-button
-        type="submit"
-        variant="primary"
-        class="ml-1"
-      >{{
-              $t("chat.tabs.settings.modal.form.button.save")
-            }}</b-button>
-    </div>
   </form>
-  <!-- </b-modal> -->
 </template>
 
 <script>
-import axios from "axios";
-import { required, email } from "vuelidate/lib/validators";
-
+import { required } from "vuelidate/lib/validators";
+import { getUserByNickname } from "@/api/users.js";
 export default {
-  name: "ChangeProfileModal",
+  name: "profileItem",
   components: {},
+  props: ["profileDetail", "profile", "user", "nickname", "description"],
   data() {
     return {
-      showModal: false,
       submitted: false,
       form: {
         file: null,
-      },
-      nickname: "붕붕바라바라붕붕",
-      profile: require("@/assets/images/users/avatar-1.jpg"),
-      description: "hello",
-      profileDetail: {
-        image: null,
-        name: "",
-        email: "",
-        location: "",
       },
       allowableTypes: ["jpg", "jpeg", "png", "gif"],
       maximumSize: 5000000,
       selectedImage: null,
       image: null,
-      options: {
-        url: "https://httpbin.org/post",
-        type: "POST",
-      },
     };
   },
 
   validations: {
     profileDetail: {
-      image: { required },
-      name: { required },
-      email: { required, email },
-      location: { required },
+      nickname: { required },
     },
   },
   methods: {
-    updateprofile() {
-      this.submitted = true;
-      // stop here if form is invalid
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        return;
-      } else {
-        this.profile = this.image;
-
-        this.username = this.profileDetail.name;
-        this.useremail = this.profileDetail.email;
-        this.userlocation = this.profileDetail.location;
-        this.showModal = false;
-      }
-      this.submitted = false;
-      this.form = {};
+    onBlur($event) {
+      console.log("blur event occur ", $event.target.value);
+      getUserByNickname(this.profileDetail.nickname)
+        .then(({ data }) => {
+          console.log(data);
+          if (!data.data) {
+            this.$alertify.error("이미 사용중인 아이디입니다.");
+          }
+        })
+        .catch((error) => {
+          console.log("error: ", error);
+        });
     },
 
     validate(image) {
@@ -184,24 +142,23 @@ export default {
     },
     changeImage($event) {
       this.selectedImage = $event.target.files[0];
-      this.profileDetail.image = $event.target.files[0];
+      this.profileDetail.profile = $event.target.files[0];
 
       //validate the image
       if (!this.validate(this.selectedImage)) return;
       // create a form
       const form = new FormData();
       form.append("file", this.selectedImage);
-      axios
-        .post("https://httpbin.org/post", { data: form })
-        .then(this.createImage)
-        .catch(this.onImageError);
+      // axios
+      //   .post("https://httpbin.org/post", { data: form })
+      //   .then(this.createImage)
+      //   .catch(this.onImageError);
     },
     createImage() {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.image = e.target.result;
       };
-      reader.readAsDataURL(this.selectedImage);
     },
   },
 };

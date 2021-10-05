@@ -31,7 +31,7 @@ public class ClimbingController {
   @GetMapping("/search/{keyword}/{pageNumber}")
   public ApiResponseDto<List<Climbing>> searchClimbingList(
       @PathVariable("keyword") String climbingName, @PathVariable int pageNumber) {
-    List<Climbing> climbingList = climbingService.getClimbingList(climbingName, pageNumber);
+    List<Climbing> climbingList = climbingService.getClimbingList(climbingName.trim(), pageNumber);
     log.info("Get user climbing list - {}", climbingList);
     return ApiResponseDto.success(climbingList);
   }
@@ -50,10 +50,13 @@ public class ClimbingController {
   @ApiResponses({@ApiResponse(code = 200, message = "성공"),
       @ApiResponse(code = 500, message = "서버 오류")})
   @GetMapping("/detail/{climbingId}/{levelTierId}/{pageNumber}")
-  public ApiResponseDto<List<ClimbingSolutionRes>> getLevelSolution(@PathVariable Long climbingId,
+  public ApiResponseDto<ClimbingSolutionRes> getLevelSolution(@PathVariable Long climbingId,
       @PathVariable Long levelTierId, @PathVariable int pageNumber) {
-    List<ClimbingSolutionRes> climbingSolutionRes =
+    ClimbingSolutionRes climbingSolutionRes =
         climbingService.getLevelSolution(climbingId, levelTierId, pageNumber);
+    
+    log.info("Get climbing solution list - {}", climbingSolutionRes);
+    
     return ApiResponseDto.success(climbingSolutionRes);
   }
 

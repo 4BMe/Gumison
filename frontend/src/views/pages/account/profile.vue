@@ -25,7 +25,7 @@
         :title="$t('chat.tabs.settings.modal.title')"
         hide-footer
       >
-        <ChangeProfileModal></ChangeProfileModal>
+        <ChangeProfileItem></ChangeProfileItem>
       </b-modal>
 
       <h5 class="font-size-16 mb-1 text-truncate">
@@ -35,8 +35,6 @@
         <p class="mb-4">{{description}}</p>
       </div>
     </div>
-
-    <!-- End profile user -->
 
     <!-- Start user-profile-desc -->
 
@@ -53,11 +51,11 @@ import axios from "axios";
 import simplebar from "simplebar-vue";
 import { required, email } from "vuelidate/lib/validators";
 
-import ChangeProfileModal from "./components/change-profile-modal.vue";
+import ChangeProfileItem from "./components/change-profile-item.vue";
 
 export default {
   name: "profile",
-  components: { simplebar, ChangeProfileModal },
+  components: { simplebar, ChangeProfileItem },
   data() {
     return {
       showModal: false,

@@ -22,9 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service("UserService")
 @RequiredArgsConstructor
-public class
-
-UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final CommonCodeRepository commonCodeRepository;
@@ -53,9 +51,8 @@ UserServiceImpl implements UserService {
     UserOauthDto userOauthDto = UserOauthDto.builder()
         .nickname(user.getNickname())
         .description(user.getDescription())
-        .oAuthId(user.getOauthId())
-        .oAuthType(user.getOauthType())
         .profile(user.getProfile())
+        .oauthId(user.getOauthId())
         .build();
     log.info("getOauthUserByOauthId: {}", user);
     return userOauthDto;
@@ -97,6 +94,7 @@ UserServiceImpl implements UserService {
     return userRepository.countByNicknameContaining(keyword);
   }
 
+
   /**
    * 유저 정보로 UserSearchDto 반환
    *
@@ -120,6 +118,37 @@ UserServiceImpl implements UserService {
         .tier(code.getName().toLowerCase())
         .solCnt(solvedCount)
         .build();
+  }
+
+
+  @Override
+  public UserOauthDto updateUserByOauthId(String oauthId, UserOauthDto userOauthDto) {
+
+    User user = userRepository.findByOauthId(oauthId)
+        .orElseThrow(() -> new ResourceNotFoundException("User", oauthId, "oauthId"));
+    try {
+      user.setNickname(userOauthDto.getNickname());
+      user.setDescription(userOauthDto.getDescription());
+      user.setProfile(userOauthDto.getProfile());
+
+      userRepository.save(user);
+
+    } catch (Exception e) {
+      log.error("[updateUserByOAuthId] ", e);
+    }
+    return UserOauthDto.builder()
+        .nickname(user.getNickname())
+        .description(user.getDescription())
+        .profile(user.getProfile())
+        .oauthId(user.getOauthId())
+        .build();
+  }
+
+  @Override
+  public void deleteUserByOauthId(String oauthId) {
+    User user = userRepository.findByOauthId(oauthId)
+        .orElseThrow(() -> new ResourceNotFoundException("User", oauthId, "oauthId"));
+    userRepository.delete(user);
   }
 
 }

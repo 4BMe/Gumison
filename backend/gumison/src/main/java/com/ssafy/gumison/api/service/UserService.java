@@ -5,8 +5,6 @@ import com.ssafy.gumison.common.dto.UserOauthDto;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import com.ssafy.gumison.common.dto.UserSearchDto;
-import com.ssafy.gumison.db.entity.User;
-import javax.servlet.http.HttpSession;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
@@ -15,8 +13,20 @@ public interface UserService {
 
   UserSearchRes getUserList(String nickname, int pageNumber);
 
+  /**
+   * oauthUserId로 사용자 정보 UserOauthDto 반환
+   *
+   * @param oauthId
+   * @return { 닉네임, 사용자 소개, 프로필 사진, oAuthId, oAuthType }
+   */
   UserOauthDto getOauthUserByOauthId(String oauthId);
 
+  /**
+   * TokenAuthenticationFilter 만들 때 사용 UserDetails 반환
+   *
+   * @param oauthId 소셜 로그인 key값
+   * @return userName, password
+   */
   UserDetails loadUserByOauthId(String oauthId);
 
   /**
@@ -35,4 +45,19 @@ public interface UserService {
    */
   Long getUserCountByKeyword(String keyword);
 
+  /**
+   * oauthId로 유저 정보(닉네임, 프로필 사진, 소개글) 변경
+   *
+   * @param oauthId     사용자의 oAuthId
+   * @param userOauthDto (변경 후 닉네임, 프로필 사진, 소개글)
+   * @return 변경된 유저 정보 (닉네임, 프로필 사진, 소개글)
+   */
+  UserOauthDto updateUserByOauthId(String oauthId, UserOauthDto userOauthDto);
+
+  /**
+   * oauthId로 유저 탈퇴
+   *
+   * @param oauthId
+   */
+  void deleteUserByOauthId(String oauthId);
 }
