@@ -12,4 +12,5 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
   List<Solution> findByClimbingIdAndLevelTierId(Long climingId, Long levelTierId,
       Pageable pageable);
 
+  List<Solution> findByUploadId(String uploadId);
 }

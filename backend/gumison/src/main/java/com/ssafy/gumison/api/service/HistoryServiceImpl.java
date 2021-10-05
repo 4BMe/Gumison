@@ -65,7 +65,6 @@ public class HistoryServiceImpl implements HistoryService {
     User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
     List<Solution> solutionList = getSolutionList(user.getId(), pageNumber);
     List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
-
     return SolutionListRes.of(solutionListItems);
   }
 
@@ -73,13 +72,20 @@ public class HistoryServiceImpl implements HistoryService {
   public SolutionRes solution(String solutionId) {
     Solution solution = solutionRepository.findById(Long.parseLong(solutionId))
         .orElseThrow(RuntimeException::new);
+    List<Solution> solutionList = solutionRepository.findByUploadId(solution.getUploadId());
     User user = solution.getUser();
     CommonCode code = commonCodeRepository.findById(user.getTierCode())
         .orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
-    String tierName = codeNameConvert(solution.getLevelTier().getTierCode());
-    String levelName = codeNameConvert(solution.getLevelTier().getLevelCode());
-    return SolutionRes.of(user, tier, solution, tierName, levelName);
+    List<String> tierNames = new ArrayList<>();
+    List<String> levelNames = new ArrayList<>();
+    List<Integer> counts = new ArrayList<>();
+    solutionList.forEach(sol -> {
+      tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
+      levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
+      counts.add(sol.getCount());
+    });
+    return SolutionRes.of(user, tier, solution, tierNames, levelNames, counts);
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
@@ -207,7 +213,7 @@ public class HistoryServiceImpl implements HistoryService {
           .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
       solutions.add(solution);
     }
-    if (!solutionRequest.getVideos().isEmpty()) {
+    if (solutionRequest.getVideos() != null) {
       uploadVideos(user.getId(), now, solutionRequest.getVideos());
     }
     return solutionRepository.saveAll(solutions);

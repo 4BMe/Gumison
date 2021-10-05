@@ -45,33 +45,35 @@
     </div>
     <div class="m-2 p-2" id="solution">
       <div class="m-3 p-3" id="level">
-        <div class="container-fluid row m-0 p-0">
-          <div class="col-3 m-0 p-0"/>
-          <div class="col-6 m-0 p-0 container-fluid row text-center align-self-center">
-            <h5 class="col-4 m-0 p-0 text-center align-self-center font-size-15">
-                <img
-                  :src="require(`@/assets/images/tier/`+data.solution.tier+`.png`)"
-                  alt="sol-tier-img"
-                  id="sol-tier-img"
-                  class="img-fluid rounded-circle sm-tier-img"
-                /> 
-            </h5>
-            <div class="col-1 m-0 p-0"/>
-            <div class="col-2 rounded-circle level-record-color m-0 p-0" id="color"></div>
-            <div class="col-1 m-0 p-0"/>
-            <!-- <div class="col-4 m-0 p-0 text-center align-self-center">
-              {{data.solution.level}}
-            </div> -->
-            <div class="col-4 m-0 p-0 text-center align-self-center">
-              {{data.solution.count}}
+        <div v-for="(solution, index) in data.solution.tier" :key=index>
+          <div class="container-fluid row m-0 p-0">
+            <div class="col-3 m-0 p-0"/>
+            <div class="col-6 m-0 p-0 container-fluid row text-center align-self-center">
+              <h5 class="col-4 m-0 p-0 text-center align-self-center font-size-15">
+                  <img
+                    :src="require(`@/assets/images/tier/`+data.solution.tier[index]+`.png`)"
+                    alt="sol-tier-img"
+                    id="sol-tier-img"
+                    class="img-fluid rounded-circle sm-tier-img"
+                  /> 
+              </h5>
+              <div class="col-1 m-0 p-0"/>
+              <div class="col-2 rounded-circle level-record-color m-0 p-0" :id="'color-' + index"></div>
+              <div class="col-1 m-0 p-0"/>
+              <!-- <div class="col-4 m-0 p-0 text-center align-self-center">
+                {{data.solution.level}}
+              </div> -->
+              <div class="col-4 m-0 p-0 text-center align-self-center">
+                {{data.solution.count[index]}}
+              </div>
             </div>
+            <div class="col-3 m-0 p-0"/>
           </div>
-          <div class="col-3 m-0 p-0"/>
         </div>
       </div>
       <div id="video">
-        <div v-if="data.solution.solutionVideoList.length!=0">
-        {{data.solution.solutionVideoList}}
+        <div v-if="data.solution.solutionVideoList && data.solution.solutionVideoList.length!=0">
+          {{data.solution.solutionVideoList}}
         </div>
       </div>
       <div id="button">
@@ -111,8 +113,7 @@ export default {
       type: Object,
       require: true
     },
-    color:{
-      type: String,
+    colors:{
       require: true
     },
     isData: {
@@ -127,14 +128,25 @@ export default {
   created() {
   },
   mounted() {
+    console.log("data");
+    console.log(this.data);
+    console.log(this.color);
     this.$nextTick(function (){
-      document.getElementById('color').style="border: 1px solid; background-color: " + this.color;
+      for (let i = 0; i < this.colors.length; i++) {
+        document.getElementById('color-' + i).style="border: 1px solid; background-color: " + this.colors[i];
+      }
     })
   },
   methods: {
     searchHistory(param) {
       console.log(param);
     },
+    clickUpdate(){
+
+    },
+    clickDelete(){
+      console.log("clickDelete!!");
+    }
   },
 };
 </script>
