@@ -1,35 +1,35 @@
 version: "3.4"
 services:
-  mysql:
-    image: mariadb:10.4.20
-    container_name: mysql
-    restart: always
-    ports:
-      - "32000:3306"
-    volumes:
-      - ./mysql/mysql-data:/var/lib/mysql
-      - ./mysql/initdb.d/:/docker-entrypoint-initdb.d/
-    environment:
-      MYSQL_USER: gumison
-      MYSQL_PASSWORD: gumison
-      MYSQL_ROOT_PASSWORD: gumison
-      MYSQL_DATABASE: gumison
-      TZ: "Asia/Seoul"
-    privileged: true
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    networks:
-      - internal_network
+  # mysql:
+  #   image: mariadb:10.4.20
+  #   container_name: mysql
+  #   restart: always
+  #   ports:
+  #     - "32000:3306"
+  #   volumes:
+  #     - ./mysql/mysql-data:/var/lib/mysql
+  #     - ./mysql/initdb.d/:/docker-entrypoint-initdb.d/
+  #   environment:
+  #     MYSQL_USER: gumison
+  #     MYSQL_PASSWORD: gumison
+  #     MYSQL_ROOT_PASSWORD: gumison
+  #     MYSQL_DATABASE: gumison
+  #     TZ: "Asia/Seoul"
+  #   privileged: true
+  #   command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  #   networks:
+  #     - internal_network
 
-  redis:
-    image: redis:6.2.4-alpine
-    container_name: redis
-    restart: always
-    volumes:
-      - ./redis/redis-data:/data
-    ports:
-      - "32001:6379"
-    networks:
-      - internal_network
+  # redis:
+  #   image: redis:6.2.4-alpine
+  #   container_name: redis
+  #   restart: always
+  #   volumes:
+  #     - ./redis/redis-data:/data
+  #   ports:
+  #     - "32001:6379"
+  #   networks:
+  #     - internal_network
 
   backend:
     container_name: backend
