@@ -37,7 +37,7 @@ export default {
       .then(({ data }) => {
         this.climbingDetail = data.data;
         this.isData = true;
-        this.$emit('climbing-level', this.climbingDetail.levelTiers);
+        // this.$emit('climbing-level', this.climbingDetail.levelTiers);
       })
       .catch((err) => {
         console.log("에러: " + err);

@@ -1,7 +1,10 @@
 <template>
   <div class="px-3" v-if="isData">
-    <div>
-        <h5 class="border-bottom border-light pl-2 pb-2"> Level </h5>
+    <div class="row">
+        <h5 class="col-9 border-bottom border-light pl-2 pb-2"> Level </h5>
+        <div class="col-3">
+          <input type="button" value="기록하기" class="btn btn-outline-info btn-sm mb-3" @click="levelRecord()">
+        </div>
     </div>
     <!-- <simplebar style="max-height: 150px; min-height: 150px"> -->
     <ul class="list-unstyled chat-list chat-user-list">
@@ -71,6 +74,17 @@ export default {
 
     searchSolutions(solutionId){
       this.$router.push({ name: 'climbingSolution', params: {solutionId: solutionId}});
+    },
+
+    levelRecord(){
+      var climbingId = this.$route.params.climbingId;
+      this.$router.push({
+        name: 'level-record',
+        params: {
+          climbingId: climbingId,
+          levelTiers: this.levelTiers,
+        }
+      }).catch();
     }
   },
 }

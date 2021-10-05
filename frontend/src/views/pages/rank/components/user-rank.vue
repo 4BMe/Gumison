@@ -1,6 +1,6 @@
 <template>
   <div class="bg-light" v-if="user">
-    <a href="javascript:void(0);">
+    <router-link to="/myhistory">
       <div class="media">
         <div class="avatar-xs overflow-hidden mr-3 align-self-center">
           <span
@@ -48,7 +48,7 @@
         </div>
       </div>
       <!-- End chat-message-list -->
-    </a>
+    </router-link>
   </div>
 </template>
 

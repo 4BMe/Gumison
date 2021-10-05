@@ -6,7 +6,7 @@ export default {
       description: "",
       profile: "",
       oauthId: "",
-      tocken: "",
+      token: "",
     },
   }),
   mutations: {
@@ -15,7 +15,7 @@ export default {
       state.user.description = payload.description;
       state.user.profile = payload.profile;
       state.user.oauthId = payload.oauthId;
-      state.user.tocken = payload.tocken;
+      state.user.token = payload.token;
     },
     UPDATE_USER(state, payload) {
       state.user.nickname = payload.nickname;
@@ -28,7 +28,7 @@ export default {
       state.user.description = "";
       state.user.profile = "";
       state.user.oauthId = "";
-      state.user.tocken = "";
+      state.user.token = "";
     },
   },
   actions: {},
@@ -38,9 +38,10 @@ export default {
       return state.user;
     },
     getToken(state) {
-      console.log("[getter getToken]", state.user.tocken);
-      return state.user.tocken;
+      console.log("[getter getToken]", state.user.token);
+      return state.user.token;
     },
+
     getNickname(state) {
       console.log("[getter getNickname]", state.user.nickname);
       return state.user.nickname;

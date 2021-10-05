@@ -57,7 +57,6 @@ export default {
     },
     setLastPage(lastPage) {
       this.rankLastPage = lastPage;
-      console.log("[lastpageset] ", this.lastPage);
     },
     movePage(page) {
       this.rankPage = page;

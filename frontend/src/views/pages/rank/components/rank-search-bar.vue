@@ -34,23 +34,6 @@ export default {
     },
   },
 
-  /*
-  computed: {
-    keyword:{
-      get(){
-        return this.rankKeyword;
-      },
-      set(keyword){
-        console.log("[rank-search-bar] emit keyword", keyword);
-        this.$emit("searchKeyword", { 
-          keyword: keyword,
-          page: 1
-        })
-      }
-    },
-  },
-  */
-
   data() {
     return {
       keyword: "",

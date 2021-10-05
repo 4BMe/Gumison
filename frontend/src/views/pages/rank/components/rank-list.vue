@@ -138,12 +138,10 @@ export default {
     },
   },
   watch: {
-    keyword: function(val, oldVal) {
-      console.log("[rank-list] watch - keyword", val + " " + oldVal);
+    keyword: function() {
       this.getList();
     },
-    page: function(val, oldVal) {
-      console.log("[rank-list] watch - page", val + " " + oldVal);
+    page: function() {
       this.getList();
     },
   },

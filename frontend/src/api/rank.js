@@ -14,11 +14,11 @@ async function getAxiosRequest(path) {
     const response = await instance.get(path);
 
     if (response.status != 200) {
-      console.log("[getUserRankList] fail, code : " + response.status);
+      console.log("[userRankAxios] fail, code : " + response.status);
       console.log("fail message : " + response.data.message);
       return null;
     }
-    console.log("[getUserRankList] success");
+    console.log("[userRankAxios] success");
     return response.data.data;
   } catch (e) {
     console.log(e);

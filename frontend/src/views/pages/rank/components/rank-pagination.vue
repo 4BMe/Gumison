@@ -57,7 +57,6 @@ export default {
 
   methods: {
     movePage() {
-      console.log(this.page);
       this.$emit("movePage", this.page);
     },
     generatePageList() {
@@ -81,10 +80,6 @@ export default {
       if (endOffset != this.rankLastPage) {
         this.pageList.push(this.rankLastPage);
       }
-      console.log("[gen-page-list] offsets = ", startOffset, endOffset);
-      console.log("[gen-page-list] lastPageCount = ", this.rankLastPage);
-
-      console.log(this.pageList);
     },
   },
 };
