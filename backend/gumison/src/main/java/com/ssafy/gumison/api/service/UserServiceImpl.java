@@ -144,6 +144,13 @@ public class UserServiceImpl implements UserService {
         .build();
   }
 
+  @Override
+  public void deleteUserByOauthId(String oauthId) {
+    User user = userRepository.findByOauthId(oauthId)
+        .orElseThrow(() -> new ResourceNotFoundException("User", oauthId, "oauthId"));
+    userRepository.delete(user);
+  }
+
 }
 
 

@@ -1,19 +1,23 @@
 <template>
   <div class="px-2">
     <div class="container-fluid row m-0 p-0">
-      <div class="col-2 chat-user-img online align-self-center" id="userCard">
+      <div
+        class="col-2 chat-user-img online align-self-center"
+        id="userCard"
+      >
         <div v-if="user.profile">
           <img
-            :src="profile"
+            :src="user.profile"
             class="rounded-circle avatar-xs"
             id="profile"
             alt="profile"
           />
         </div>
-        <div class="avatar-xs" v-else>
-          <span 
-            class="avatar-title rounded-circle bg-soft-primary text-primary"
-            >{{ user.nickname.charAt(0) }}
+        <div
+          class="avatar-xs"
+          v-else
+        >
+          <span class="avatar-title rounded-circle bg-soft-primary text-primary">{{ user.nickname.charAt(0) }}
           </span>
         </div>
       </div>
@@ -28,19 +32,47 @@
           {{ user.nickname }}
         </h5>
       </div>
-      <div class="col-4 pr-3 container-fluid row m-0 p-0 align-self-center" v-if="user.nickname == currNickname">
-        <div class="col-6 m-0 p-0" />
-        <div class="col-6 m-0 p-0 align-self-center text-right" >
-          <button>민지!</button>
+      <div
+        class="col-4 pr-3 container-fluid row m-0 p-0 align-self-center"
+        v-if="user.nickname == currNickname"
+      >
+        <div class="col-6 m-0 p-0  text-right">
+          <div class="row">
+            <b-button
+              type="button"
+              class="btn col bg-primary avatar-xs p-0 rounded-circle"
+              v-b-modal="'modal-change-profile'"
+            >
+              <i class="ri-pencil-fill"></i>
+            </b-button>
+            <b-button
+              type="button"
+              class="btn col bg-danger avatar-xs p-0 rounded-circle"
+              v-b-modal="'modal-withdraw'"
+            >
+              <i class="ri-delete-bin-fill"></i>
+            </b-button>
+          </div>
+
         </div>
+
       </div>
+      <WithdrawModal></WithdrawModal>
+      <ProfileChangeModal></ProfileChangeModal>
+
     </div>
-    <div class="chat-user-img online align-self-center m-1" id="description">
+    <div
+      class="chat-user-img online align-self-center m-1"
+      id="description"
+    >
       <p class="chat-user-message align-self-center ml-2 mb-0">
         {{ user.description }}
       </p>
     </div>
-    <div class="m-0 p-0 " id="exp">
+    <div
+      class="m-0 p-0 "
+      id="exp"
+    >
       <div class="container-fluid align-self-center row m-0 p-0">
         <div class="col-1 m-0 p-0 align-self-center text-right">
           <img
@@ -58,11 +90,14 @@
           {{user.exp}}/{{user.nextExp}}
         </h6>
       </div>
-      <div class="progress mt-2 mx-3 mb-3" id="progress-bar">
+      <div
+        class="progress mt-2 mx-3 mb-3"
+        id="progress-bar"
+      >
         <div
           class="progress-bar bg-info"
           role="progressbar"
-          :style="'width:' + expPercent + '%'"
+          :style="'width:'+expPercent+'%'"
           aria-valuenow="50"
           aria-valuemin="0"
           aria-valuemax="100"
@@ -73,18 +108,22 @@
 </template>
 
 <script>
+import ProfileChangeModal from "./profileChangeModal.vue";
+import WithdrawModal from "./withdrawModal.vue";
 import store from "@/store";
-
 export default {
+  name: "userInfo",
+  components: { ProfileChangeModal, WithdrawModal },
   props: {
     user: {
       type: Object,
-      require: true
-    }
+      require: true,
+    },
   },
   data() {
     return {
       expPercent: 0,
+      // profile: this.user.profile,
     };
   },
   computed: {
