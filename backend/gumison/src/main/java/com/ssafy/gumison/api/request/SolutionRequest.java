@@ -19,7 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class SolutionRequest {
   private Long solutionId;
-  private Long userId;
+  private String oauthId;
   private Long climbingId;
   private Integer accumulateReport;
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

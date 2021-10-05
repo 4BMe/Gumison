@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -163,7 +162,7 @@ public class HistoryServiceImpl implements HistoryService {
     log.info("[createSolution] - HistoryService : {}", solutionRequest);
     List<Solution> solutions = new ArrayList<>();
 
-    User user = userRepository.findById(solutionRequest.getUserId())
+    User user = userRepository.findByOauthId(solutionRequest.getOauthId())
         .orElseThrow(RuntimeException::new);
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId())
         .orElseThrow(RuntimeException::new);
@@ -180,7 +179,7 @@ public class HistoryServiceImpl implements HistoryService {
           .build();
       solutions.add(solution);
     }
-    if (!solutionRequest.getVideos().isEmpty()) {
+    if (solutionRequest.getVideos() != null) {
       uploadVideos(user.getId(), now, solutionRequest.getVideos());
     }
     return solutionRepository.saveAll(solutions);
@@ -191,7 +190,7 @@ public class HistoryServiceImpl implements HistoryService {
     log.info("[updateSolution] - HistoryService : {}", solutionRequest);
     List<Solution> solutions = new ArrayList<>();
 
-    User user = userRepository.findById(solutionRequest.getUserId())
+    User user = userRepository.findByOauthId(solutionRequest.getOauthId())
         .orElseThrow(RuntimeException::new);
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId())
         .orElseThrow(RuntimeException::new);

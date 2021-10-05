@@ -59,7 +59,7 @@
             </li>
 
             <!-- 3번탭: 사용자, 클라이밍장 검색 페이지 -->
-            <li
+            <!-- <li
               class="nav-item"
               v-b-tooltip.hover
               data-placement="top"
@@ -74,7 +74,7 @@
               >
                 <i class="ri-add-box-line"></i>
               </router-link>
-            </li>
+            </li> -->
 
             <!-- 4번탭: 사용자 계정, 로그인 필요 페이지
             <li
@@ -190,12 +190,9 @@ export default {
     console.log(routeUrl[3]);
     switch (routeUrl[3]) {
       case "":
-        this.activetab = 1;
-        break;
-      case "temp":
       case "level-record":
       case "level-contribution":
-        this.activetab = 3;
+        this.activetab = 1;
         break;
       case "profile":
         this.activtab = 4;
