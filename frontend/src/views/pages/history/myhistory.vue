@@ -83,12 +83,15 @@ export default {
     UserInfo,
     HistoryList,
   },
+  props: {
+    nickname: String,
+  },
   data() {
     return {
       isData: false,
       user: {
         profile: store.getters["users/getUser"].profile,
-        nickname: store.getters["users/getUser"].nickname,
+        nickname: null,
         description: null,
         tier: null,
         exp: null,
@@ -103,7 +106,7 @@ export default {
   async mounted() {
     console.log("myhistory");
     await axios
-      .get(`${BASE_URL}/history/${this.user.nickname}`)
+      .get(`${BASE_URL}/history/${this.nickname}`)
       .then(({ data }) => {
         this.user = data.data.user;
         this.solutionList = data.data.solutionList;

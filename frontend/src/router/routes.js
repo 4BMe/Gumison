@@ -15,54 +15,86 @@ export default [
         path: '/myhistory',
         name: 'myhistory',
         component: () => import('../views/pages/history/myhistory'),
-    },
-    {
-        path: '/level-record',
-        name: 'level-record',
-        component: () => import('../views/pages/level-record/level-record'),
-        meta: {
-            beforeResolve(routeTo, routeFrom, next) {
-                /**
-                 * token이 이미 있으면 myhistory 로 가고,
-                 * 없으면 로그인 화면으로 가기
-                 */
-                const token = store.getters['users/getToken'];
-                console.log('[route myhistory click] token: ', token)
-                if (token) {
-                    console.log('[route myhistory click] token token : ', token)
-                    next()
-                } else {
-                    next({
-                        name: 'login'
-                    })
-                }
-            },
-        },
         props: true,
     },
     {
-        path: '/level-contribution',
-        name: 'level-contribution',
-        component: () => import('../views/pages/level-contribution/level-contribution'),
-        meta: {
-            beforeResolve(routeTo, routeFrom, next) {
-                /**
-                 * token이 이미 있으면 myhistory 로 가고,
-                 * 없으면 로그인 화면으로 가기
-                 */
-                const token = store.getters['users/getToken'];
-                console.log('[route myhistory click] token: ', token)
-                if (token) {
-                    console.log('[route myhistory click] token token : ', token)
-                    next()
-                } else {
-                    next({
-                        name: 'login'
-                    })
-                }
-            },
-        },
+        path: '/userlist/:keyword',
+        name: 'userlist',
+        component: () => import('../views/pages/search/userlist'),
         props: true,
+    },
+    {
+        path: '/climbinglist/:keyword',
+        name: 'climbinglist',
+        component: () => import('../views/pages/search/climbingList'),
+        props: true,
+    },
+    {
+        path: '/climbing/:climbingId',
+        name: 'climbing',
+        component: () => import('../views/pages/climbing/climbing'),
+        props: true,
+        children: [
+            {
+                path: '',
+                name: 'level',
+                component: () => import('../views/pages/climbing/level'),
+            },
+            {
+                path: 'solution:solutionId',
+                name: 'climbingSolution',
+                component: () => import('../views/pages/climbing/solution/climbingSolution'),
+                props: '',
+            },
+            {
+                path: 'level-record',
+                name: 'level-record',
+                component: () => import('../views/pages/level-record/level-record'),
+                meta: {
+                    beforeResolve(routeTo, routeFrom, next) {
+                        /**
+                         * token이 이미 있으면 myhistory 로 가고,
+                         * 없으면 로그인 화면으로 가기
+                         */
+                        const token = store.getters['users/getToken'];
+                        console.log('[route myhistory click] token: ', token)
+                        if (token) {
+                            console.log('[route myhistory click] token token : ', token)
+                            next()
+                        } else {
+                            next({
+                                name: 'login'
+                            })
+                        }
+                    },
+                },
+                props: true,
+            },
+            {
+                path: '/level-contribution',
+                name: 'level-contribution',
+                component: () => import('../views/pages/level-contribution/level-contribution'),
+                meta: {
+                    beforeResolve(routeTo, routeFrom, next) {
+                        /**
+                         * token이 이미 있으면 myhistory 로 가고,
+                         * 없으면 로그인 화면으로 가기
+                         */
+                        const token = store.getters['users/getToken'];
+                        console.log('[route myhistory click] token: ', token)
+                        if (token) {
+                            console.log('[route myhistory click] token token : ', token)
+                            next()
+                        } else {
+                            next({
+                                name: 'login'
+                            })
+                        }
+                    },
+                },
+                props: true,
+            },
+        ]
     },
     {
         path: '/login',

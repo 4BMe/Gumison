@@ -1,37 +1,53 @@
 <template>
   <div class="height-full">
-      <b-card no-body class="border custom-accordion">
-          <b-card-body>
-            <div class="mb-3">
-              <input type="date" id="input-date" v-model="solutionDate" class="form-control"/>
-            </div>
-            <div v-for="(levelTier, index) in levelTiers" :key="index">
-              <LevelRecordLine :level=levelTier.level :color=colors[index] :index=index :solutionCount="levelTier.solutionCount" class="mb-3 ml-3" v-model.number="recordSolutionCounts[index]" />
-            </div>
-          </b-card-body>
-      </b-card>
-          <div class="d-flex">
-            <input
-              type="file"
-              value="동영상 업로드"
-              ref="solutionVideos"
-              class="btn btn-outline-success ml-3"
-              accept="video/*"
-              @change="handleFileUpload()"
-              multiple>
-          </div>
-          <input type="button" value="등록" class="btn btn-outline-primary float-right mt-3 mr-4 ml-3" @click="submitClick()">
-          <br><br><br><br><br><br><br>
+    <b-card no-body class="border custom-accordion">
+      <b-card-body>
+        <div class="mb-3">
+          <input
+            type="date"
+            id="input-date"
+            v-model="solutionDate"
+            class="form-control"
+          />
+        </div>
+        <div v-for="(levelTier, index) in levelTiers" :key="index">
+          <LevelRecordLine
+            :level="levelTier.level"
+            :color="colors[index]"
+            :index="index"
+            :solutionCount="levelTier.solutionCount"
+            class="mb-3 ml-3"
+            v-model.number="recordSolutionCounts[index]"
+          />
+        </div>
+      </b-card-body>
+    </b-card>
+    <div class="d-flex">
+      <input
+        type="file"
+        value="동영상 업로드"
+        ref="solutionVideos"
+        class="btn btn-outline-success ml-3"
+        accept="video/*"
+        @change="handleFileUpload()"
+        multiple
+      />
+    </div>
+    <input
+      type="button"
+      value="등록"
+      class="btn btn-outline-primary float-right mt-3 mr-4 ml-3"
+      @click="submitClick()"
+    />
   </div>
 </template>
 
 <script>
-import LevelRecordLine from './components/level-record-line';
-import { submit, update } from '@/api/level-record.js';
-import Colors from '@/constant/colors.js';
+import LevelRecordLine from "./components/level-record-line";
+import { submit, update } from "@/api/level-record.js";
+import Colors from "@/constant/colors.js";
 
-
-var today = new Date().toISOString().slice(0,10);
+var today = new Date().toISOString().slice(0, 10);
 
 export default {
   props: {
@@ -39,82 +55,78 @@ export default {
     levelTiers: {},
   },
   components: {
-      LevelRecordLine,
+    LevelRecordLine,
   },
-  data(){
-      return {
-        oauthId: this.$store.state.users.user.oauthId,
-        recordSolutionCounts: [],
-        solutionIds: [],
-        solutionVideos: '',
-        solutionDate: today,
-        colors: [],
-      }
+  data() {
+    return {
+      oauthId: this.$store.state.users.user.oauthId,
+      recordSolutionCounts: [],
+      solutionIds: [],
+      solutionVideos: "",
+      solutionDate: today,
+      colors: [],
+    };
   },
 
   methods: {
-      handleFileUpload() {
-          this.solutionVideos = this.$refs.solutionVideos.files;
-      },
-      goBack(){
-        this.$router.go(-1);
-      },
-      async submitClick() {
-          const formData = new FormData();
-          formData.append("oauthId", this.oauthId);
-          formData.append("climbingId", this.climbingId);
-          formData.append("date", this.solutionDate);
-          for (let i = 0; i < this.colors.length; i++) {
-            if(this.recordSolutionCounts[i] > 0) {
-              if(this.solutionIds[i] > 0) {
-                formData.append("solutionIds",this.solutionIds[i]);
-              }
-              formData.append("levelTierIds", this.levelTiers[i].id);
-              formData.append("counts", this.recordSolutionCounts[i]);
-            }
+    handleFileUpload() {
+      this.solutionVideos = this.$refs.solutionVideos.files;
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    async submitClick() {
+      const formData = new FormData();
+      formData.append("oauthId", this.oauthId);
+      formData.append("climbingId", this.climbingId);
+      formData.append("date", this.solutionDate);
+      for (let i = 0; i < this.colors.length; i++) {
+        if (this.recordSolutionCounts[i] > 0) {
+          if (this.solutionIds[i] > 0) {
+            formData.append("solutionIds", this.solutionIds[i]);
           }
-          for(let video of this.solutionVideos){
-            formData.append('videos', video);
-          }
-
-          if(this.solutionIds[0] > 0) {
-            await update(formData)
-            .then(({ data }) => {
-              console.log(data);
-            })
-            .catch(error => {
-              console.log(error);
-            })
-          }
-          else {
-            await submit(formData)
-            .then(({ data }) => {
-              console.log(data);
-            })
-            .catch(error => {
-              console.log(error);
-            })
-          }
+          formData.append("levelTierIds", this.levelTiers[i].id);
+          formData.append("counts", this.recordSolutionCounts[i]);
+        }
       }
+      for (let video of this.solutionVideos) {
+        formData.append("videos", video);
+      }
+
+      if (this.solutionIds[0] > 0) {
+        await update(formData)
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        await submit(formData)
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
   },
   mounted() {
     for (var i = 0; i < this.levelTiers.length; i++) {
       this.colors.push(Colors.colors[this.levelTiers[i].level]);
-      if(this.levelTiers[i].solutionCount > 0)
+      if (this.levelTiers[i].solutionCount > 0)
         this.recordSolutionCounts.push(this.levelTiers[i].solutionCount);
-      else
-        this.recordSolutionCounts.push(0);
+      else this.recordSolutionCounts.push(0);
 
-      if(this.levelTiers[i].solutionId > 0)
+      if (this.levelTiers[i].solutionId > 0)
         this.solutionIds.push(this.levelTiers[i].solutionId);
 
-      if(this.levelTiers[i].solutionDate) 
+      if (this.levelTiers[i].solutionDate)
         this.solutionDate = this.levelTiers[i].solutionDate;
     }
   },
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

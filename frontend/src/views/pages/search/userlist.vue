@@ -3,29 +3,10 @@
     <SearchBar 
       currName = '사용자'
       currType = 'userlist'
-      :currKeyword = 'keyword'
+      :currKeyword = 'currKeyword'
     />
-    <simplebar class="chat-message-list" id="chat-list" ref="current">
-      <ul
-        class="list-unstyled chat-list chat-user-list"
-        v-if="userList.length == 0"
-      >
-        <li>
-          <a href="javascript:void(0);">
-            <div class="media">
-              <div class="media-body overflow-hidden">
-                <p class="chat-user-message text-truncate mb-0 pt-">
-                  "{{ keyword }}"을/를 찾을 수 없습니다.
-                </p>
-              </div>
-            </div>
-          </a>
-          <div class="media">
-            <div class="chat-user-img online align-self-center mr-3"></div>
-          </div>
-        </li>
-      </ul>
-      <ul class="list-unstyled chat-list chat-user-list" v-else>
+    <simplebar class="chat-group-list" id="chat-list" ref="current">
+      <ul class="list-unstyled chat-list chat-user-list">
         <li
           v-for="(item, index) in userList"
           :key="index"
@@ -44,7 +25,7 @@
                 <div class="avatar-xs" v-if="!item.profile">
                   <span
                     class="avatar-title rounded-circle bg-soft-primary text-primary"
-                    >{{ $t(item.nickname).charAt(0) }}
+                    >{{ item.nickname.charAt(0) }}
                   </span>
                 </div>
               </div>
@@ -63,7 +44,7 @@
                 <table style="width:100%">
                   <tbody>
                     <tr>
-                      <td style="width:0px">
+                      <td style="width:100px">
                         <p class="chat-user-message text-truncate mb-0">
                           {{ item.tier }}
                         </p>
@@ -81,6 +62,10 @@
           </a>
         </li>
       </ul>
+      <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+        <div slot="no-more"></div>
+        <div slot="no-results">"{{ keyword }}"을/를 찾을 수 없습니다.</div>
+      </infinite-loading>
     </simplebar>
     <!-- End chat-message-list -->
   </div>
@@ -91,12 +76,14 @@ import axios from "axios";
 import { BASE_URL } from "@/constant/index"
 import simplebar from "simplebar-vue";
 import SearchBar from "./searchBar";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   name: 'userlist',
   components: {
     simplebar,
     SearchBar,
+    InfiniteLoading
   },
 
   props: {
@@ -109,30 +96,41 @@ export default {
     return {
       userList: [],
       pageNumber: 0,
+      currKeyword: this.keyword
     };
   },
-  watch:{
-    $route(to, from) { 
-      console.log(to);
-      if (to.name == from.name) {
-        this.getList();
-      }
-    }
-  },
   created() {
-    this.getList();
+    if(this.currKeyword == ' '){
+      this.currKeyword = '';
+    }
   },
   mounted() {
   },
   methods: {
     searchHistory(user) {
-      console.log(user);
+      this.$router.push({name: 'myhistory', params:{nickname: user.nickname}})
     },
-    getList(){
+    
+    infiniteHandler($state) {
+    //  무한 스크롤
       axios
         .get(`${BASE_URL}/users/search/${this.keyword}/${this.pageNumber}`)
         .then(({ data }) => {
-          this.userList = data.data.users;
+          // 로딩스피너를 위해 0.1초의 지연시간을 설정했다.
+          setTimeout(() => {  
+            if(data.data.users.length) {
+              this.userList = this.userList.concat(data.data.users)
+              this.pageNumber++;
+              $state.loaded()
+                // 끝 지정(No more data) - 데이터가 1개 미만이면
+              if(data.data.users.length < 10) {  //종료조건
+                $state.complete()
+              }
+            } else {
+                // 끝 지정(No more data)
+              $state.complete()
+            }
+          }, 100)
         })
         .catch((err) => {
           console.log("에러: " + err);

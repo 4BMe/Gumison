@@ -190,7 +190,7 @@
         </div>
         <!-- Side menu user -->
       </div>
-      <router-view class="mr-lg-1 flex-grow-1" />
+      <router-view :key="$route.fullPath" class="mr-lg-1 flex-grow-1"/>
     </div>
   </div>
 </template>
