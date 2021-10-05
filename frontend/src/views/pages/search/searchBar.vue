@@ -3,8 +3,9 @@
       <div class="search-box chat-search-box">
         <div class="input-group bg-light input-group-lg rounded-lg">
           <b-dropdown
-              variant="white-outline"
-              toggle-class="btn-sm dropdown-toggle w-sm"
+            v-if="activeTab.activeTab == 1"
+            variant="white-outline"
+            toggle-class="btn-sm dropdown-toggle w-sm"
           >
             <template v-slot:button-content>
               {{ typeName }}
@@ -12,6 +13,18 @@
             </template>
             <b-dropdown-item @click="selectSearchType('climbinglist', '클라이밍')">클라이밍</b-dropdown-item>
             <b-dropdown-item @click="selectSearchType('userlist', '사용자')">사용자</b-dropdown-item>
+          </b-dropdown>
+          <b-dropdown
+            v-else
+            variant="white-outline"
+            toggle-class="btn-sm dropdown-toggle w-sm"
+            disabled
+          >
+            <template v-slot:button-content>
+              {{ typeName }}
+              <i class="mdi mdi-chevron-down"></i>
+            </template>
+            <b-dropdown-item @click="selectSearchType('climbinglist', '클라이밍')">클라이밍</b-dropdown-item>
           </b-dropdown>
           <input
             type="text"
@@ -37,6 +50,8 @@
 </template>
 
 <script>
+import { mapState } from'vuex';
+
 export default { 
   props:{
     currKeyword: {
@@ -56,10 +71,19 @@ export default {
     return {
       type: this.currType,
       typeName: this.currName,
-      keyword: this.currKeyword
+      keyword: this.currKeyword,
+      routeUri: '',
     };
   },
-  mounted() {},
+  computed: {
+    ...mapState([
+      'activeTab',
+    ]),
+  },
+  mounted() {
+    var curPage = document.location.href;
+    this.routeUri = curPage.split("/")[3];
+  },
   methods: {
     selectSearchType(type, typeName){
       this.type = type;
@@ -70,7 +94,12 @@ export default {
         this.keyword = ' '
       }
 
-      this.$router.push({ name: this.type, params: {keyword: this.keyword}}).catch({});
+      this.$router.push({
+        name: this.type,
+        params: {
+          keyword: this.keyword,
+          routeUri: this.routeUri,
+          }}).catch({});
     }
 
   },

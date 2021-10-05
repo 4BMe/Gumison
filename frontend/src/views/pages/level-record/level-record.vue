@@ -38,25 +38,23 @@
 <script>
 import LevelRecordLine from './components/level-record-line';
 import { submit, update } from '@/api/level-record.js';
+import { getClimingDetail } from "@/api/climbing";
 import Colors from '@/constant/colors.js';
+import { mapGetters } from 'vuex';
 
 var today = new Date().toISOString().slice(0,10);
 
 export default {
   props: {
-    userId:{
-      default: 0
-    },
-    climbingId: {
-      default: 0
-    },
-    levelTiers: {},
+    climbingInfo: {},
   },
   components: {
       LevelRecordLine,
   },
   data(){
       return {
+        userId: 0,
+        levelTiers: [],
         recordSolutionCounts: [],
         solutionIds: [],
         solutionVideos: '',
@@ -71,10 +69,19 @@ export default {
       goBack(){
         this.$router.go(-1);
       },
+      async getClimbingInfo(){
+        await getClimingDetail(this.climbingInfo.id)
+        .then(({ data }) => {
+          this.levelTiers = data.data.levelTiers;
+        })
+        .catch((err) => {
+          console.log("에러: " + err);
+        });
+      },
       async submitClick() {
           const formData = new FormData();
-          formData.append("userId", this.userId);
-          formData.append("climbingId", this.climbingId);
+          formData.append("oauthId", this.getUser.oauthId);
+          formData.append("climbingId", this.climbingInfo.id);
           formData.append("date", this.solutionDate);
           for (let i = 0; i < this.colors.length; i++) {
             if(this.recordSolutionCounts[i] > 0) {
@@ -123,6 +130,11 @@ export default {
       if(this.levelTiers[i].solutionDate) 
         this.solutionDate = this.levelTiers[i].solutionDate;
     }
+  },
+  computed:{
+    ...mapGetters([
+      'getUser',
+      ]),
   },
 }
 </script>

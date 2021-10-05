@@ -33,7 +33,7 @@
           <li
             v-for="(item, index) in climbingList"
             :key="index"
-            @click="searchHistory(item.id)"
+            @click="searchHistory(item)"
           >
             <a href="javascript:void(0);">
               <ClimbingCard 
@@ -52,6 +52,7 @@ import axios from "axios";
 import { BASE_URL } from "@/constant/index"
 import SearchBar from "./searchBar";
 import ClimbingCard from "@/views/pages/climbing/climbingCard";
+import { mapState } from 'vuex';
 // import InfiniteLoading from "vue-infinite-loading";
 
 export default {
@@ -65,6 +66,7 @@ export default {
       type: String,
       default: " ",
     },
+    routeUri: {},
   },
   data() {
     return {
@@ -75,6 +77,11 @@ export default {
   created() {
     this.getList();
   },
+  computed: {
+    ...mapState[
+      'activeTab',
+    ],
+  },
   watch:{
     $route(to, from) { 
       if (to.name == from.name) {
@@ -83,9 +90,30 @@ export default {
     }
   },
   methods: {
-    searchHistory(id) {
-      console.log("climbingList - id : " + id);
-      this.$router.push({path:`/climbing/${id}`})
+    searchHistory(item) {
+      console.log("climbingList - id : " + item.id);
+      console.log(item);
+      var curPage = document.location.href;
+      var routeUrl = curPage.split("/");
+      console.log(routeUrl[3]);
+      switch (routeUrl[3]) {
+        case "climbinglist":
+          this.$router.push({path:`/climbing/${item.id}`})
+          break;
+        case "temp":
+        case "level-record":
+        case "level-contribution":
+          this.$router.push({
+                name: 'level-record',
+                params: {
+                    climbingInfo: item,
+                }
+            })
+          break;
+        case "profile":
+          this.activtab = 4;
+          break;
+      }
     },
 
     getList(){

@@ -51,8 +51,8 @@
                 to="/"
                 class="nav-link"
                 id="pills-search-tab"
-                v-on:click.native="activetab = 1"
-                v-bind:class="[activetab === 1 ? 'active' : '']"
+                v-on:click.native="setActiveTab(1)"
+                v-bind:class="[activeTab.activeTab === 1 ? 'active' : '']"
               >
                 <i class="ri-search-2-line"></i>
               </router-link>
@@ -66,11 +66,11 @@
               title="Level Record"
             >
               <router-link
-                to="/temp"
+                to="/"
                 class="nav-link"
                 id="pills-level-record-tab"
-                v-on:click.native="activetab = 3"
-                v-bind:class="[activetab === 3 ? 'active' : '']"
+                v-on:click.native="setActiveTab(3)"
+                v-bind:class="[activeTab.activeTab === 3 ? 'active' : '']"
               >
                 <i class="ri-add-box-line"></i>
               </router-link>
@@ -87,8 +87,8 @@
                 to="/profile"
                 class="nav-link"
                 id="pills-user-tab"
-                v-on:click.native="activetab = 4"
-                v-bind:class="[activetab === 4 ? 'active' : '']"
+                v-on:click.native="activeTab = 4"
+                v-bind:class="[activeTab === 4 ? 'active' : '']"
               >
                 <i class="ri-user-2-line"></i>
               </router-link>
@@ -112,8 +112,8 @@
               <b-dropdown-item>
                 <router-link
                   to="/myhistory"
-                  v-on:click.native="activetab = 4"
-                  v-bind:class="[activetab === 4 ? 'active' : '']"
+                  v-on:click.native="setActiveTab(4)"
+                  v-bind:class="[activeTab.activeTab === 4 ? 'active' : '']"
                 >
                   Profile
                   <i class="ri-profile-line float-right text-muted"></i>
@@ -178,29 +178,42 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import store from '@/store';
+
 export default {
   data() {
     return {
-      activetab: 1,
+      // activeTab: 1,
     };
   },
+  methods: {
+    setActiveTab : function(activeTab) {
+      store.commit("activeTab/SET_ACTIVE_TAB", activeTab);
+    }
+  },
+  computed: mapState([
+    'activeTab',
+  ]),
   mounted() {
     var curPage = document.location.href;
     var routeUrl = curPage.split("/");
     console.log(routeUrl[3]);
+    console.log("b : " + this.activeTab.activeTab);
     switch (routeUrl[3]) {
       case "":
-        this.activetab = 1;
+        store.commit("activeTab/SET_ACTIVE_TAB", 1);
         break;
       case "temp":
       case "level-record":
       case "level-contribution":
-        this.activetab = 3;
+        store.commit("activeTab/SET_ACTIVE_TAB", 3);
         break;
       case "profile":
-        this.activtab = 4;
+        store.commit("activeTab/SET_ACTIVE_TAB", 4);
         break;
     }
+    console.log("a : " + this.activeTab.activeTab);
   },
 };
 </script>
