@@ -76,7 +76,7 @@ import { BASE_URL } from "@/constant/index";
 import Colors from "@/constant/colors.js";
 import UserInfo from "./components/userInfo";
 import HistoryList from "./components/historyList";
-import store from "@/store";
+
 export default {
   name: "myhistory",
   components: {
@@ -90,7 +90,7 @@ export default {
     return {
       isData: false,
       user: {
-        profile: store.getters["users/getUser"].profile,
+        profile: null,
         nickname: null,
         description: null,
         tier: null,

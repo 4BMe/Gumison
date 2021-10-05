@@ -190,7 +190,10 @@
         </div>
         <!-- Side menu user -->
       </div>
-      <router-view :key="$route.fullPath" class="mr-lg-1 flex-grow-1"/>
+      <router-view
+        :key="$route.fullPath"
+        class="mr-lg-1 flex-grow-1"
+      />
     </div>
   </div>
 </template>
@@ -204,8 +207,8 @@ export default {
     };
   },
   computed: {
-    token() {
-      return store.getters["users/getToken"];
+    user() {
+      return store.getters["users/getUser"];
     },
   },
   mounted() {
@@ -225,9 +228,12 @@ export default {
   },
   methods: {
     goToMypage() {
-      if (this.token) {
-        console.log("[route myhistory click] token token : ", this.token);
-        return "/myhistory";
+      if (this.user.nickname) {
+        console.log(
+          "[route myhistory click] token token : ",
+          this.user.nickname
+        );
+        return { name: "myhistory", params: { nickname: this.user.nickname } };
       } else {
         return "/login";
       }

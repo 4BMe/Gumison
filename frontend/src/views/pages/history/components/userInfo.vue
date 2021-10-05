@@ -7,7 +7,7 @@
       >
         <div v-if="user.profile">
           <img
-            :src="profile"
+            :src="user.profile"
             class="rounded-circle avatar-xs"
             id="profile"
             alt="profile"
@@ -32,7 +32,10 @@
           {{ user.nickname }}
         </h5>
       </div>
-      <div class="col-4 pr-3 container-fluid row m-0 p-0 align-self-center">
+      <div
+        class="col-4 pr-3 container-fluid row m-0 p-0 align-self-center"
+        v-if="user.nickname == currNickname"
+      >
         <div class="col-6 m-0 p-0  text-right">
           <div class="row">
             <b-button
@@ -107,6 +110,7 @@
 <script>
 import ProfileChangeModal from "./profileChangeModal.vue";
 import WithdrawModal from "./withdrawModal.vue";
+import store from "@/store";
 export default {
   name: "userInfo",
   components: { ProfileChangeModal, WithdrawModal },
@@ -119,8 +123,13 @@ export default {
   data() {
     return {
       expPercent: 0,
-      profile: this.$store.state.users.user.profile,
+      // profile: this.user.profile,
     };
+  },
+  computed: {
+    currNickname() {
+      return store.getters["users/getUser"].nickname;
+    },
   },
   created() {
     this.expPercent = parseInt((this.user.exp / this.user.nextExp) * 100);
