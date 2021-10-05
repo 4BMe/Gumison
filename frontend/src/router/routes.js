@@ -118,16 +118,15 @@ export default [
             },
         },
     },
-    // {
-    //     path: '/myhistory',
-    //     name: 'myhistory',
-    //     component: () => import('../views/pages/history/myhistory'),
-    //     props: true,
-    // },
     {
         path: '/solution',
         name: 'solution',
         component: () => import('../views/pages/solution/solution'),
         props: true,
-    }
+    },
+    {
+        path: '/rank-list',
+        name: 'rank-list',
+        component: () => import('../views/pages/rank/rank'),
+    },
 ]
