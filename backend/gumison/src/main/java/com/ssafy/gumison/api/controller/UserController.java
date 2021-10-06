@@ -12,16 +12,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.gumison.api.response.UserSearchRes;
 import com.ssafy.gumison.api.service.UserService;
 import com.ssafy.gumison.common.response.ApiResponseDto;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 @Slf4j
@@ -116,5 +119,23 @@ public class UserController {
       log.error("[deleteUserByoauthId] ", e);
     }
     return ApiResponseDto.fail(isValid, "사용자 정보를 삭제하는데 실패했습니다.");
+  }
+
+  @ApiOperation(value = "프로필 이미지 변경", notes = "oauthId로 사용자 프로필 이미지를 변경합니다.", response = ApiResponseDto.class)
+  @ApiResponses({@ApiResponse(code = 200, message = "성공"),
+      @ApiResponse(code = 401, message = "인증 실패"), @ApiResponse(code = 404, message = "페이지 없음"),
+      @ApiResponse(code = 500, message = "서버 오류")})
+  @PreAuthorize("hasRole('USER')")
+  @PutMapping("/profile/{oauthId}")
+  public ApiResponseDto<String> updateProfileByoauthId(@PathVariable("oauthId") String oauthId, @RequestParam MultipartFile file) {
+    String updateProfile="";
+    log.info("[updateProfileByoauthId] file: {}" , file);
+    try {
+      updateProfile=userService.updateProfileByOauthId(oauthId, file);
+      return ApiResponseDto.success(updateProfile);
+    } catch (Exception e) {
+      log.error("[updateProfileByoauthId] ", e);
+    }
+    return ApiResponseDto.fail(updateProfile, "프로필 이미지를 변경하는 데 실패했습니다.");
   }
 }

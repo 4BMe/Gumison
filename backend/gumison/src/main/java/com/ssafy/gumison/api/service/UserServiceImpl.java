@@ -18,6 +18,7 @@ import com.ssafy.gumison.db.repository.CommonCodeRepository;
 import com.ssafy.gumison.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service("UserService")
@@ -149,6 +150,15 @@ public class UserServiceImpl implements UserService {
     User user = userRepository.findByOauthId(oauthId)
         .orElseThrow(() -> new ResourceNotFoundException("User", oauthId, "oauthId"));
     userRepository.delete(user);
+  }
+
+  @Override
+  public String updateProfileByOauthId(String oauthId, MultipartFile file) {
+
+    userRepository.updateProfileByOauthId(oauthId, "test");
+    User user = userRepository.findByOauthId(oauthId)
+        .orElseThrow(() -> new ResourceNotFoundException("User", oauthId, "oauthId"));
+    return user.getProfile();
   }
 
 }

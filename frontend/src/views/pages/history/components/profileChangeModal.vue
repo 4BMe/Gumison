@@ -105,6 +105,7 @@ export default {
           };
           store.commit("users/UPDATE_USER", updateUserData);
           this.showModal = false;
+          //this.$router.go();
         })
         .catch((error) => {
           console.log(error);

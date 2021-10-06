@@ -12,10 +12,10 @@
       <div class="modal-content">
         <div class="modal-body">
           <div class="py-3 text-center">
-            <h4>회원님의 정보가 모두 삭제되며 복구할 수 없습니다.</h4>
-            <h4 class="text-gradient text-danger mt-4">
+            <h5>회원님의 정보가 모두 삭제되며 복구할 수 없습니다.</h5>
+            <h5 class="text-gradient text-danger mt-4">
               정말 탈퇴하시겠습니까?
-            </h4>
+            </h5>
           </div>
         </div>
         <div class="modal-footer">
