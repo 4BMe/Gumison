@@ -44,8 +44,6 @@
             <li
               class="nav-item"
               v-b-tooltip.hover
-              data-placement="top"
-              title="Search"
             >
               <router-link
                 to="/"
@@ -62,8 +60,6 @@
             <li
               class="nav-item"
               v-b-tooltip.hover
-              data-placement="top"
-              title="Rank"
             >
               <router-link
                 to="/rank-list"
@@ -80,8 +76,6 @@
             <!-- <li
               class="nav-item"
               v-b-tooltip.hover
-              data-placement="top"
-              title="Level Record"
             >
               <router-link
                 to="/temp"
@@ -97,8 +91,6 @@
             <!-- 4번탭: 사용자 계정, 로그인 필요 페이지
             <li
               class="nav-item"
-              data-placement="top"
-              title="Profile"
               v-b-tooltip.hover
             >
               <router-link
