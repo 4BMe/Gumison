@@ -81,13 +81,6 @@ public class HistoryController {
     return ApiResponseDto.success(solutions);
   }
 
-//  @ApiOperation(value = "레벨 기록 비디오", notes = "성공한 레벨 기록의 영상을 반환합니다.", response = ApiResponseDto.class)
-//  @GetMapping(value = "/videos/{title}", produces = "video/mp4")
-//  public Mono<Resource> stream(@PathVariable String title, @RequestHeader("Range") String range) throws Exception {
-//    log.info("[stream] : {}, range : {}", title, range);
-//    return historyService.getVideo(title);
-//  }
-
   @ApiOperation(value = "레벨 기록 비디오", notes = "성공한 레벨 기록의 영상을 반환합니다.", response = ApiResponseDto.class)
   @GetMapping("/videos")
   public ResponseEntity<StreamingResponseBody> stream(HttpServletRequest req,
