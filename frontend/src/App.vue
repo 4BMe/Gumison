@@ -72,7 +72,7 @@
                 v-on:click.native="activetab = 2"
                 v-bind:class="[activetab === 2 ? 'active' : '']"
               >
-                <i class="ri-list-ordered"></i>
+                <i class="ri-medal-line"></i>
               </router-link>
             </li>
 
@@ -161,39 +161,42 @@
 
         <div class="flex-lg-column d-none d-lg-block">
           <ul class="nav side-menu-nav justify-content-center">
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="light-dark"
-                target="_blank"
-                href="http://chatvia-dark.vue.themesbrand.com/"
-                v-b-tooltip.hover
-                title="Dark Mode"
-              >
-                <i class="ri-sun-line theme-mode-icon"></i>
-              </a>
-            </li>
             <b-dropdown
               class="nav-item btn-group dropup profile-user-dropdown"
               variant="white"
             >
               <template v-slot:button-content>
                 <img
-                  src="@/assets/images/users/avatar-1.jpg"
+                  :src="profile"
                   alt
                   class="profile-user rounded-circle"
                 />
               </template>
-              <b-dropdown-item href="javascript:void(0);">
-                Profile
-                <i class="ri-profile-line float-right text-muted"></i>
+              <b-dropdown-item>
+                <router-link
+                  :to="goToMypage()"
+                  v-on:click.native="activetab = 4"
+                  v-bind:class="[activetab === 4 ? 'active' : '']"
+                >
+                  Profile
+                  <i class="ri-profile-line float-right text-muted"></i>
+                </router-link>
               </b-dropdown-item>
-              <b-dropdown-item href="javascript:void(0);">
-                Setting
-                <i class="ri-settings-3-line float-right text-muted"></i>
-              </b-dropdown-item>
-              <b-dropdown-item href="/logout">
+
+              <b-dropdown-item
+                href="/logout"
+                v-if="user.nickname"
+              >
+                <b-dropdown-divider></b-dropdown-divider>
                 Log out
+                <i class="ri-logout-circle-r-line float-right text-muted"></i>
+              </b-dropdown-item>
+              <b-dropdown-item
+                href="/login"
+                v-if="!user.nickname"
+              >
+                <b-dropdown-divider></b-dropdown-divider>
+                Log in
                 <i class="ri-logout-circle-r-line float-right text-muted"></i>
               </b-dropdown-item>
             </b-dropdown>
