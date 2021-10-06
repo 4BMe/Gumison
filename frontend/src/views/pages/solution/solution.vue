@@ -44,36 +44,42 @@
       </div>
     </div>
     <div class="m-2 p-2" id="solution">
-      <div class="m-3 p-3" id="level">
-        <div v-for="(solution, index) in data.solution.tier" :key=index>
-          <div class="container-fluid row m-0 p-0">
-            <div class="col-3 m-0 p-0"/>
-            <div class="col-6 m-0 p-0 container-fluid row text-center align-self-center">
-              <h5 class="col-4 m-0 p-0 text-center align-self-center font-size-15">
-                  <img
-                    :src="require(`@/assets/images/tier/`+data.solution.tier[index]+`.png`)"
-                    alt="sol-tier-img"
-                    id="sol-tier-img"
-                    class="img-fluid rounded-circle sm-tier-img"
-                  /> 
-              </h5>
-              <div class="col-1 m-0 p-0"/>
-              <div class="col-2 rounded-circle level-record-color m-0 p-0" :id="'color-' + index"></div>
-              <div class="col-1 m-0 p-0"/>
-              <!-- <div class="col-4 m-0 p-0 text-center align-self-center">
-                {{data.solution.level}}
-              </div> -->
-              <div class="col-4 m-0 p-0 text-center align-self-center">
-                {{data.solution.count[index]}}
-              </div>
-            </div>
-            <div class="col-3 m-0 p-0"/>
+      <div class="m-3 p-3 row" id="level">
+        <div v-for="(solution, index) in data.solution.tier" :key=index class="row text-center align-self-center col border border-2 mr-auto ml-auto">
+          <h5 class="col-5 m-0 p-0 text-center align-self-center font-size-15">
+              <img
+                :src="require(`@/assets/images/tier/`+data.solution.tier[index]+`.png`)"
+                alt="sol-tier-img"
+                id="sol-tier-img"
+                class="img-fluid rounded-circle sm-tier-img"
+              /> 
+          </h5>
+          <div class="col-5 rounded-circle level-record-color m-0 p-0" :id="'color-' + index"></div>
+          <!-- <div class="col-4 m-0 p-0 text-center align-self-center">
+            {{data.solution.level}}
+          </div> -->
+          <div class="col-2 m-0 p-0 text-center align-self-center">
+            {{data.solution.count[index]}}
           </div>
         </div>
       </div>
       <div id="video">
         <div v-if="data.solution.solutionVideoList && data.solution.solutionVideoList.length!=0">
-          {{data.solution.solutionVideoList}}
+          <div v-for="(video, index) in data.solution.solutionVideoList" :key="index">
+            <!-- <video
+              controls
+              src="@/assets/videos/535-2021-10-05T21.30.55.264-0.mp4"
+              style="border: solid 1px"
+              class="container"
+            > -->
+            <video
+              controls
+              :src="getVideoSrc(index)"
+              style="border: solid 5px"
+              class="container"
+            >
+            </video>
+          </div>
         </div>
       </div>
       <div id="button">
@@ -98,8 +104,9 @@
 </template>
 
 <script>
+//http://localhost:8888/api/history/videos?fileName=535-2021-10-05T21.30.55.264-0.mp4
 // import axios from "axios";
-// import { BASE_URL } from "@/constant/index"
+import { BASE_URL } from "@/constant/index";
 
 /**
  * Profile component
@@ -130,7 +137,6 @@ export default {
   mounted() {
     console.log("data");
     console.log(this.data);
-    console.log(this.color);
     this.$nextTick(function (){
       for (let i = 0; i < this.colors.length; i++) {
         document.getElementById('color-' + i).style="border: 1px solid; background-color: " + this.colors[i];
@@ -138,6 +144,23 @@ export default {
     })
   },
   methods: {
+    getVideoSrc(index) {
+      console.log(this.data.solution.solutionVideoList[index].uri);
+      return `${BASE_URL}/history/videos?fileName=${this.data.solution.solutionVideoList[index].uri}`;
+    },
+    getVideoOptions(index) {
+      index;
+      return {
+				autoplay: false,
+				controls: true,
+				sources: [
+					{
+						src: `${BASE_URL}/history/videos?fileName=${this.data.solution.solutionVideoList[index].uri}`,
+						type: "video/mp4"
+					}
+				]
+			}
+    },
     searchHistory(param) {
       console.log(param);
     },

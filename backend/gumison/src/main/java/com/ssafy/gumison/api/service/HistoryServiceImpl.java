@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ import com.ssafy.gumison.db.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +49,8 @@ public class HistoryServiceImpl implements HistoryService {
   private final LevelTierRepository levelTierRepository;
   private final SolutionVideoRepository solutionVideoRepository;
   private final int LIST_PER_PAGE = 10;
+  private final String windowsPath = "C:\\SolutionVideo\\";
+  private final ResourceLoader resourceLoader;
 
   @Override
   public HistoryRes history(String nickname) {
@@ -80,12 +85,14 @@ public class HistoryServiceImpl implements HistoryService {
     List<String> tierNames = new ArrayList<>();
     List<String> levelNames = new ArrayList<>();
     List<Integer> counts = new ArrayList<>();
+    List<SolutionVideo> solutionVideoList = solutionVideoRepository
+        .findByUploadId(solution.getUploadId());
     solutionList.forEach(sol -> {
       tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
       counts.add(sol.getCount());
     });
-    return SolutionRes.of(user, tier, solution, tierNames, levelNames, counts);
+    return SolutionRes.of(user, tier, solution, tierNames, levelNames, counts, solutionVideoList);
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
@@ -130,7 +137,6 @@ public class HistoryServiceImpl implements HistoryService {
   private void uploadVideos(Long userId, LocalDateTime now, List<MultipartFile> videos) {
     log.info("[uploadVideos] - HistoryService : {}", videos);
 
-    String windowsPath = "C:\\SolutionVideo\\";
     File videoFolder = new File(windowsPath);
     if (!videoFolder.exists()) {
       try {
@@ -155,8 +161,8 @@ public class HistoryServiceImpl implements HistoryService {
         log.error("[uploadVideo] - VideoService : Failed to upload videos");
         e.printStackTrace();
       }
-      SolutionVideo solutionVideo = SolutionVideo.builder().dateTime(now)
-          .uri(windowsPath + fileName).uploadId(userId + "-" + now).build();
+      SolutionVideo solutionVideo = SolutionVideo.builder().dateTime(now).uri(fileName)
+          .uploadId(userId + "-" + now).build();
       solutionVideos.add(solutionVideo);
     }
     solutionVideoRepository.saveAll(solutionVideos);
@@ -217,5 +223,12 @@ public class HistoryServiceImpl implements HistoryService {
       uploadVideos(user.getId(), now, solutionRequest.getVideos());
     }
     return solutionRepository.saveAll(solutions);
+  }
+
+  @Override
+  public Mono<Resource> getVideo(String title) {
+    log.info("[getVideo] - HistoryService : {}", title);
+    final String FORMAT = "classpath:videos/%s";
+    return Mono.fromSupplier(() -> this.resourceLoader.getResource(String.format(FORMAT, title)));
   }
 }
