@@ -35,7 +35,7 @@
                       style="margin-right:10%"
                     />구글 로그인</button>
                   <!-- 카카오 로그인 -->
-                  <button
+                  <!-- <button
                     class="btn btn-warning btn-block"
                     type="submit"
                   ><img
@@ -44,7 +44,7 @@
                       height="30"
                       class="logo"
                       style="margin-right:10%"
-                    />카카오 로그인</button>
+                    />카카오 로그인</button> -->
                 </div>
               </div>
             </div>

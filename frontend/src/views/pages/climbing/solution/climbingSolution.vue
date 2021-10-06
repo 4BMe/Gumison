@@ -1,11 +1,12 @@
 <template>
-  <div class="px-3" v-if="isData" >
+  <div
+    class="px-3"
+    v-if="isData"
+  >
     <div>
       <h5 class="pl-2">Solution</h5>
     </div>
-    <SolutionList 
-      :solutionList ="solutionList"
-    />
+    <SolutionList :solutionList="solutionList" />
     <b-pagination
       v-model="pageNumber"
       :total-rows="totalRows"
@@ -17,17 +18,17 @@
       pills
     ></b-pagination>
   </div>
-</template>ㅌ
+</template>
 
 <script>
 import { getClimingSolution } from "@/api/climbing";
 import Colors from "@/constant/colors.js";
-import SolutionList from "./solutionList"
+import SolutionList from "./solutionList";
 
 export default {
   name: "climbingSolution",
   components: {
-    SolutionList
+    SolutionList,
   },
   data() {
     return {
@@ -59,18 +60,18 @@ export default {
         });
     },
 
-    pageClick(button, page){
+    pageClick(button, page) {
       this.pageNumber = page;
       getClimingSolution(this.climbingId, this.solutionId, this.pageNumber - 1)
         .then(({ data }) => {
           this.solutionList = data.data.climbingSolutions;
-          window.scrollTo(0,0);
+          window.scrollTo(0, 0);
           this.isData = true;
         })
         .catch((err) => {
           console.log("에러: " + err);
         });
-    }
+    },
   },
 };
 </script>

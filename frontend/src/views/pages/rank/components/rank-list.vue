@@ -17,7 +17,10 @@
       </li>
     </ul>
 
-    <ul class="list-unstyled chat-list chat-user-list" v-else>
+    <ul
+      class="list-unstyled chat-list chat-user-list"
+      v-else
+    >
       <li>
         <UserRank />
       </li>
@@ -36,9 +39,7 @@
           <a href="javascript:void(0);">
             <div class="media">
               <div class="avatar-xs overflow-hidden mr-3 align-self-center">
-                <span
-                  class=" avatar-title text-primary rounded-circle bg-transparent align-center"
-                  >{{ item.rank }}
+                <span class=" avatar-title text-primary rounded-circle bg-transparent align-center">{{ item.rank }}
                 </span>
               </div>
               <div class="chat-user-img online align-self-center mr-3">
@@ -49,10 +50,11 @@
                     alt
                   />
                 </div>
-                <div class="avatar-xs" v-if="!item.profile">
-                  <span
-                    class="avatar-title rounded-circle bg-soft-primary text-primary"
-                    >{{ $t(item.nickname).charAt(0) }}
+                <div
+                  class="avatar-xs"
+                  v-if="!item.profile"
+                >
+                  <span class="avatar-title rounded-circle bg-soft-primary text-primary">{{ $t(item.nickname).charAt(0) }}
                   </span>
                 </div>
               </div>
@@ -74,7 +76,7 @@
                           {{ item.tier }}
                         </p>
                       </td>
-                      <td>
+                      <td class="d-flex justify-content-end mr-5">
                         <p class="chat-user-message text-truncate mb-0">
                           <b>{{ item.solCnt }}</b> 문제 성공
                         </p>
@@ -143,10 +145,10 @@ export default {
     },
   },
   watch: {
-    keyword: function() {
+    keyword: function () {
       this.getList();
     },
-    page: function() {
+    page: function () {
       this.getList();
     },
   },
