@@ -13,11 +13,14 @@ public class HistoryRes {
 
   private HistoryUserDto user;
   private List<SolutionListItem> solutionList;
+  private int solutionLastPage;
 
-  public static HistoryRes of(HistoryUserDto user, List<SolutionListItem> list) {
+  public static HistoryRes of(HistoryUserDto user, List<SolutionListItem> list,
+      int solutionLastPage) {
     HistoryRes res = new HistoryRes();
     res.setUser(user);
     res.setSolutionList(list);
+    res.setSolutionLastPage(solutionLastPage);
     return res;
   }
 }

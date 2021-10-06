@@ -51,13 +51,14 @@ public class HistoryServiceImpl implements HistoryService {
   public HistoryRes history(String nickname) {
     User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
     List<Solution> solutionList = getSolutionList(user.getId(), 0);
-    CommonCode code = commonCodeRepository.findById(user.getTierCode())
-        .orElseThrow(RuntimeException::new);
+    CommonCode code =
+        commonCodeRepository.findById(user.getTierCode()).orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
     Long nextExp = codeExpConvert(code.getCode() + 1L);
     HistoryUserDto userDto = userConvert(user, tier, user.getAccumulateExp(), nextExp);
-    return HistoryRes.of(userDto, solutionListItems);
+    int solutionLastPage = allHistorySize(user.getId());
+    return HistoryRes.of(userDto, solutionListItems, solutionLastPage);
   }
 
   @Override
@@ -71,11 +72,11 @@ public class HistoryServiceImpl implements HistoryService {
 
   @Override
   public SolutionRes solution(String solutionId) {
-    Solution solution = solutionRepository.findById(Long.parseLong(solutionId))
-        .orElseThrow(RuntimeException::new);
+    Solution solution =
+        solutionRepository.findById(Long.parseLong(solutionId)).orElseThrow(RuntimeException::new);
     User user = solution.getUser();
-    CommonCode code = commonCodeRepository.findById(user.getTierCode())
-        .orElseThrow(RuntimeException::new);
+    CommonCode code =
+        commonCodeRepository.findById(user.getTierCode()).orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     String tierName = codeNameConvert(solution.getLevelTier().getTierCode());
     String levelName = codeNameConvert(solution.getLevelTier().getLevelCode());
@@ -83,9 +84,9 @@ public class HistoryServiceImpl implements HistoryService {
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
-    HistoryUserDto userDto = HistoryUserDto.builder().profile(user.getProfile())
-        .nickname(user.getNickname()).description(user.getDescription()).tier(tier).exp(exp)
-        .nextExp(nextExp).build();
+    HistoryUserDto userDto =
+        HistoryUserDto.builder().profile(user.getProfile()).nickname(user.getNickname())
+            .description(user.getDescription()).tier(tier).exp(exp).nextExp(nextExp).build();
     return userDto;
   }
 
@@ -101,10 +102,17 @@ public class HistoryServiceImpl implements HistoryService {
     return list;
   }
 
+  private int allHistorySize(Long id) {
+    int size = 0;
+    List<Solution> sol = solutionRepository.findAllByUserId(id);
+    size = sol.size() / LIST_PER_PAGE + (sol.size() % LIST_PER_PAGE == 0 ? 0 : 1);
+    return size;
+  }
+
   private List<Solution> getSolutionList(Long userId, int pageNumber) {
     List<Solution> solutionList = new LinkedList<Solution>();
-    PageRequest page = PageRequest.of(pageNumber, LIST_PER_PAGE,
-        Sort.by(Sort.Direction.DESC, "date"));
+    PageRequest page =
+        PageRequest.of(pageNumber, LIST_PER_PAGE, Sort.by(Sort.Direction.DESC, "date"));
     solutionList = solutionRepository.findByUserId(userId, page);
     return solutionList;
   }
@@ -138,8 +146,8 @@ public class HistoryServiceImpl implements HistoryService {
     List<SolutionVideo> solutionVideos = new ArrayList<>();
     for (int i = 0; i < videos.size(); i++) {
       String originalFileName = videos.get(i).getOriginalFilename();
-      String extensionName = originalFileName.substring(originalFileName.lastIndexOf('.'),
-          originalFileName.length());
+      String extensionName =
+          originalFileName.substring(originalFileName.lastIndexOf('.'), originalFileName.length());
       String fileName = userId + "-" + now.toString().replace(':', '.') + "-" + i + extensionName;
       log.info("[uploadVideo] - VideoService, fileName : {}", fileName);
       File dest = new File(windowsPath + fileName);
@@ -154,7 +162,7 @@ public class HistoryServiceImpl implements HistoryService {
       solutionVideos.add(solutionVideo);
     }
     solutionVideoRepository.saveAll(solutionVideos);
-//    List<SolutionVideo> solutionVideosRet = solutionVideoRepository.saveAll(solutionVideos);
+    // List<SolutionVideo> solutionVideosRet = solutionVideoRepository.saveAll(solutionVideos);
   }
 
   @Override
@@ -171,12 +179,12 @@ public class HistoryServiceImpl implements HistoryService {
     List<Integer> counts = solutionRequest.getCounts();
     for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
-      LevelTier levelTier = levelTierRepository.findById(levelTierId)
-          .orElseThrow(RuntimeException::new);
+      LevelTier levelTier =
+          levelTierRepository.findById(levelTierId).orElseThrow(RuntimeException::new);
 
-      Solution solution = Solution.builder().user(user).levelTier(levelTier).climbing(climbing)
-          .count(counts.get(i)).date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now)
-          .build();
+      Solution solution =
+          Solution.builder().user(user).levelTier(levelTier).climbing(climbing).count(counts.get(i))
+              .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
       solutions.add(solution);
     }
     if (solutionRequest.getVideos() != null) {
@@ -199,8 +207,8 @@ public class HistoryServiceImpl implements HistoryService {
     List<Integer> counts = solutionRequest.getCounts();
     for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
-      LevelTier levelTier = levelTierRepository.findById(levelTierId)
-          .orElseThrow(RuntimeException::new);
+      LevelTier levelTier =
+          levelTierRepository.findById(levelTierId).orElseThrow(RuntimeException::new);
 
       Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user)
           .levelTier(levelTier).climbing(climbing).count(counts.get(i))
