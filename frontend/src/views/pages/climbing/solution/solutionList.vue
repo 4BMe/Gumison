@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/constant/index";
 import simplebar from "simplebar-vue";
 import Colors from "@/constant/colors.js";
 
@@ -77,7 +79,26 @@ export default {
   mounted() {
     this.color = Colors.colors;
   },
-  methods: {},
+  methods: {
+    searchHistory(solution, index) {
+      console.log(solution.id);
+      axios
+        .get(`${BASE_URL}/history/detail/${solution.id}`)
+        .then(({ data }) => {
+          this.$router.push({
+            name: "solution",
+            params: {
+              data: data.data,
+              color: this.color[index],
+              isData: true,
+            },
+          });
+        })
+        .catch((err) => {
+          console.log("에러: " + err);
+        });
+    },
+  },
 };
 </script>
 <style>

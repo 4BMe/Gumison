@@ -4,6 +4,11 @@
       <h4 class="mb-0">거미손</h4>
     </div>
 
+    <div class="text-center h-100">
+      <img src="@/assets/images/logo.svg"
+      height="45%"/>
+    </div>
+
     <SearchBar class="align-middle"
       currType = 'climbinglist'
       currName = '클라이밍'
