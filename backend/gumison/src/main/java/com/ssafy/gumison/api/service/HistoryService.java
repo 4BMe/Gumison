@@ -22,6 +22,4 @@ public interface HistoryService {
   public List<Solution> createSolution(SolutionRequest solutionRequest);
 
   public List<Solution> updateSolution(SolutionRequest solutionRequest);
-  
-  public Mono<Resource> getVideo(String title);
 }

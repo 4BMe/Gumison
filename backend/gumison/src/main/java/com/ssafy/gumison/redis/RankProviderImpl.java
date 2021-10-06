@@ -14,14 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스의 구현체
  *
  * @author cherrytomato1
- * @version 1.3   티어 가중치 추가
+ * @version 1.4   티어 가중치 수정
  */
 @Component
 @Slf4j
@@ -29,7 +27,7 @@ public class RankProviderImpl implements RankProvider {
 
   private final Long MAX_EXP = 0xFFFF_FFFFL;
 
-  private final Long TIER_BASE_SCORE = 0x2FF_FFFFL;
+  private final Long TIER_BASE_SCORE = 0x6FF_FFFFL;
 
   private final String KEY_PREFIX = RedisKey.GUMISON_CACHE.name();
 
