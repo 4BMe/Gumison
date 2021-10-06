@@ -123,7 +123,10 @@ export default {
     return {
       userRankList: [],
       dataLoaded: false,
-      rankCss: this.$store.state.users.user.nickname == ''? 'rank-list-logout' : 'rank-list-login',
+      rankCss:
+        this.$store.state.users.user.nickname == ""
+          ? "rank-list-logout"
+          : "rank-list-login",
     };
   },
 
@@ -152,6 +155,9 @@ export default {
   },
   mounted() {},
   methods: {
+    searchHistory(nickname) {
+      this.$router.push({ name: "myhistory", params: { nickname: nickname } });
+    },
     async getList() {
       this.dataLoaded = false;
       this.$emit("setDataLoaded", false);
