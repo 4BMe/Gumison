@@ -5,6 +5,7 @@ import com.ssafy.gumison.common.dto.UserOauthDto;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import com.ssafy.gumison.common.dto.UserSearchDto;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
@@ -57,7 +58,16 @@ public interface UserService {
   /**
    * oauthId로 유저 탈퇴
    *
-   * @param oauthId
+   * @param oauthId 사용자의 oAuthId
    */
   void deleteUserByOauthId(String oauthId);
+
+  /**
+   * oauthId로 프로필 이미지 변경
+   *
+   * @param oauthId 사용자의 oAuthId
+   * @param profile 변경할 프로필 이미지 경로
+   * @return 변경된 프로필 이미지 경로
+   */
+  String updateProfileByOauthId(String oauthId, MultipartFile profile);
 }
