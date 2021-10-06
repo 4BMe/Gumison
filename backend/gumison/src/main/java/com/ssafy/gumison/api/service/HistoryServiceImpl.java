@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,8 @@ public class HistoryServiceImpl implements HistoryService {
   private final LevelTierRepository levelTierRepository;
   private final SolutionVideoRepository solutionVideoRepository;
   private final int LIST_PER_PAGE = 10;
+  private final String windowsPath = "C:\\SolutionVideo\\";
+  private final ResourceLoader resourceLoader;
 
   @Override
   public HistoryRes history(String nickname) {
@@ -65,7 +68,6 @@ public class HistoryServiceImpl implements HistoryService {
     User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
     List<Solution> solutionList = getSolutionList(user.getId(), pageNumber);
     List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
-
     return SolutionListRes.of(solutionListItems);
   }
 
@@ -73,13 +75,22 @@ public class HistoryServiceImpl implements HistoryService {
   public SolutionRes solution(String solutionId) {
     Solution solution = solutionRepository.findById(Long.parseLong(solutionId))
         .orElseThrow(RuntimeException::new);
+    List<Solution> solutionList = solutionRepository.findByUploadId(solution.getUploadId());
     User user = solution.getUser();
     CommonCode code = commonCodeRepository.findById(user.getTierCode())
         .orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
-    String tierName = codeNameConvert(solution.getLevelTier().getTierCode());
-    String levelName = codeNameConvert(solution.getLevelTier().getLevelCode());
-    return SolutionRes.of(user, tier, solution, tierName, levelName);
+    List<String> tierNames = new ArrayList<>();
+    List<String> levelNames = new ArrayList<>();
+    List<Integer> counts = new ArrayList<>();
+    List<SolutionVideo> solutionVideoList = solutionVideoRepository
+        .findByUploadId(solution.getUploadId());
+    solutionList.forEach(sol -> {
+      tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
+      levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
+      counts.add(sol.getCount());
+    });
+    return SolutionRes.of(user, tier, solution, tierNames, levelNames, counts, solutionVideoList);
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
@@ -124,7 +135,6 @@ public class HistoryServiceImpl implements HistoryService {
   private void uploadVideos(Long userId, LocalDateTime now, List<MultipartFile> videos) {
     log.info("[uploadVideos] - HistoryService : {}", videos);
 
-    String windowsPath = "C:\\SolutionVideo\\";
     File videoFolder = new File(windowsPath);
     if (!videoFolder.exists()) {
       try {
@@ -149,8 +159,8 @@ public class HistoryServiceImpl implements HistoryService {
         log.error("[uploadVideo] - VideoService : Failed to upload videos");
         e.printStackTrace();
       }
-      SolutionVideo solutionVideo = SolutionVideo.builder().dateTime(now)
-          .uri(windowsPath + fileName).uploadId(userId + "-" + now).build();
+      SolutionVideo solutionVideo = SolutionVideo.builder().dateTime(now).uri(fileName)
+          .uploadId(userId + "-" + now).build();
       solutionVideos.add(solutionVideo);
     }
     solutionVideoRepository.saveAll(solutionVideos);
@@ -207,7 +217,7 @@ public class HistoryServiceImpl implements HistoryService {
           .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
       solutions.add(solution);
     }
-    if (!solutionRequest.getVideos().isEmpty()) {
+    if (solutionRequest.getVideos() != null) {
       uploadVideos(user.getId(), now, solutionRequest.getVideos());
     }
     return solutionRepository.saveAll(solutions);
