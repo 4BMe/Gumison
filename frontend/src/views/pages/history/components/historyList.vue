@@ -1,17 +1,21 @@
 <template>
   <div class="container-fluid row">
+    <div class="col-2 text-center align-self-center">
     <img
       :src="require(`@/assets/images/tier/`+item.tier+`.png`)"
       id="solution-tier-img"
-      class="col-2 img-fluid rounded-circle sm-tier-img m-0"
+      class="img-fluid rounded-circle sm-tier-img m-0"
     />
+    </div>
     <h5 class="col-4 text-center align-self-center font-size-13 m-0">
       {{ item.climbingName }}
     </h5>
-    <div
-      class="col-1 rounded-circle level-record-color m-0 p-0"
-      :id="'color-'+index"
-    ></div>
+    <div class="col-1 m-0 p-0 d-flex justify-content-center">
+      <div
+        class="m-0 p-0 rounded-circle text-center align-self-center color-round"
+        :id="'color-'+index"
+      />
+    </div>
     <!-- <h5 class="col-1 rounded-circle level-record-color align-self-center m-0" :id="'color-'+index">
       </h5> -->
     <h5 class="col-1 text-center align-self-center font-size-13 m-0">
@@ -52,11 +56,11 @@ export default {
 </script>
 <style>
 #solution-tier-img {
-  width: 10%;
-  height: 10%;
+  width: 35px;
+  height: 35px;
 }
-.h5 {
-  width: 10%;
-  height: 10%;
+.color-round {
+  width: 30px;
+  height: 30px;
 }
 </style>

@@ -191,7 +191,7 @@ export default {
   height: 23px;
 }
 #profile {
-  width: 110%;
-  height: 110%;
+  width: 42px;
+  height: 42px;
 }
 </style>
