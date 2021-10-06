@@ -46,11 +46,18 @@ public interface UserService {
   Long getUserCountByKeyword(String keyword);
 
   /**
-   * 닉네임으로 유저 정보(닉네임, 프로필 사진, 소개글) 변경
+   * oauthId로 유저 정보(닉네임, 프로필 사진, 소개글) 변경
    *
    * @param oauthId     사용자의 oAuthId
    * @param userOauthDto (변경 후 닉네임, 프로필 사진, 소개글)
    * @return 변경된 유저 정보 (닉네임, 프로필 사진, 소개글)
    */
   UserOauthDto updateUserByOauthId(String oauthId, UserOauthDto userOauthDto);
+
+  /**
+   * oauthId로 유저 탈퇴
+   *
+   * @param oauthId
+   */
+  void deleteUserByOauthId(String oauthId);
 }

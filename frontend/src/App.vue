@@ -58,6 +58,24 @@
               </router-link>
             </li>
 
+            <!-- 2번탭: 랭크 페이지 -->
+            <li
+              class="nav-item"
+              v-b-tooltip.hover
+              data-placement="top"
+              title="Rank"
+            >
+              <router-link
+                to="/rank-list"
+                class="nav-link"
+                id="pills-rank-tab"
+                v-on:click.native="activetab = 2"
+                v-bind:class="[activetab === 2 ? 'active' : '']"
+              >
+                <i class="ri-list-ordered"></i>
+              </router-link>
+            </li>
+
             <!-- 3번탭: 사용자, 클라이밍장 검색 페이지 -->
             <!-- <li
               class="nav-item"
@@ -111,7 +129,7 @@
 
               <b-dropdown-item>
                 <router-link
-                  to="/myhistory"
+                  :to="goToMypage()"
                   v-on:click.native="activetab = 4"
                   v-bind:class="[activetab === 4 ? 'active' : '']"
                 >
@@ -172,17 +190,26 @@
         </div>
         <!-- Side menu user -->
       </div>
-      <router-view class="mr-lg-1 flex-grow-1" />
+      <router-view
+        :key="$route.fullPath"
+        class="mr-lg-1 flex-grow-1"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import store from "@/store";
 export default {
   data() {
     return {
       activetab: 1,
     };
+  },
+  computed: {
+    user() {
+      return store.getters["users/getUser"];
+    },
   },
   mounted() {
     var curPage = document.location.href;
@@ -198,6 +225,19 @@ export default {
         this.activtab = 4;
         break;
     }
+  },
+  methods: {
+    goToMypage() {
+      if (this.user.nickname) {
+        console.log(
+          "[route myhistory click] token token : ",
+          this.user.nickname
+        );
+        return { name: "myhistory", params: { nickname: this.user.nickname } };
+      } else {
+        return "/login";
+      }
+    },
   },
 };
 </script>

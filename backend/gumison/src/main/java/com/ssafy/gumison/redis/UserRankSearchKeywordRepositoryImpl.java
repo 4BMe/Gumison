@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 유저 검색 키워드를 레디스에 저장하고 불러오는 인터페이스의 구현체
  *
  * @author cherrytomato1
- * @version 1.0 키워드에 해당하는 유저 수 검색 및 저장
+ * @version 1.1 캐시 저장시간 5분 -> 2분 30초
  */
 
 @Component
@@ -57,6 +57,6 @@ public class UserRankSearchKeywordRepositoryImpl implements UserRankSearchKeywor
   @Transactional
   public void setUserSearchKeywordCount(String keyword, Long count) {
     log.info("set new keyword in redis, keyword - {}, count - {}", keyword, count);
-    valueOperations.set(KEY_PREFIX + keyword, String.valueOf(count), 5, TimeUnit.MINUTES);
+    valueOperations.set(KEY_PREFIX + keyword, String.valueOf(count), 150, TimeUnit.SECONDS);
   }
 }

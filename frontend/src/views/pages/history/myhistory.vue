@@ -74,14 +74,17 @@
 import axios from "axios";
 import { BASE_URL } from "@/constant/index";
 import Colors from "@/constant/colors.js";
-import UserInfo from "@/views/pages/history/userInfo";
-import HistoryList from "@/views/pages/history/historyList";
+import UserInfo from "./components/userInfo";
+import HistoryList from "./components/historyList";
 
 export default {
   name: "myhistory",
   components: {
     UserInfo,
     HistoryList,
+  },
+  props: {
+    nickname: String,
   },
   data() {
     return {
@@ -99,11 +102,11 @@ export default {
       pageNumber: 0,
     };
   },
-  async created() {},
+  computed: {},
   async mounted() {
     console.log("myhistory");
     await axios
-      .get(`${BASE_URL}/history/${this.$store.state.users.user.nickname}`)
+      .get(`${BASE_URL}/history/${this.nickname}`)
       .then(({ data }) => {
         this.user = data.data.user;
         this.solutionList = data.data.solutionList;

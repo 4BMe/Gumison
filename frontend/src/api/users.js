@@ -36,9 +36,14 @@ function updateUserByOauthId(oauthId, updateUserData) {
     return oauth.put(oauthId, updateUserData)
 }
 
+function deleteUserByOauthId(oauthId) {
+    return oauth.delete(oauthId)
+}
+
 export {
     googleLoginUser,
     getUser,
     getUserByNickname,
-    updateUserByOauthId
+    updateUserByOauthId,
+    deleteUserByOauthId
 }
