@@ -183,9 +183,9 @@ public class HistoryServiceImpl implements HistoryService {
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId())
         .orElseThrow(RuntimeException::new);
     LocalDateTime now = LocalDateTime.now();
-    List<Long> levelTierIds = solutionRequest.getLevelTierIdList();
-    List<Integer> counts = solutionRequest.getCountList();
-    for (int i = 0; i < solutionRequest.getLevelTierIdList().size(); i++) {
+    List<Long> levelTierIds = solutionRequest.getLevelTierIds();
+    List<Integer> counts = solutionRequest.getCounts();
+    for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
       LevelTier levelTier = levelTierRepository.findById(levelTierId)
           .orElseThrow(RuntimeException::new);
@@ -197,8 +197,8 @@ public class HistoryServiceImpl implements HistoryService {
 
       increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
     }
-    if (solutionRequest.getVideoFileList() != null) {
-      uploadVideos(user.getId(), now, solutionRequest.getVideoFileList());
+    if (solutionRequest.getVideos() != null) {
+      uploadVideos(user.getId(), now, solutionRequest.getVideos());
     }
     return solutionRepository.saveAll(solutions);
   }
@@ -213,9 +213,9 @@ public class HistoryServiceImpl implements HistoryService {
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId())
         .orElseThrow(RuntimeException::new);
     LocalDateTime now = LocalDateTime.now();
-    List<Long> levelTierIds = solutionRequest.getLevelTierIdList();
-    List<Integer> counts = solutionRequest.getCountList();
-    for (int i = 0; i < solutionRequest.getLevelTierIdList().size(); i++) {
+    List<Long> levelTierIds = solutionRequest.getLevelTierIds();
+    List<Integer> counts = solutionRequest.getCounts();
+    for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
       LevelTier levelTier = levelTierRepository.findById(levelTierId)
           .orElseThrow(RuntimeException::new);
@@ -231,8 +231,9 @@ public class HistoryServiceImpl implements HistoryService {
 
       increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
     }
-    if (!solutionRequest.getVideoFileList().isEmpty()) {
-      uploadVideos(user.getId(), now, solutionRequest.getVideoFileList());
+
+    if (solutionRequest.getVideos() != null) {
+      uploadVideos(user.getId(), now, solutionRequest.getVideos());
     }
     return solutionRepository.saveAll(solutions);
   }

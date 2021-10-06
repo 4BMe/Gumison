@@ -28,7 +28,7 @@ public class SolutionRequest {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate date;
   private Boolean deleteYn;
-  private List<Long> levelTierIdList;
-  private List<Integer> countList;
-  private List<MultipartFile> videoFileList;
+  private List<Long> levelTierIds;
+  private List<Integer> counts;
+  private List<MultipartFile> videos;
 }

@@ -37,7 +37,7 @@ class HistoryServiceTest {
       levelTierIdList.add((long) i);
     }
     SolutionRequest solutionRequest = SolutionRequest.builder().climbingId(1L).date(LocalDate.now())
-        .levelTierIdList(levelTierIdList).countList(countList).oauthId(OAUTH_ID).build();
+        .levelTierIds(levelTierIdList).counts(countList).oauthId(OAUTH_ID).build();
 
     //when
     User user = userRepository.findByOauthId(OAUTH_ID).orElseThrow(RuntimeException::new);
