@@ -1,26 +1,24 @@
 package com.ssafy.gumison.api.service;
 
-import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.Optional;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.ssafy.gumison.api.request.SolutionRequest;
 import com.ssafy.gumison.api.response.HistoryRes;
 import com.ssafy.gumison.api.response.SolutionListItem;
 import com.ssafy.gumison.api.response.SolutionListRes;
 import com.ssafy.gumison.api.response.SolutionRes;
 import com.ssafy.gumison.common.dto.HistoryUserDto;
+import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import com.ssafy.gumison.db.entity.Climbing;
 import com.ssafy.gumison.db.entity.CommonCode;
 import com.ssafy.gumison.db.entity.LevelTier;
@@ -33,7 +31,6 @@ import com.ssafy.gumison.db.repository.LevelTierRepository;
 import com.ssafy.gumison.db.repository.SolutionRepository;
 import com.ssafy.gumison.db.repository.SolutionVideoRepository;
 import com.ssafy.gumison.db.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,13 +57,14 @@ public class HistoryServiceImpl implements HistoryService {
   public HistoryRes history(String nickname) {
     User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
     List<Solution> solutionList = getSolutionList(user.getId(), 0);
-    CommonCode code = commonCodeRepository.findById(user.getTierCode())
-        .orElseThrow(RuntimeException::new);
+    CommonCode code =
+        commonCodeRepository.findById(user.getTierCode()).orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
     Long nextExp = codeExpConvert(code.getCode() + 1L);
     HistoryUserDto userDto = userConvert(user, tier, user.getAccumulateExp(), nextExp);
-    return HistoryRes.of(userDto, solutionListItems);
+    int solutionLastPage = allHistorySize(user.getId());
+    return HistoryRes.of(userDto, solutionListItems, solutionLastPage);
   }
 
   @Override
@@ -79,18 +77,18 @@ public class HistoryServiceImpl implements HistoryService {
 
   @Override
   public SolutionRes solution(String solutionId) {
-    Solution solution = solutionRepository.findById(Long.parseLong(solutionId))
-        .orElseThrow(RuntimeException::new);
+    Solution solution =
+        solutionRepository.findById(Long.parseLong(solutionId)).orElseThrow(RuntimeException::new);
     List<Solution> solutionList = solutionRepository.findByUploadId(solution.getUploadId());
     User user = solution.getUser();
-    CommonCode code = commonCodeRepository.findById(user.getTierCode())
-        .orElseThrow(RuntimeException::new);
+    CommonCode code =
+        commonCodeRepository.findById(user.getTierCode()).orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     List<String> tierNames = new ArrayList<>();
     List<String> levelNames = new ArrayList<>();
     List<Integer> counts = new ArrayList<>();
-    List<SolutionVideo> solutionVideoList = solutionVideoRepository
-        .findByUploadId(solution.getUploadId());
+    List<SolutionVideo> solutionVideoList =
+        solutionVideoRepository.findByUploadId(solution.getUploadId());
     solutionList.forEach(sol -> {
       tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
@@ -100,9 +98,9 @@ public class HistoryServiceImpl implements HistoryService {
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
-    HistoryUserDto userDto = HistoryUserDto.builder().profile(user.getProfile())
-        .nickname(user.getNickname()).description(user.getDescription()).tier(tier).exp(exp)
-        .nextExp(nextExp).build();
+    HistoryUserDto userDto =
+        HistoryUserDto.builder().profile(user.getProfile()).nickname(user.getNickname())
+            .description(user.getDescription()).tier(tier).exp(exp).nextExp(nextExp).build();
     return userDto;
   }
 
@@ -118,10 +116,17 @@ public class HistoryServiceImpl implements HistoryService {
     return list;
   }
 
+  private int allHistorySize(Long id) {
+    int size = 0;
+    List<Solution> sol = solutionRepository.findAllByUserId(id);
+    size = sol.size() / LIST_PER_PAGE + (sol.size() % LIST_PER_PAGE == 0 ? 0 : 1);
+    return size;
+  }
+
   private List<Solution> getSolutionList(Long userId, int pageNumber) {
     List<Solution> solutionList = new LinkedList<Solution>();
-    PageRequest page = PageRequest.of(pageNumber, LIST_PER_PAGE,
-        Sort.by(Sort.Direction.DESC, "date"));
+    PageRequest page =
+        PageRequest.of(pageNumber, LIST_PER_PAGE, Sort.by(Sort.Direction.DESC, "date"));
     solutionList = solutionRepository.findByUserId(userId, page);
     return solutionList;
   }
@@ -154,8 +159,8 @@ public class HistoryServiceImpl implements HistoryService {
     List<SolutionVideo> solutionVideos = new ArrayList<>();
     for (int i = 0; i < videos.size(); i++) {
       String originalFileName = videos.get(i).getOriginalFilename();
-      String extensionName = originalFileName.substring(originalFileName.lastIndexOf('.'),
-          originalFileName.length());
+      String extensionName =
+          originalFileName.substring(originalFileName.lastIndexOf('.'), originalFileName.length());
       String fileName = userId + "-" + now.toString().replace(':', '.') + "-" + i + extensionName;
       log.info("[uploadVideo] - VideoService, fileName : {}", fileName);
       File dest = new File(windowsPath + fileName);
@@ -165,12 +170,12 @@ public class HistoryServiceImpl implements HistoryService {
         log.error("[uploadVideo] - VideoService : Failed to upload videos");
         e.printStackTrace();
       }
-      SolutionVideo solutionVideo = SolutionVideo.builder().dateTime(now).uri(fileName)
-          .uploadId(userId + "-" + now).build();
+      SolutionVideo solutionVideo =
+          SolutionVideo.builder().dateTime(now).uri(fileName).uploadId(userId + "-" + now).build();
       solutionVideos.add(solutionVideo);
     }
     solutionVideoRepository.saveAll(solutionVideos);
-//    List<SolutionVideo> solutionVideosRet = solutionVideoRepository.saveAll(solutionVideos);
+    // List<SolutionVideo> solutionVideosRet = solutionVideoRepository.saveAll(solutionVideos);
   }
 
   @Override
@@ -187,12 +192,12 @@ public class HistoryServiceImpl implements HistoryService {
     List<Integer> counts = solutionRequest.getCounts();
     for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
-      LevelTier levelTier = levelTierRepository.findById(levelTierId)
-          .orElseThrow(RuntimeException::new);
+      LevelTier levelTier =
+          levelTierRepository.findById(levelTierId).orElseThrow(RuntimeException::new);
 
-      Solution solution = Solution.builder().user(user).levelTier(levelTier).climbing(climbing)
-          .count(counts.get(i)).date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now)
-          .build();
+      Solution solution =
+          Solution.builder().user(user).levelTier(levelTier).climbing(climbing).count(counts.get(i))
+              .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
       solutions.add(solution);
 
       increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
@@ -217,8 +222,8 @@ public class HistoryServiceImpl implements HistoryService {
     List<Integer> counts = solutionRequest.getCounts();
     for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
-      LevelTier levelTier = levelTierRepository.findById(levelTierId)
-          .orElseThrow(RuntimeException::new);
+      LevelTier levelTier =
+          levelTierRepository.findById(levelTierId).orElseThrow(RuntimeException::new);
 
       Solution oldSolution = solutionRepository.getById(solutionRequest.getSolutionId());
 
@@ -261,9 +266,9 @@ public class HistoryServiceImpl implements HistoryService {
       Long nextLevelRequireExp = getTierExpByTierCode(user.getTierCode() + 1);
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
-      for (; user.getAccumulateExp() >= nextLevelRequireExp && !user.getTierCode()
-          .equals(MAX_TIER_CODE);
-          nextLevelRequireExp = getTierExpByTierCode(user.getTierCode() + 1)) {
+      for (; user.getAccumulateExp() >= nextLevelRequireExp
+          && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp =
+              getTierExpByTierCode(user.getTierCode() + 1)) {
 
         log.info("[solutionCreate] increase user tier");
         user.setTierCode(user.getTierCode() + 1);
@@ -296,9 +301,9 @@ public class HistoryServiceImpl implements HistoryService {
       Long nextLevelRequireExp = getTierExpByTierCode(user.getTierCode() - 1);
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
-      for (; user.getAccumulateExp() < nextLevelRequireExp && !user.getTierCode()
-          .equals(MIN_TIER_CODE);
-          nextLevelRequireExp = getTierExpByTierCode(user.getTierCode() - 1)) {
+      for (; user.getAccumulateExp() < nextLevelRequireExp
+          && !user.getTierCode().equals(MIN_TIER_CODE); nextLevelRequireExp =
+              getTierExpByTierCode(user.getTierCode() - 1)) {
 
         log.info("[solutionCreate] decrease user tier");
         user.setTierCode(user.getTierCode() - 1);
@@ -309,15 +314,12 @@ public class HistoryServiceImpl implements HistoryService {
   }
 
   private Long getTierExpByTierCode(Long tierCode) {
-    return Optional
-        .ofNullable(commonCodeRepository.findTierExp(tierCode)).orElseThrow(
-            () -> new ResourceNotFoundException("tier_exp", "tier_code", tierCode));
+    return Optional.ofNullable(commonCodeRepository.findTierExp(tierCode))
+        .orElseThrow(() -> new ResourceNotFoundException("tier_exp", "tier_code", tierCode));
   }
 
   private Long getSolutionExpByTierCode(Long tierCode) {
     return Optional.ofNullable(commonCodeRepository.findSolutionExp(tierCode))
-        .orElseThrow(
-            () -> new ResourceNotFoundException("solution_exp", "tier_code",
-                tierCode));
+        .orElseThrow(() -> new ResourceNotFoundException("solution_exp", "tier_code", tierCode));
   }
 }
