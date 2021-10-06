@@ -4,7 +4,7 @@
         <div class="col-2 chat-user-img online align-self-center ml-2" id="userCard" v-if="user!=undefined">
           <div v-if="user.profile">
             <img
-              :src="profile"
+              :src="user.profile"
               class="rounded-circle avatar-xs"
               id="profile"
               alt="profile"

@@ -54,7 +54,7 @@
           <li
             v-for="(item, index) in solutionList"
             :key="index"
-            @click="searchHistory(item,index)"
+            @click="searchHistory(item)"
             class="mb-2"
           >
             <!-- <a href="javascript:void(0);"> -->
@@ -133,15 +133,19 @@ export default {
       });
   },
   methods: {
-    searchHistory(solution, index) {
+    searchHistory(solution) {
       axios
         .get(`${BASE_URL}/history/detail/` + solution.id)
         .then(({ data }) => {
+          let colorsParam = [];
+          for (let i = 0; i < data.data.solution.level.length; i++) {
+            colorsParam.push(Colors.colors[data.data.solution.level[i]]);
+          }
           this.$router.push({
             name: "solution",
             params: {
               data: data.data,
-              color: this.colors[index],
+              colors: colorsParam,
               isData: true,
             },
           });
