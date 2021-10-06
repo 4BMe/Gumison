@@ -80,16 +80,19 @@ export default {
     this.color = Colors.colors;
   },
   methods: {
-    searchHistory(solution, index) {
-      console.log(solution.id);
+    searchHistory(solution) {
       axios
-        .get(`${BASE_URL}/history/detail/${solution.id}`)
+        .get(`${BASE_URL}/history/detail/` + solution.id)
         .then(({ data }) => {
+          let colorsParam = [];
+          for (let i = 0; i < data.data.solution.level.length; i++) {
+            colorsParam.push(Colors.colors[data.data.solution.level[i]]);
+          }
           this.$router.push({
             name: "solution",
             params: {
               data: data.data,
-              color: this.color[index],
+              colors: colorsParam,
               isData: true,
             },
           });
@@ -101,7 +104,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .sm-tier-img {
   width: 30px;
 }
