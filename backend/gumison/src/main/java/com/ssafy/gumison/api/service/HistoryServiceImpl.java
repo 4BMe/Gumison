@@ -221,7 +221,7 @@ public class HistoryServiceImpl implements HistoryService {
     Long nextExp;
 
     try {
-      nextExp = getTierExpByTierCode(levelTier.getTierCode()) * count;
+      nextExp = getSolutionExpByTierCode(levelTier.getTierCode()) * count;
     } catch (ResourceNotFoundException e) {
       return;
     }
@@ -234,10 +234,13 @@ public class HistoryServiceImpl implements HistoryService {
 
   private void increaseUserTierByUserExp(User user) {
     try {
-      Long nextLevelRequireExp = getSolutionExpByTierCode(user.getTierCode() + 1);
-      for (; user.getAccumulateExp() < nextLevelRequireExp;
-          nextLevelRequireExp = getSolutionExpByTierCode(user.getTierCode() + 1)) {
+      Long nextLevelRequireExp = getTierExpByTierCode(user.getTierCode() + 1);
+      log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
+      log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
+      for (; user.getAccumulateExp() >= nextLevelRequireExp;
+          nextLevelRequireExp = getTierExpByTierCode(user.getTierCode() + 1)) {
 
+        log.info("[solutionCreate] increase user tier");
         user.setTierCode(user.getTierCode() + 1);
       }
     } catch (ResourceNotFoundException e) {
