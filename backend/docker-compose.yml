@@ -1,10 +1,86 @@
-version: "3.7"
-
+version: "3.4"
 services:
-  redis:
-    image: redis:latest
-    container_name: redis
+  # mysql:
+  #   image: mariadb:10.4.20
+  #   container_name: mysql
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./mysql/mysql-data:/var/lib/mysql
+  #     - ./mysql/initdb.d/:/docker-entrypoint-initdb.d/
+  #   environment:
+  #     MYSQL_USER: gumison
+  #     MYSQL_PASSWORD: gumison
+  #     MYSQL_ROOT_PASSWORD: gumison
+  #     MYSQL_DATABASE: gumison
+  #     TZ: "Asia/Seoul"
+  #   privileged: true
+  #   command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  #   networks:
+  #     - internal_network
+
+  # redis:
+  #   image: redis:6.2.4-alpine
+  #   container_name: redis
+  #   restart: always
+  #   volumes:
+  #     - ./redis/redis-data:/data
+  #   ports:
+  #     - "32001:6379"
+  #   networks:
+  #     - internal_network
+
+  backend:
+    container_name: backend
+    build:
+      dockerfile: Dockerfile
+      context: ./gumison
+      target: prod
     ports:
-      - 6379:6379
-    labels:
-      - "mode=standalone"
+      - "8888:8888"
+    volumes:
+      - ./log:/log
+    environment:
+      TZ: "Asia/Seoul"
+      SPRING_PROFILES_ACTIVE: "prod"
+      server.address: 0.0.0.0
+    depends_on:
+      # - mysql
+      # - redis
+    networks:
+      - internal_network
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ../frontend
+      target: production-stage
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - backend
+      - certbot
+    networks:
+      - internal_network
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - internal_network
+
+networks:
+  internal_network:

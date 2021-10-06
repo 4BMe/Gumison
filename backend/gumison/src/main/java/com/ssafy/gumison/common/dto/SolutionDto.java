@@ -12,10 +12,10 @@ import lombok.ToString;
 @Builder
 public class SolutionDto {
   private String climbingName;
-  private String level;
-  private String tier;
+  private List<String> level;
+  private List<String> tier;
   private List<SolutionVideo> solutionVideoList = new ArrayList<>();
-  private Integer count;
+  private List<Integer> count;
   private LocalDate date;
 
 }

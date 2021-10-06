@@ -12,7 +12,7 @@ export default [
         component: () => import('../views/pages/level-record/temp'),
     },
     {
-        path: '/myhistory',
+        path: '/myhistory/:nickname',
         name: 'myhistory',
         component: () => import('../views/pages/history/myhistory'),
         props: true,

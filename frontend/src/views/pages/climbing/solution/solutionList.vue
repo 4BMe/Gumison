@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/constant/index";
 import simplebar from "simplebar-vue";
 import Colors from "@/constant/colors.js";
 
@@ -77,10 +79,32 @@ export default {
   mounted() {
     this.color = Colors.colors;
   },
-  methods: {},
+  methods: {
+    searchHistory(solution) {
+      axios
+        .get(`${BASE_URL}/history/detail/` + solution.id)
+        .then(({ data }) => {
+          let colorsParam = [];
+          for (let i = 0; i < data.data.solution.level.length; i++) {
+            colorsParam.push(Colors.colors[data.data.solution.level[i]]);
+          }
+          this.$router.push({
+            name: "solution",
+            params: {
+              data: data.data,
+              colors: colorsParam,
+              isData: true,
+            },
+          });
+        })
+        .catch((err) => {
+          console.log("에러: " + err);
+        });
+    },
+  },
 };
 </script>
-<style>
+<style scoped>
 .sm-tier-img {
   width: 30px;
 }
