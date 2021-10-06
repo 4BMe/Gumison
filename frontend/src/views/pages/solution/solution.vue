@@ -6,10 +6,10 @@
     <div>
       <div class="px-2">
         <div class="container-fluid row">
-          <div class="px-4 col-1 chat-user-img online align-self-center" id="userCard">
-            <div v-if="data.profile">
+          <div class="px-4 col-2 chat-user-img online align-self-center" id="userCard">
+            <div v-if="data.profile" class="avatar-xs">
               <img
-                :src="profile"
+                :src="data.profile"
                 class="rounded-circle avatar-xs"
                 id="profile"
                 alt="profile"
@@ -36,7 +36,7 @@
           <div class="col-2 p-0 no-padding chat-user-img online align-self-center">
           </div>
           <div class="col-4 chat-user-img online align-self-center">
-            <h5 class="text-truncate font-size-15 mb-1">
+            <h5 class="text-truncate font-size-15 mb-1 mt-3">
               {{ data.solution.date }}
             </h5>
           </div>
@@ -145,7 +145,6 @@ export default {
   },
   methods: {
     getVideoSrc(index) {
-      console.log(this.data.solution.solutionVideoList[index].uri);
       return `${BASE_URL}/history/videos?fileName=${this.data.solution.solutionVideoList[index].uri}`;
     },
     getVideoOptions(index) {

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,7 +34,6 @@ import com.ssafy.gumison.db.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -223,12 +221,5 @@ public class HistoryServiceImpl implements HistoryService {
       uploadVideos(user.getId(), now, solutionRequest.getVideos());
     }
     return solutionRepository.saveAll(solutions);
-  }
-
-  @Override
-  public Mono<Resource> getVideo(String title) {
-    log.info("[getVideo] - HistoryService : {}", title);
-    final String FORMAT = "classpath:videos/%s";
-    return Mono.fromSupplier(() -> this.resourceLoader.getResource(String.format(FORMAT, title)));
   }
 }

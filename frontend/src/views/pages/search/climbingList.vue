@@ -104,7 +104,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .sm-tier-img {
   width: 7%;
   height: 7%;
