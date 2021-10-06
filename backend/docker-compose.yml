@@ -45,7 +45,7 @@ services:
       TZ: "Asia/Seoul"
       SPRING_PROFILES_ACTIVE: "prod"
       server.address: 0.0.0.0
-    depends_on:
+    # depends_on:
       # - mysql
       # - redis
     networks:
