@@ -1,8 +1,13 @@
 <template>
   <div class="height-full">
-    <b-card no-body class="border custom-accordion">
+    <b-card
+      no-body
+      class="border custom-accordion"
+    >
       <b-card-body>
+        <h5>해결한 문제를 기록하세요.</h5>
         <div class="mb-3">
+          날짜
           <input
             type="date"
             id="input-date"
@@ -10,7 +15,10 @@
             class="form-control"
           />
         </div>
-        <div v-for="(levelTier, index) in levelTiers" :key="index">
+        <div
+          v-for="(levelTier, index) in levelTiers"
+          :key="index"
+        >
           <LevelRecordLine
             :level="levelTier.level"
             :color="colors[index]"
@@ -22,20 +30,27 @@
         </div>
       </b-card-body>
     </b-card>
-    <div class="d-flex">
-      <input
-        type="file"
-        value="동영상 업로드"
-        ref="solutionVideos"
-        class="btn btn-outline-success ml-3"
-        accept="video/*"
-        @change="handleFileUpload()"
-        multiple
-      />
-    </div>
+    <b-card class="border custom-accordion">
+      <div class="d-flex justify-content-center">
+        <label class="btn btn-primary">
+          영상 등록
+          <input
+            type="file"
+            value="동영상 업로드"
+            ref="solutionVideos"
+            class="btn btn-outline-success ml-3"
+            accept="video/*"
+            @change="handleFileUpload()"
+            style="display:none;"
+            multiple
+          />
+          <i class="ri-video-fill"></i>
+        </label>
+      </div>
+    </b-card>
     <input
       type="button"
-      value="등록"
+      value="완료"
       class="btn btn-outline-primary float-right mt-3 mr-4 ml-3"
       @click="submitClick()"
     />
@@ -129,4 +144,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+input {
+  background-image: "@/assets/images/icon/video-fill.png";
+
+  background-position: top right;
+
+  background-repeat: no-repeat;
+}
+</style>
