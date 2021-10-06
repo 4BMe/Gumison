@@ -1,8 +1,13 @@
 <template>
   <div class="height-full">
-    <b-card no-body class="border custom-accordion">
+    <b-card
+      no-body
+      class="border custom-accordion"
+    >
       <b-card-body>
+        <h5>해결한 문제를 기록하세요.</h5>
         <div class="mb-3">
+          날짜
           <input
             type="date"
             id="input-date"
@@ -10,7 +15,10 @@
             class="form-control"
           />
         </div>
-        <div v-for="(levelTier, index) in levelTiers" :key="index">
+        <div
+          v-for="(levelTier, index) in levelTiers"
+          :key="index"
+        >
           <LevelRecordLine
             :level="levelTier.level"
             :color="colors[index]"
@@ -22,20 +30,30 @@
         </div>
       </b-card-body>
     </b-card>
-    <div class="d-flex">
-      <input
-        type="file"
-        value="동영상 업로드"
-        ref="solutionVideos"
-        class="btn btn-outline-success ml-3"
-        accept="video/*"
-        @change="handleFileUpload()"
-        multiple
-      />
-    </div>
+    <b-card class="border custom-accordion" v-if="!uploadId">
+      <div class="d-flex justify-content-center">
+        <label class="btn btn-primary" v-if="!solutionVideos">
+          영상 등록
+          <input
+            type="file"
+            value="동영상 업로드"
+            ref="solutionVideos"
+            class="btn btn-outline-success ml-3"
+            accept="video/*"
+            @change="handleFileUpload()"
+            style="display:none;"
+            multiple
+          />
+          <i class="ri-video-fill"></i>
+        </label>
+        <div v-else>
+          영상 {{solutionVideos.length}}개 선택됨
+        </div>
+      </div>
+    </b-card>
     <input
       type="button"
-      value="등록"
+      value="완료"
       class="btn btn-outline-primary float-right mt-3 mr-4 ml-3"
       @click="submitClick()"
     />
@@ -51,8 +69,10 @@ var today = new Date().toISOString().slice(0, 10);
 
 export default {
   props: {
+    nickname: {},
     climbingId: {},
     levelTiers: {},
+    uploadId: {},
   },
   components: {
     LevelRecordLine,
@@ -84,6 +104,8 @@ export default {
         if (this.recordSolutionCounts[i] > 0) {
           if (this.solutionIds[i] > 0) {
             formData.append("solutionIds", this.solutionIds[i]);
+          } else {
+            formData.append("solutionIds", 0);
           }
           formData.append("levelTierIds", this.levelTiers[i].id);
           formData.append("counts", this.recordSolutionCounts[i]);
@@ -93,41 +115,76 @@ export default {
         formData.append("videos", video);
       }
 
-      if (this.solutionIds[0] > 0) {
+      let flag = false;
+      for(let i of this.solutionIds) {
+        if(i) {
+          flag = true;
+          break;
+        }
+      }
+
+      if (flag) {
         await update(formData)
           .then(({ data }) => {
             console.log(data);
+            this.$alertify.success("기록되었습니다.");
+            this.$router.push({
+              name: 'myhistory',
+              props: {
+                nickname: this.nickname,
+              }
+            })
           })
           .catch((error) => {
             console.log(error);
+            this.$alertify.error("기록에 실패하였습니다.");
           });
       } else {
         await submit(formData)
           .then(({ data }) => {
             console.log(data);
+            this.$alertify.success("기록되었습니다.");
+            this.$router.go(-1);
           })
           .catch((error) => {
             console.log(error);
+            this.$alertify.error("기록에 실패하였습니다.");
           });
       }
     },
   },
   mounted() {
-    console.log("level-record.vue");
+    // console.log("level-record.vue");
+    // console.log("this.levelTiers", this.levelTiers)
     for (var i = 0; i < this.levelTiers.length; i++) {
       this.colors.push(Colors.colors[this.levelTiers[i].level]);
-      if (this.levelTiers[i].solutionCount > 0)
+      if (this.levelTiers[i].solutionCount)
         this.recordSolutionCounts.push(this.levelTiers[i].solutionCount);
-      else this.recordSolutionCounts.push(0);
+      else
+        this.recordSolutionCounts.push(0);
 
-      if (this.levelTiers[i].solutionId > 0)
+      if (this.levelTiers[i].solutionId)
         this.solutionIds.push(this.levelTiers[i].solutionId);
+      else
+        this.solutionIds.push(0);
 
       if (this.levelTiers[i].solutionDate)
         this.solutionDate = this.levelTiers[i].solutionDate;
     }
+    // console.log("this.colors", this.colors);
+    // console.log("this.recordSolutionCounts", this.recordSolutionCounts);
+    // console.log("this.solutionIds", this.solutionIds);
+    // console.log("this.solutionDate", this.solutionDate);
   },
 };
 </script>
 
-<style></style>
+<style>
+input {
+  background-image: "@/assets/images/icon/video-fill.png";
+
+  background-position: top right;
+
+  background-repeat: no-repeat;
+}
+</style>

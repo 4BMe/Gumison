@@ -1,6 +1,13 @@
 <template>
   <form>
-    <div class="form-group mb-4">
+    <div class="mb-4 profile-user">
+      <img
+        :src="image"
+        class="rounded-circle avatar-lg img-thumbnail"
+        alt
+      />
+    </div>
+    <!-- <div class="form-group mb-4">
       <label for="updateProfile-input">
         프로필
       </label>
@@ -27,7 +34,7 @@
         type="hidden"
         name="photo"
       />
-    </div>
+    </div> -->
     <div class="form-group mb-4">
       <label for="updateName-input">
         닉네임
@@ -83,6 +90,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import { getUserByNickname } from "@/api/users.js";
+//import { getUserByNickname, updateProfileByOauthId } from "@/api/users.js";
 export default {
   name: "profileItem",
   components: {},
@@ -96,7 +104,7 @@ export default {
       allowableTypes: ["jpg", "jpeg", "png", "gif"],
       maximumSize: 5000000,
       selectedImage: null,
-      image: null,
+      image: this.profile,
     };
   },
 
@@ -137,28 +145,20 @@ export default {
       }
       return true;
     },
-    onImageError(err) {
-      console.log(err, "do something with error");
-    },
+
     changeImage($event) {
       this.selectedImage = $event.target.files[0];
-      this.profileDetail.profile = $event.target.files[0];
+      this.profileDetail.profile = this.selectedImage;
 
       //validate the image
       if (!this.validate(this.selectedImage)) return;
-      // create a form
-      const form = new FormData();
-      form.append("file", this.selectedImage);
-      // axios
-      //   .post("https://httpbin.org/post", { data: form })
-      //   .then(this.createImage)
-      //   .catch(this.onImageError);
-    },
-    createImage() {
+
       const reader = new FileReader();
       reader.onload = (e) => {
         this.image = e.target.result;
+        console.log("reader onload: ", this.image);
       };
+      reader.readAsDataURL(this.selectedImage);
     },
   },
 };

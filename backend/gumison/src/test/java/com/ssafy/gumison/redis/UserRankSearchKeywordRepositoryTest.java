@@ -1,7 +1,6 @@
 package com.ssafy.gumison.redis;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,15 +13,15 @@ class UserRankSearchKeywordRepositoryTest {
 
   @Test
   public void 검색키워드를_저장하고_조회한다() {
-    //given
+    // given
     final String keyword = "testKey";
     final Long value = 3L;
 
-    //when
+    // when
     userRankSearchKeywordRepository.setUserSearchKeywordCount(keyword, value);
     Long result = userRankSearchKeywordRepository.getUserSearchKeywordCount(keyword);
 
-    //then
+    // then
     assertEquals(result, value);
   }
 }

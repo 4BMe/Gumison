@@ -1,8 +1,10 @@
 package com.ssafy.gumison;
 
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,16 +24,16 @@ public class RedisConnectionTest {
 
   @Test
   public void 값_설정_및_조회_삭제_기능을_수행한다() {
-    //given
+    // given
     final String KEY = "testKey";
     final String VALUE = "testValue";
 
     ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
 
-    //when
+    // when
     valueOperations.set(KEY, VALUE);
 
-    //then
+    // then
     assertEquals(valueOperations.get(KEY), VALUE);
     stringRedisTemplate.delete(KEY);
     assertNull(valueOperations.get(KEY));
@@ -40,19 +42,19 @@ public class RedisConnectionTest {
   @Test
   public void ZSET에_값_설정_조회_삭제_기능을_수행한다() {
 
-    //given
+    // given
     final String KEY = "TEST KEY";
     final Integer[] SCORES = {300, 500, 100};
     final String[] VALUES = {"testVal 0", "testVal 1", "testVal 2"};
 
     ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
 
-    //when
+    // when
     for (int i = 0; i < SCORES.length; i++) {
       assertTrue(zSetOperations.add(KEY, VALUES[i], SCORES[i]).booleanValue());
     }
 
-    //then
+    // then
     assertEquals(zSetOperations.rank(KEY, VALUES[2]), 0);
 
     for (int i = 0; i < SCORES.length; i++) {

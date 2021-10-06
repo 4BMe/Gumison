@@ -14,6 +14,7 @@ public class SolutionRes {
   private String profile;
   private String nickname;
   private String tier;
+  private String uploadId;
   private SolutionDto solution;
 
   public static SolutionRes of(User user, String tier, Solution solution, List<String> tierNames, List<Long> solutionIds,
@@ -22,6 +23,7 @@ public class SolutionRes {
     res.profile = user.getProfile();
     res.nickname = user.getNickname();
     res.tier = tier;
+    res.uploadId = solution.getUploadId();
     res.solution = SolutionDto.builder().climbingId(solution.getClimbing().getId()).climbingName(solution.getClimbing().getClimbingName())
         .solutionIds(solutionIds).level(levelNames).tier(tierNames).counts(counts).date(solution.getDate())
         .solutionVideoList(solutionVideoList).build();

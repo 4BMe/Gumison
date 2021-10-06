@@ -129,7 +129,7 @@ export default [
 
                 const user = store.getters['users/getUser'];
                 console.log('[router profile] user: ', user);
-                if (user.token) {
+                if (user.nickname) {
                     // If the user is already logged in
                     next({
                         name: 'home'

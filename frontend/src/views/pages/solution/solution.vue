@@ -91,7 +91,7 @@
               수정
             </button>
             <button class="btn btn-outline-info ml-1"
-                    @click="searchHistory('기여')">
+                    @click="clickDelete()">
               삭제
             </button>
           </div>
@@ -104,6 +104,7 @@
 <script>
 //http://localhost:8888/api/history/videos?fileName=535-2021-10-05T21.30.55.264-0.mp4
 // import axios from "axios";
+import axios from "axios";
 import simplebar from "simplebar-vue";
 import { BASE_URL } from "@/constant/index";
 
@@ -121,10 +122,6 @@ export default {
       require: true
     },
     colors:{
-      require: true
-    },
-    isData: {
-      type: Boolean,
       require: true
     },
   },
@@ -161,18 +158,25 @@ export default {
           solutionDate: this.data.solution.date,
         })
       }
+      console.log("solution - levelTiers: " + levelTiers);
       this.$router.push({
         name: 'level-record-update',
         params: {
+          nickname: this.data.nickname,
           climbingId: this.data.solution.climbingId,
           levelTiers: levelTiers,
+          uploadId: this.data.uploadId,
         }
       })
     },
-    clickDelete(){
-      console.log("clickDelete!!");
+    async clickDelete() {
+      await axios
+        .delete(`${BASE_URL}/history/${this.nickname}`)
+        .then(({data}) => {
+          console.log(data);
+        })
     },
-    previousVideo(){
+    previousVideo() {
       if(this.videoIdx > 0)
         this.videoIdx--;
     },

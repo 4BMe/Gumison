@@ -93,7 +93,6 @@ export default {
             params: {
               data: data.data,
               colors: colorsParam,
-              isData: true,
             },
           });
         })

@@ -93,7 +93,19 @@ export default {
           : this.description,
         oauthId: this.user.oauthId,
       };
-      console.log("[update user, saveUser] userData: ", userData);
+
+      /**
+       * 닉네임을 변환하면 this.$router.push
+       * 아니면 this.$router.go
+       */
+      let changeNickname = false;
+      if (
+        this.profileDetail.nickname &&
+        this.nickname != this.profileDetail.nickname
+      ) {
+        changeNickname = true;
+      }
+
       updateUserByOauthId(this.user.oauthId, userData)
         .then(({ data }) => {
           console.log(data);
@@ -105,6 +117,15 @@ export default {
           };
           store.commit("users/UPDATE_USER", updateUserData);
           this.showModal = false;
+          console.log("changeNickname: ", changeNickname);
+          if (changeNickname) {
+            this.$router.push({
+              name: "myhistory",
+              params: { nickname: updateUserData.nickname },
+            });
+          } else {
+            this.$router.go();
+          }
         })
         .catch((error) => {
           console.log(error);

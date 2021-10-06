@@ -1,14 +1,14 @@
 package com.ssafy.gumison.api.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.ssafy.gumison.common.dto.UserRankDto;
-import com.ssafy.gumison.redis.RankProvider;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import com.ssafy.gumison.common.dto.UserRankDto;
+import com.ssafy.gumison.redis.RankProvider;
 
 @SpringBootTest
 class RankServiceTest {
@@ -21,12 +21,12 @@ class RankServiceTest {
 
   @Test
   public void 닉네임으로_랭크를_불러온다() {
-    //given
+    // given
     final String NICKNAME = "dummy1";
     final Long USER_COUNT = rankProvider.getUserCount();
-    //when
+    // when
     UserRankDto userRankDto = rankService.getUserRankByNickname(NICKNAME);
-    //then
+    // then
     assertNotNull(userRankDto);
     assertTrue(userRankDto.getRank() >= 0 && userRankDto.getRank() <= USER_COUNT);
 
@@ -34,14 +34,14 @@ class RankServiceTest {
 
   @Test
   public void 페이지에_맞게_유저_리스트를_불러온다() {
-    //given
+    // given
     final int PAGE = 1;
     final int MAX_USER_PER_PAGE = 10;
 
-    //when
+    // when
     List<UserRankDto> userRankDtoList = rankService.getUserRankByPage(PAGE);
 
-    //then
+    // then
     assertTrue(userRankDtoList.size() <= MAX_USER_PER_PAGE);
 
     AtomicInteger index = new AtomicInteger(1);

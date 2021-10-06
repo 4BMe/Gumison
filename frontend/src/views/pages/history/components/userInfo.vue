@@ -36,18 +36,19 @@
         class="col-4 pr-3 container-fluid row m-0 p-0 align-self-center"
         v-if="user.nickname == currNickname"
       >
-        <div class="col-6 m-0 p-0  text-right">
+        <div class="col m-0 p-0  text-right">
           <div class="row">
             <b-button
               type="button"
-              class="btn col bg-primary avatar-xs p-0 rounded-circle"
+              class="btn col-4 bg-primary avatar-xs p-0 rounded-circle"
               v-b-modal="'modal-change-profile'"
             >
               <i class="ri-pencil-fill"></i>
             </b-button>
+            <div class="col-1"></div>
             <b-button
               type="button"
-              class="btn col bg-danger avatar-xs p-0 rounded-circle"
+              class="btn col-4 bg-danger avatar-xs p-0 rounded-circle"
               v-b-modal="'modal-withdraw'"
             >
               <i class="ri-delete-bin-fill"></i>

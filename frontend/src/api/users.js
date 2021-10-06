@@ -20,6 +20,15 @@ const oauth = axios.create({
     withCredentials: true,
 })
 
+const file = axios.create({
+    baseURL: `${BASE_URL}/users/`,
+    headers: {
+        'Content-type': 'multipart/form-data',
+        'Authorization': `Bearer ${store.getters["users/getToken"]}`,
+    },
+    withCredentials: true,
+})
+
 function googleLoginUser() {
     return window.location.href = `${GOOGLE_OAUTH_URL}`;
 }
@@ -40,10 +49,15 @@ function deleteUserByOauthId(oauthId) {
     return oauth.delete(oauthId)
 }
 
+function updateProfileByOauthId(oauthId, form) {
+    return file.put('profile/' + oauthId, form)
+}
+
 export {
     googleLoginUser,
     getUser,
     getUserByNickname,
     updateUserByOauthId,
-    deleteUserByOauthId
+    deleteUserByOauthId,
+    updateProfileByOauthId
 }

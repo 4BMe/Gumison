@@ -3,6 +3,7 @@ package com.ssafy.gumison.api.request;
 import java.time.LocalDate;
 import java.util.List;
 
+import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class SolutionRequest {
   private List<Long> solutionIds;
   private String oauthId;
