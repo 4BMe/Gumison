@@ -1,5 +1,6 @@
 package com.ssafy.gumison.api.service;
 
+import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -117,7 +119,7 @@ public class HistoryServiceImpl implements HistoryService {
 
   private Long codeExpConvert(Long code) {
     Long exp = 0L;
-    exp = commonCodeRepository.findExp(code);
+    exp = commonCodeRepository.findTierExp(code);
     return exp;
   }
 
@@ -167,9 +169,9 @@ public class HistoryServiceImpl implements HistoryService {
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId())
         .orElseThrow(RuntimeException::new);
     LocalDateTime now = LocalDateTime.now();
-    List<Long> levelTierIds = solutionRequest.getLevelTierIds();
-    List<Integer> counts = solutionRequest.getCounts();
-    for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
+    List<Long> levelTierIds = solutionRequest.getLevelTierIdList();
+    List<Integer> counts = solutionRequest.getCountList();
+    for (int i = 0; i < solutionRequest.getLevelTierIdList().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
       LevelTier levelTier = levelTierRepository.findById(levelTierId)
           .orElseThrow(RuntimeException::new);
@@ -178,9 +180,11 @@ public class HistoryServiceImpl implements HistoryService {
           .count(counts.get(i)).date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now)
           .build();
       solutions.add(solution);
+
+      increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
     }
-    if (solutionRequest.getVideos() != null) {
-      uploadVideos(user.getId(), now, solutionRequest.getVideos());
+    if (solutionRequest.getVideoFileList() != null) {
+      uploadVideos(user.getId(), now, solutionRequest.getVideoFileList());
     }
     return solutionRepository.saveAll(solutions);
   }
@@ -195,9 +199,9 @@ public class HistoryServiceImpl implements HistoryService {
     Climbing climbing = climbingRepository.findById(solutionRequest.getClimbingId())
         .orElseThrow(RuntimeException::new);
     LocalDateTime now = LocalDateTime.now();
-    List<Long> levelTierIds = solutionRequest.getLevelTierIds();
-    List<Integer> counts = solutionRequest.getCounts();
-    for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
+    List<Long> levelTierIds = solutionRequest.getLevelTierIdList();
+    List<Integer> counts = solutionRequest.getCountList();
+    for (int i = 0; i < solutionRequest.getLevelTierIdList().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
       LevelTier levelTier = levelTierRepository.findById(levelTierId)
           .orElseThrow(RuntimeException::new);
@@ -207,9 +211,50 @@ public class HistoryServiceImpl implements HistoryService {
           .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
       solutions.add(solution);
     }
-    if (!solutionRequest.getVideos().isEmpty()) {
-      uploadVideos(user.getId(), now, solutionRequest.getVideos());
+    if (!solutionRequest.getVideoFileList().isEmpty()) {
+      uploadVideos(user.getId(), now, solutionRequest.getVideoFileList());
     }
     return solutionRepository.saveAll(solutions);
+  }
+
+  private void increaseUserExpByLevelTierAndCount(User user, LevelTier levelTier, Integer count) {
+    Long nextExp;
+
+    try {
+      nextExp = getTierExpByTierCode(levelTier.getTierCode()) * count;
+    } catch (ResourceNotFoundException e) {
+      return;
+    }
+
+    user.setAccumulateExp(user.getAccumulateExp() + nextExp);
+
+    increaseUserTierByUserExp(user);
+    userRepository.save(user);
+  }
+
+  private void increaseUserTierByUserExp(User user) {
+    try {
+      Long nextLevelRequireExp = getSolutionExpByTierCode(user.getTierCode() + 1);
+      for (; user.getAccumulateExp() < nextLevelRequireExp;
+          nextLevelRequireExp = getSolutionExpByTierCode(user.getTierCode() + 1)) {
+
+        user.setTierCode(user.getTierCode() + 1);
+      }
+    } catch (ResourceNotFoundException e) {
+      log.error(e.getMessage());
+    }
+  }
+
+  private Long getTierExpByTierCode(Long tierCode) {
+    return Optional
+        .ofNullable(commonCodeRepository.findTierExp(tierCode)).orElseThrow(
+            () -> new ResourceNotFoundException("tier_exp", "tier_code", tierCode));
+  }
+
+  private Long getSolutionExpByTierCode(Long tierCode) {
+    return Optional.ofNullable(commonCodeRepository.findSolutionExp(tierCode))
+        .orElseThrow(
+            () -> new ResourceNotFoundException("solution_exp", "tier_code",
+                tierCode));
   }
 }

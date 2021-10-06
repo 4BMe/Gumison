@@ -18,6 +18,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SolutionRequest {
+
   private Long solutionId;
   private String oauthId;
   private Long climbingId;
@@ -25,7 +26,7 @@ public class SolutionRequest {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate date;
   private Boolean deleteYn;
-  private List<Long> levelTierIds;
-  private List<Integer> counts;
-  private List<MultipartFile> videos;
+  private List<Long> levelTierIdList;
+  private List<Integer> countList;
+  private List<MultipartFile> videoFileList;
 }
