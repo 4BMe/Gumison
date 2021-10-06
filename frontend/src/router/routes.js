@@ -97,6 +97,30 @@ export default [
         ]
     },
     {
+        path: '/level-record-update',
+        name: 'level-record-update',
+        component: () => import('../views/pages/level-record/level-record-update'),
+        meta: {
+            beforeResolve(routeTo, routeFrom, next) {
+                /**
+                 * token이 이미 있으면 myhistory 로 가고,
+                 * 없으면 로그인 화면으로 가기
+                 */
+                const token = store.getters['users/getToken'];
+                console.log('[route myhistory click] token: ', token)
+                if (token) {
+                    console.log('[route myhistory click] token token : ', token)
+                    next()
+                } else {
+                    next({
+                        name: 'login'
+                    })
+                }
+            },
+        },
+        props: true,
+    },
+    {
         path: '/login',
         name: 'login',
         component: () => import('../views/pages/account/login'),

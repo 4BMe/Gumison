@@ -104,7 +104,6 @@ export default {
   },
   computed: {},
   async mounted() {
-    console.log("myhistory");
     await axios
       .get(`${BASE_URL}/history/${this.nickname}`)
       .then(({ data }) => {

@@ -73,7 +73,14 @@ export default {
     },
 
     searchSolutions(solutionId){
-      this.$router.push({ name: 'climbingSolution', params: {solutionId: solutionId}, hash: '#list-top'});
+      this.$router.push({
+        name: 'climbingSolution',
+        params: {
+          climbingId: this.$route.params.climbingId,
+          solutionId: solutionId
+          },
+        hash: '#list-top'
+        });
     },
 
     levelRecord(){

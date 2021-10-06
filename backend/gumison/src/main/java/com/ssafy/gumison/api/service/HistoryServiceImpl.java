@@ -80,17 +80,20 @@ public class HistoryServiceImpl implements HistoryService {
     CommonCode code = commonCodeRepository.findById(user.getTierCode())
         .orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
+    List<Long> solutionIds = new ArrayList<>();
     List<String> tierNames = new ArrayList<>();
     List<String> levelNames = new ArrayList<>();
     List<Integer> counts = new ArrayList<>();
     List<SolutionVideo> solutionVideoList = solutionVideoRepository
         .findByUploadId(solution.getUploadId());
     solutionList.forEach(sol -> {
+      solutionIds.add(sol.getId());
       tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
       counts.add(sol.getCount());
     });
-    return SolutionRes.of(user, tier, solution, tierNames, levelNames, counts, solutionVideoList);
+    return SolutionRes.of(user, tier, solution, tierNames, solutionIds, levelNames, counts,
+        solutionVideoList);
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
@@ -207,14 +210,15 @@ public class HistoryServiceImpl implements HistoryService {
     LocalDateTime now = LocalDateTime.now();
     List<Long> levelTierIds = solutionRequest.getLevelTierIds();
     List<Integer> counts = solutionRequest.getCounts();
+    List<Long> solutionIds = solutionRequest.getSolutionIds();
     for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
       LevelTier levelTier = levelTierRepository.findById(levelTierId)
           .orElseThrow(RuntimeException::new);
-
-      Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user)
-          .levelTier(levelTier).climbing(climbing).count(counts.get(i))
-          .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
+      Long solutionId = solutionIds.get(i);
+      Solution solution = Solution.builder().id(solutionId).user(user).levelTier(levelTier)
+          .climbing(climbing).count(counts.get(i)).date(solutionRequest.getDate())
+          .uploadId(user.getId() + "-" + now).build();
       solutions.add(solution);
     }
     if (solutionRequest.getVideos() != null) {

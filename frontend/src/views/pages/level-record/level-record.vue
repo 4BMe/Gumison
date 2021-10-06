@@ -113,6 +113,7 @@ export default {
     },
   },
   mounted() {
+    console.log("level-record.vue");
     for (var i = 0; i < this.levelTiers.length; i++) {
       this.colors.push(Colors.colors[this.levelTiers[i].level]);
       if (this.levelTiers[i].solutionCount > 0)

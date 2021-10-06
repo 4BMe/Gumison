@@ -11,11 +11,13 @@ import lombok.ToString;
 @Getter
 @Builder
 public class SolutionDto {
+  private Long climbingId;
   private String climbingName;
+  private List<Long> solutionIds;
   private List<String> level;
   private List<String> tier;
-  private List<SolutionVideo> solutionVideoList = new ArrayList<>();
-  private List<Integer> count;
+  private List<SolutionVideo> solutionVideoList;
+  private List<Integer> counts;
   private LocalDate date;
 
 }

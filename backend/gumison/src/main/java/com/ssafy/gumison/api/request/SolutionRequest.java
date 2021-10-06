@@ -18,7 +18,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SolutionRequest {
-  private Long solutionId;
+  private List<Long> solutionIds;
   private String oauthId;
   private Long climbingId;
   private Integer accumulateReport;
