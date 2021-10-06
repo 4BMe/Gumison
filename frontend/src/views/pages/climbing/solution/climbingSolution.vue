@@ -20,8 +20,6 @@
 </template>ㅌ
 
 <script>
-import axios from "axios";
-import { BASE_URL } from "@/constant/index";
 import { getClimingSolution } from "@/api/climbing";
 import Colors from "@/constant/colors.js";
 import SolutionList from "./solutionList"
@@ -55,24 +53,6 @@ export default {
           this.solutionList = data.data.climbingSolutions;
           this.totalRows = data.data.totalElements;
           this.isData = true;
-        })
-        .catch((err) => {
-          console.log("에러: " + err);
-        });
-    },
-
-    searchHistory(solution, index) {
-      axios
-        .get(`${BASE_URL}/history/detail/` + solution.id)
-        .then(({ data }) => {
-          this.$router.push({
-            name: "solution",
-            params: {
-              data: data.data,
-              color: this.colors[index],
-              isData: true,
-            },
-          });
         })
         .catch((err) => {
           console.log("에러: " + err);
