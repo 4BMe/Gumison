@@ -96,7 +96,7 @@
 
 - HTML5, CSS3, JS(ES6)
 - Bootstrap4
-- Vue.js, Vuex
+- Vue.js 2.6.12, Vuex 3.5.1
 - Visual Studio Code
 
 
