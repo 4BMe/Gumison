@@ -168,7 +168,6 @@ export default {
     };
   },
   mounted() {
-    console.log("data-solution.vue", this.data);
     this.$nextTick(function () {
       for (let i = 0; i < this.colors.length; i++) {
         document.getElementById("color-" + i).style =
@@ -206,11 +205,9 @@ export default {
       });
     },
     async clickDelete() {
-      console.log("this.uploadId : "+this.data.uploadId);
       await axios
         .delete(`${BASE_URL}/history/${this.data.uploadId}`)
         .then(() => {
-          console.log("this.data.nickname : " + this.data.nickname);
           let nickname = this.data.nickname;
           this.$router.push({ name: "myhistory", params: { nickname: nickname } });
         })
