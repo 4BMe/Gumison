@@ -209,21 +209,10 @@ export default {
       console.log("this.uploadId : "+this.data.uploadId);
       await axios
         .delete(`${BASE_URL}/history/${this.data.uploadId}`)
-<<<<<<< HEAD
         .then(() => {
           console.log("this.data.nickname : " + this.data.nickname);
           let nickname = this.data.nickname;
           this.$router.push({ name: "myhistory", params: { nickname: nickname } });
-=======
-        .then(({data}) => {
-          console.log(data);
-          this.$router.push({
-              name: 'myhistory',
-              props: {
-                nickname: this.data.nickname,
-              }
-          });
->>>>>>> develop
         })
         .catch(error => {
           console.log(error);
