@@ -1,5 +1,7 @@
 package com.ssafy.gumison.api.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +26,9 @@ public class ContributionController {
 
   @ApiOperation(value = "레벨 기여 생성", notes = "레벨 기여를 생성합니다.", response = ApiResponseDto.class)
   @PostMapping("/")
-  public ApiResponseDto<Contribution[]> createContribution(
-      @RequestBody ContributionRequest[] contributionRequests) {
-    log.info("[createContribution] - ContributionController : {}", contributionRequests);
-    Contribution[] contributions = new Contribution[contributionRequests.length];
-    for (int i = 0; i < contributionRequests.length; i++) {
-      Contribution contribution = contributionService.createContribution(contributionRequests[i]);
-      contributions[i] = contribution;
-    }
-    return ApiResponseDto.success(contributions);
+  public ApiResponseDto<List<Contribution>> createContribution(
+      @RequestBody ContributionRequest contributionRequest) {
+    log.info("[createContribution] - ContributionController : {}", contributionRequest);
+    return ApiResponseDto.success(contributionService.createContribution(contributionRequest));
   }
 }
