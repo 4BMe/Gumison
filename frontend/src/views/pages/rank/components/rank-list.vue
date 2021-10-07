@@ -188,18 +188,18 @@ export default {
 
 <style lang="scss" scoped>
 .rank-list-login {
-  height: calc(100vh - 230px);
+  height: calc(100vh - 280px);
 
   @media (max-width: 991.98px) {
-    height: calc(100vh - 280px);
+    height: calc(100vh - 330px);
   }
 }
 
 .rank-list-logout {
-  height: calc(100vh - 150px);
+  height: calc(100vh - 200px);
 
   @media (max-width: 991.98px) {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 250px);
   }
 }
 .sm-tier-img {
