@@ -82,6 +82,7 @@ public class RankController {
     });
 
     Long lastPageNumber = rankService.getMaxPageCount();
+
     return ApiResponseDto.success(UserRankListRes.of(userRankDtoList, lastPageNumber));
   }
 
@@ -103,6 +104,10 @@ public class RankController {
       lastPageNumber =
           userService.getUserCountByKeyword(keyword) / rankService.getUserSizePerPage() + 1;
       userRankSearchKeywordRepository.setUserSearchKeywordCount(keyword, lastPageNumber);
+    }
+
+    if (page > lastPageNumber) {
+      throw new IllegalArgumentException("invalid page number : " + page);
     }
 
     List<UserSearchDto> userSearchDtoList = userService.getUserList(keyword, page - 1).getUsers();

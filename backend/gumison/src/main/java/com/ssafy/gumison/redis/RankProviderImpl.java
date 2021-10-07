@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스의 구현체
  *
  * @author cherrytomato1
- * @version 1.5   최대 Offset 수정
+ * @version 1.6   score 로직 수정
  */
 @Component
 @Slf4j
@@ -159,6 +159,7 @@ public class RankProviderImpl implements RankProvider {
   @Override
   public boolean deleteUserByNickname(String nickname) {
     log.info("[rank-provider] delete user nickname - {}", nickname);
+    userCount--;
     return zSetOperations.remove(KEY_PREFIX + RedisKey.RANK, nickname) != null;
   }
 

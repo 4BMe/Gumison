@@ -1,5 +1,6 @@
 package com.ssafy.gumison.api.service;
 
+import com.ssafy.gumison.redis.RankProvider;
 import com.ssafy.gumison.security.UserPrincipal;
 import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.util.List;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final CommonCodeRepository commonCodeRepository;
   private final HttpSession httpSession;
+  private final RankProvider rankProvider;
 
   @Override
   public UserSearchRes getUserList(String nickname, int pageNumber) {
@@ -72,7 +74,7 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
-   * 유저 닉네임으로 UserSearcDto 반환
+   * 유저 닉네임으로 UserSearchDto 반환
    *
    * @param nickname 사용자 닉네임
    * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
@@ -137,12 +139,16 @@ public class UserServiceImpl implements UserService {
     } catch (Exception e) {
       log.error("[updateUserByOAuthId] ", e);
     }
+    rankProvider.loadAllUserExpIntoRankZSet();
+
     return UserOauthDto.builder()
         .nickname(user.getNickname())
         .description(user.getDescription())
         .profile(user.getProfile())
         .oauthId(user.getOauthId())
         .build();
+
+
   }
 
   @Override
