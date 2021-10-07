@@ -30,9 +30,9 @@
         </div>
       </b-card-body>
     </b-card>
-    <b-card class="border custom-accordion">
+    <b-card class="border custom-accordion" v-if="!uploadId">
       <div class="d-flex justify-content-center">
-        <label class="btn btn-primary">
+        <label class="btn btn-primary" v-if="!solutionVideos">
           영상 등록
           <input
             type="file"
@@ -46,6 +46,9 @@
           />
           <i class="ri-video-fill"></i>
         </label>
+        <div v-else>
+          영상 {{solutionVideos.length}}개 선택됨
+        </div>
       </div>
     </b-card>
     <div>
@@ -76,8 +79,10 @@ var today = new Date().toISOString().slice(0, 10);
 
 export default {
   props: {
+    nickname: {},
     climbingId: {},
     levelTiers: {},
+    uploadId: {},
   },
   components: {
     LevelRecordLine,
@@ -109,6 +114,8 @@ export default {
         if (this.recordSolutionCounts[i] > 0) {
           if (this.solutionIds[i] > 0) {
             formData.append("solutionIds", this.solutionIds[i]);
+          } else {
+            formData.append("solutionIds", 0);
           }
           formData.append("levelTierIds", this.levelTiers[i].id);
           formData.append("counts", this.recordSolutionCounts[i]);
@@ -118,38 +125,66 @@ export default {
         formData.append("videos", video);
       }
 
-      if (this.solutionIds[0] > 0) {
+      let flag = false;
+      for(let i of this.solutionIds) {
+        if(i) {
+          flag = true;
+          break;
+        }
+      }
+
+      if (flag) {
         await update(formData)
           .then(({ data }) => {
             console.log(data);
+            this.$alertify.success("기록되었습니다.");
+            this.$router.push({
+              name: 'myhistory',
+              props: {
+                nickname: this.nickname,
+              }
+            })
           })
           .catch((error) => {
             console.log(error);
+            this.$alertify.error("기록에 실패하였습니다.");
           });
       } else {
         await submit(formData)
           .then(({ data }) => {
             console.log(data);
+            this.$alertify.success("기록되었습니다.");
+            this.$router.go(-1);
           })
           .catch((error) => {
             console.log(error);
+            this.$alertify.error("기록에 실패하였습니다.");
           });
       }
     },
   },
   mounted() {
+    // console.log("level-record.vue");
+    // console.log("this.levelTiers", this.levelTiers)
     for (var i = 0; i < this.levelTiers.length; i++) {
       this.colors.push(Colors.colors[this.levelTiers[i].level]);
-      if (this.levelTiers[i].solutionCount > 0)
+      if (this.levelTiers[i].solutionCount)
         this.recordSolutionCounts.push(this.levelTiers[i].solutionCount);
-      else this.recordSolutionCounts.push(0);
+      else
+        this.recordSolutionCounts.push(0);
 
-      if (this.levelTiers[i].solutionId > 0)
+      if (this.levelTiers[i].solutionId)
         this.solutionIds.push(this.levelTiers[i].solutionId);
+      else
+        this.solutionIds.push(0);
 
       if (this.levelTiers[i].solutionDate)
         this.solutionDate = this.levelTiers[i].solutionDate;
     }
+    // console.log("this.colors", this.colors);
+    // console.log("this.recordSolutionCounts", this.recordSolutionCounts);
+    // console.log("this.solutionIds", this.solutionIds);
+    // console.log("this.solutionDate", this.solutionDate);
   },
 };
 </script>

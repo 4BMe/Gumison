@@ -126,7 +126,6 @@ export default {
     },
   },
   async mounted() {
-    console.log("myhistory");
     await axios
       .get(`${BASE_URL}/history/${this.nickname}`)
       .then(({ data }) => {
@@ -159,7 +158,6 @@ export default {
             params: {
               data: data.data,
               colors: colorsParam,
-              isData: true,
             },
           });
         })
