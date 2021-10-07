@@ -203,7 +203,35 @@ export default {
       });
     },
     async clickDelete() {
-      await axios.delete(`${BASE_URL}/history/${this.nickname}`);
+      console.log("this.uploadId : "+this.data.uploadId);
+      await axios
+        .delete(`${BASE_URL}/history/${this.data.uploadId}`)
+        .then(() => {
+          console.log("this.data.nickname : " + this.data.nickname);
+          let nickname = this.data.nickname;
+          this.$router.push({ name: "myhistory", params: { nickname: nickname } });
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    },
+    clickContribution(){
+      let levelTiers = [];
+      for(let i = 0; i < this.data.solution.levelTierIds.length; i++) {
+        levelTiers.push({
+          id: this.data.solution.levelTierIds[i],
+          level: this.data.solution.level[i],
+          tier: this.data.solution.tier[i]
+        })
+      }
+      this.$router.push({
+        name: 'level-contribution',
+        params: {
+          nickname: this.data.nickname,
+          climbingId: this.data.solution.climbingId,
+          levelTiers: levelTiers,
+        }
+      })
     },
     previousVideo() {
       if (this.videoIdx > 0) this.videoIdx--;

@@ -96,8 +96,8 @@ public class HistoryServiceImpl implements HistoryService {
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
       counts.add(sol.getCount());
     });
-    return SolutionRes.of(user, tier, solution, tierNames, solutionIds, levelNames, counts,
-        solutionVideoList);
+    return SolutionRes.of(user, tier, solution, levelTierIds, tierNames, solutionIds, levelNames,
+        counts, solutionVideoList);
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
@@ -258,6 +258,40 @@ public class HistoryServiceImpl implements HistoryService {
     return solutionRepository.saveAll(solutions);
   }
 
+  private void deleteVideos(String uploadId) {
+    List<SolutionVideo> solutionVideos = solutionVideoRepository.findByUploadId(uploadId);
+    for (int i = 0; i < 3; i++) {
+      boolean flag = true;
+      for (SolutionVideo solutionVideo : solutionVideos) {
+        File removeFile = new File(windowsPath + solutionVideo.getUri());
+        log.info("[deleteVideos] - pathname : {}", removeFile.getPath());
+        if (removeFile.exists()) {
+          if (removeFile.delete())
+            log.info("[deleteVideos] - success!!");
+          else {
+            log.info("[deleteVideos] - fail!!");
+            flag = false;
+          }
+        } else {
+          log.info("[deleteVideos] - no file!!");
+        }
+      }
+      if (flag)
+        break;
+    }
+
+    solutionVideoRepository.removeByUploadId(uploadId);
+  }
+
+  @Override
+  public Integer deleteSolution(String uploadId) {
+    log.info("[deleteSolution] - HistoryService : {}", uploadId);
+    deleteVideos(uploadId);
+    Integer ret = solutionRepository.removeByUploadId(uploadId);
+    log.info("ret : {}", ret);
+    return ret;
+  }
+
   /**
    * 사용자의 문제 풀이 기록으로 사용자 경험치를 올린다.
    *
@@ -294,8 +328,8 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() >= nextLevelRequireExp
-          && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp =
-          getTierExpByTierCode(user.getTierCode() + 1)) {
+          && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp = getTierExpByTierCode(
+              user.getTierCode() + 1)) {
 
         log.info("[solutionCreate] increase user tier");
         user.setTierCode(user.getTierCode() + 1);
@@ -343,8 +377,7 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() < nextLevelRequireExp
-          && !user.getTierCode().equals(MIN_TIER_CODE);
-          nextLevelRequireExp = getTierExpByTierCode(
+          && !user.getTierCode().equals(MIN_TIER_CODE); nextLevelRequireExp = getTierExpByTierCode(
               user.getTierCode() - 1)) {
 
         log.info("[solutionCreate] decrease user tier");

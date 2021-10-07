@@ -80,6 +80,13 @@ public class HistoryController {
     List<Solution> solutions = historyService.updateSolution(solutionRequest);
     return ApiResponseDto.success(solutions);
   }
+  
+  @ApiOperation(value = "레벨 기록 삭제", notes = "레벨 기록을 삭제합니다.", response = ApiResponseDto.class)
+  @DeleteMapping("/{uploadId}")
+  public ApiResponseDto<Integer> deleteSolution(@PathVariable String uploadId){
+    log.info("[deleteSolution] - HistoryController : {}", uploadId);
+    return ApiResponseDto.success(historyService.deleteSolution(uploadId));
+  }
 
   @ApiOperation(value = "레벨 기록 비디오", notes = "성공한 레벨 기록의 영상을 반환합니다.", response = ApiResponseDto.class)
   @GetMapping("/videos")
