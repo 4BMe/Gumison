@@ -2,7 +2,7 @@
   <div>
     <div class="px-4 pt-4 container-fluid row">
       <h4
-        class="mb-0 text-center col-1"
+        class="mb-0 text-center col-1 p-0"
         @click="goToBack()"
         v-if="user.nickname != currNickname"
       ><i class="ri-arrow-left-s-line"></i>
