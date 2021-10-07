@@ -188,7 +188,7 @@ export default {
 
 <style lang="scss" scoped>
 .rank-list-login {
-  height: calc(100vh - 540px);
+  height: calc(100vh - 230px);
 
   @media (max-width: 991.98px) {
     height: calc(100vh - 280px);
@@ -196,7 +196,7 @@ export default {
 }
 
 .rank-list-logout {
-  height: calc(100vh - 540px);
+  height: calc(100vh - 150px);
 
   @media (max-width: 991.98px) {
     height: calc(100vh - 200px);
