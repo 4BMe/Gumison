@@ -175,10 +175,10 @@ export default {
       case "platinum3":
       case "platinum2":
       case "platinum1":
-      case "daimond4":
-      case "daimond3":
-      case "daimond2":
-      case "daimond1":
+      case "diamond4":
+      case "diamond3":
+      case "diamond2":
+      case "diamond1":
       case "master4":
       case "master3":
       case "master2":
