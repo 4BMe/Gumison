@@ -90,7 +90,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import { getUserByNickname } from "@/api/users.js";
-//import { getUserByNickname, updateProfileByOauthId } from "@/api/users.js";
+import store from "@/store";
 export default {
   name: "profileItem",
   components: {},
@@ -121,6 +121,13 @@ export default {
           console.log(data);
           if (!data.data) {
             this.$alertify.error("이미 사용중인 아이디입니다.");
+            store.commit("users/SET_IS_VALID_NICKNAME", false);
+          } else {
+            store.commit("users/SET_IS_VALID_NICKNAME", true);
+            console.log(
+              "사용 가능한 아이디 this.isValidNickname: ",
+              this.isValidNickname
+            );
           }
         })
         .catch((error) => {

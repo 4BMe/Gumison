@@ -17,7 +17,7 @@ public interface UserService {
   /**
    * oauthUserId로 사용자 정보 UserOauthDto 반환.
    *
-   * @param oauthId
+   * @param oauthId 사용자 OAuthId
    * @return { 닉네임, 사용자 소개, 프로필 사진, oAuthId, oAuthType }
    */
   UserOauthDto getOauthUserByOauthId(String oauthId);

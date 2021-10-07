@@ -57,8 +57,8 @@ public class HistoryServiceImpl implements HistoryService {
   public HistoryRes history(String nickname) {
     User user = userRepository.findByNickname(nickname).orElseThrow(RuntimeException::new);
     List<Solution> solutionList = getSolutionList(user.getId(), 0);
-    CommonCode code =
-        commonCodeRepository.findById(user.getTierCode()).orElseThrow(RuntimeException::new);
+    CommonCode code = commonCodeRepository.findById(user.getTierCode())
+        .orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     List<SolutionListItem> solutionListItems = solutionListConvert(solutionList);
     Long nextExp = codeExpConvert(code.getCode() + 1L);
@@ -77,30 +77,33 @@ public class HistoryServiceImpl implements HistoryService {
 
   @Override
   public SolutionRes solution(String solutionId) {
-    Solution solution =
-        solutionRepository.findById(Long.parseLong(solutionId)).orElseThrow(RuntimeException::new);
+    Solution solution = solutionRepository.findById(Long.parseLong(solutionId))
+        .orElseThrow(RuntimeException::new);
     List<Solution> solutionList = solutionRepository.findByUploadId(solution.getUploadId());
     User user = solution.getUser();
-    CommonCode code =
-        commonCodeRepository.findById(user.getTierCode()).orElseThrow(RuntimeException::new);
+    CommonCode code = commonCodeRepository.findById(user.getTierCode())
+        .orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
+    List<Long> solutionIds = new ArrayList<>();
     List<String> tierNames = new ArrayList<>();
     List<String> levelNames = new ArrayList<>();
     List<Integer> counts = new ArrayList<>();
-    List<SolutionVideo> solutionVideoList =
-        solutionVideoRepository.findByUploadId(solution.getUploadId());
+    List<SolutionVideo> solutionVideoList = solutionVideoRepository
+        .findByUploadId(solution.getUploadId());
     solutionList.forEach(sol -> {
+      solutionIds.add(sol.getId());
       tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
       counts.add(sol.getCount());
     });
-    return SolutionRes.of(user, tier, solution, tierNames, levelNames, counts, solutionVideoList);
+    return SolutionRes.of(user, tier, solution, tierNames, solutionIds, levelNames, counts,
+        solutionVideoList);
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
-    HistoryUserDto userDto =
-        HistoryUserDto.builder().profile(user.getProfile()).nickname(user.getNickname())
-            .description(user.getDescription()).tier(tier).exp(exp).nextExp(nextExp).build();
+    HistoryUserDto userDto = HistoryUserDto.builder().profile(user.getProfile())
+        .nickname(user.getNickname()).description(user.getDescription()).tier(tier).exp(exp)
+        .nextExp(nextExp).build();
     return userDto;
   }
 
@@ -125,8 +128,8 @@ public class HistoryServiceImpl implements HistoryService {
 
   private List<Solution> getSolutionList(Long userId, int pageNumber) {
     List<Solution> solutionList = new LinkedList<Solution>();
-    PageRequest page =
-        PageRequest.of(pageNumber, LIST_PER_PAGE, Sort.by(Sort.Direction.DESC, "date"));
+    PageRequest page = PageRequest.of(pageNumber, LIST_PER_PAGE,
+        Sort.by(Sort.Direction.DESC, "date"));
     solutionList = solutionRepository.findByUserId(userId, page);
     return solutionList;
   }
@@ -159,8 +162,8 @@ public class HistoryServiceImpl implements HistoryService {
     List<SolutionVideo> solutionVideos = new ArrayList<>();
     for (int i = 0; i < videos.size(); i++) {
       String originalFileName = videos.get(i).getOriginalFilename();
-      String extensionName =
-          originalFileName.substring(originalFileName.lastIndexOf('.'), originalFileName.length());
+      String extensionName = originalFileName.substring(originalFileName.lastIndexOf('.'),
+          originalFileName.length());
       String fileName = userId + "-" + now.toString().replace(':', '.') + "-" + i + extensionName;
       log.info("[uploadVideo] - VideoService, fileName : {}", fileName);
       File dest = new File(windowsPath + fileName);
@@ -170,12 +173,13 @@ public class HistoryServiceImpl implements HistoryService {
         log.error("[uploadVideo] - VideoService : Failed to upload videos");
         e.printStackTrace();
       }
-      SolutionVideo solutionVideo =
-          SolutionVideo.builder().dateTime(now).uri(fileName).uploadId(userId + "-" + now).build();
+      SolutionVideo solutionVideo = SolutionVideo.builder().dateTime(now).uri(fileName)
+          .uploadId(userId + "-" + now).build();
       solutionVideos.add(solutionVideo);
     }
     solutionVideoRepository.saveAll(solutionVideos);
-    // List<SolutionVideo> solutionVideosRet = solutionVideoRepository.saveAll(solutionVideos);
+    // List<SolutionVideo> solutionVideosRet =
+    // solutionVideoRepository.saveAll(solutionVideos);
   }
 
   @Override
@@ -192,12 +196,12 @@ public class HistoryServiceImpl implements HistoryService {
     List<Integer> counts = solutionRequest.getCounts();
     for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
-      LevelTier levelTier =
-          levelTierRepository.findById(levelTierId).orElseThrow(RuntimeException::new);
+      LevelTier levelTier = levelTierRepository.findById(levelTierId)
+          .orElseThrow(RuntimeException::new);
 
-      Solution solution =
-          Solution.builder().user(user).levelTier(levelTier).climbing(climbing).count(counts.get(i))
-              .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
+      Solution solution = Solution.builder().user(user).levelTier(levelTier).climbing(climbing)
+          .count(counts.get(i)).date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now)
+          .build();
       solutions.add(solution);
 
       increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
@@ -220,29 +224,47 @@ public class HistoryServiceImpl implements HistoryService {
     LocalDateTime now = LocalDateTime.now();
     List<Long> levelTierIds = solutionRequest.getLevelTierIds();
     List<Integer> counts = solutionRequest.getCounts();
+    List<Long> solutionIds = solutionRequest.getSolutionIds();
     for (int i = 0; i < solutionRequest.getLevelTierIds().size(); i++) {
       Long levelTierId = levelTierIds.get(i);
-      LevelTier levelTier =
-          levelTierRepository.findById(levelTierId).orElseThrow(RuntimeException::new);
 
-      Solution oldSolution = solutionRepository.getById(solutionRequest.getSolutionId());
+      LevelTier levelTier = levelTierRepository.findById(levelTierId)
+          .orElseThrow(RuntimeException::new);
+      Long solutionId = solutionIds.get(i);
+      if (solutionId > 0) {
+        Solution oldSolution = solutionRepository.getById(solutionId);
+        Solution solution = Solution.builder().id(solutionId).user(user).levelTier(levelTier)
+            .climbing(climbing).count(counts.get(i)).date(solutionRequest.getDate())
+            .accumulateReport(oldSolution.getAccumulateReport()).uploadId(user.getId() + "-" + now)
+            .deleteYN(oldSolution.getDeleteYN()).build();
 
-      decreaseUserExpByLevelTierAndCount(user, oldSolution.getLevelTier(), oldSolution.getCount());
+        decreaseUserExpByLevelTierAndCount(user, oldSolution.getLevelTier(),
+            oldSolution.getCount());
 
-      Solution solution = Solution.builder().id(solutionRequest.getSolutionId()).user(user)
-          .levelTier(levelTier).climbing(climbing).count(counts.get(i))
-          .date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now).build();
-      solutions.add(solution);
+        solutions.add(solution);
 
-      increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
+        increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
+      } else {
+        Solution solution = Solution.builder().user(user).levelTier(levelTier)
+            .climbing(climbing).count(counts.get(i)).date(solutionRequest.getDate())
+            .uploadId(user.getId() + "-" + now).build();
+
+        solutions.add(solution);
+
+        increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
+      }
     }
 
-    if (solutionRequest.getVideos() != null) {
-      uploadVideos(user.getId(), now, solutionRequest.getVideos());
-    }
     return solutionRepository.saveAll(solutions);
   }
 
+  /**
+   * 사용자의 문제 풀이 기록으로 사용자 경험치를 올린다.
+   *
+   * @param user      사용자 정보
+   * @param levelTier 난이도 정보
+   * @param count     푼 문제 수
+   */
   private void increaseUserExpByLevelTierAndCount(User user, LevelTier levelTier, Integer count) {
     Long nextExp;
 
@@ -258,6 +280,11 @@ public class HistoryServiceImpl implements HistoryService {
     userRepository.save(user);
   }
 
+  /**
+   * 사용자 경험치가 요구 경험치를 초과했을 경우 티어를 올린다.
+   *
+   * @param user 사용자 정보
+   */
   private void increaseUserTierByUserExp(User user) {
     try {
       if (user.getTierCode().equals(MAX_TIER_CODE)) {
@@ -278,6 +305,14 @@ public class HistoryServiceImpl implements HistoryService {
     }
   }
 
+  /**
+   * 사용자의 문제 기록으로 사용자 경험치를 낮춘다.
+   *
+   * @param user      사용자 정보
+   * @param levelTier 난이도 정보
+   * @param count     푼 문제 수
+   */
+
   private void decreaseUserExpByLevelTierAndCount(User user, LevelTier levelTier, Integer count) {
     Long nextExp;
 
@@ -293,6 +328,12 @@ public class HistoryServiceImpl implements HistoryService {
     userRepository.save(user);
   }
 
+  /**
+   * 사용자 경험치가 이전 티어의 요구 경험치보다 낮을 경우 티어를 낮춘다.
+   *
+   * @param user 사용자 정보
+   */
+
   private void decreaseUserTierByUserExp(User user) {
     try {
       if (user.getTierCode().equals(MIN_TIER_CODE)) {
@@ -302,8 +343,9 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() < nextLevelRequireExp
-          && !user.getTierCode().equals(MIN_TIER_CODE); nextLevelRequireExp =
-          getTierExpByTierCode(user.getTierCode() - 1)) {
+          && !user.getTierCode().equals(MIN_TIER_CODE);
+          nextLevelRequireExp = getTierExpByTierCode(
+              user.getTierCode() - 1)) {
 
         log.info("[solutionCreate] decrease user tier");
         user.setTierCode(user.getTierCode() - 1);

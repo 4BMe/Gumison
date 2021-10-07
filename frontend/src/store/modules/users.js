@@ -8,6 +8,7 @@ export default {
       oauthId: "",
       token: "",
     },
+    isValidNickname: '',
   }),
   mutations: {
     SET_USER(state, payload) {
@@ -30,6 +31,9 @@ export default {
       state.user.oauthId = "";
       state.user.token = "";
     },
+    SET_IS_VALID_NICKNAME(state, payload) {
+      state.isValidNickname = payload;
+    }
   },
   actions: {},
   getters: {
@@ -46,5 +50,8 @@ export default {
       console.log("[getter getNickname]", state.user.nickname);
       return state.user.nickname;
     },
+    getIsValidNickname(state) {
+      return state.isValidNickname;
+    }
   },
 };
