@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HistoryController {
 
   private final HistoryService historyService;
-  private final String videoPath = "home/video/";
+  private final String videoPath = "/home/ubuntu/video/";
 
   @ApiOperation(value = "유저 히스토리", notes = "히스토리를 보여줍니다.", response = ApiResponseDto.class)
   @GetMapping("/{nickname}")
