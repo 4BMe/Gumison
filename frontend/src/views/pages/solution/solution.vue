@@ -119,10 +119,10 @@ export default {
   props: {
     data: {
       type: Object,
-      require: true
+      require: true,
     },
-    colors:{
-      require: true
+    colors: {
+      require: true,
     },
   },
   data() {
@@ -130,16 +130,15 @@ export default {
       videoIdx: 0,
     };
   },
-  created() {
-  },
   mounted() {
     console.log("data-solution.vue");
     console.log(this.data);
-    this.$nextTick(function (){
+    this.$nextTick(function () {
       for (let i = 0; i < this.colors.length; i++) {
-        document.getElementById('color-' + i).style="border: 1px solid; background-color: " + this.colors[i];
+        document.getElementById("color-" + i).style =
+          "border: 1px solid; background-color: " + this.colors[i];
       }
-    })
+    });
   },
   methods: {
     getVideoSrc() {

@@ -1,22 +1,28 @@
 <template>
-  <div class="bg-light" v-if="user">
+  <div
+    class="bg-light"
+    v-if="user"
+  >
     <div @click="searchHistory(user.nickname)">
       <a href="javascript:void(0);">
         <div class="media">
           <div class="avatar-xs overflow-hidden mr-3 align-self-center">
-            <span
-              class=" avatar-title text-primary rounded-circle bg-soft-light align-center"
-              >{{ user.rank }}
+            <span class=" avatar-title text-primary rounded-circle bg-soft-light align-center">{{ user.rank }}
             </span>
           </div>
           <div class="chat-user-img online align-self-center mr-3">
             <div v-if="user.profile">
-              <img :src="user.profile" class="rounded-circle avatar-xs" alt />
+              <img
+                :src="user.profile"
+                class="rounded-circle avatar-xs"
+                alt
+              />
             </div>
-            <div class="avatar-xs" v-if="!user.profile">
-              <span
-                class="avatar-title rounded-circle bg-soft-primary text-primary"
-                >{{ $t(user.nickname).charAt(0) }}
+            <div
+              class="avatar-xs"
+              v-if="!user.profile"
+            >
+              <span class="avatar-title rounded-circle bg-soft-primary text-primary">{{ $t(user.nickname).charAt(0) }}
               </span>
             </div>
           </div>
@@ -38,7 +44,7 @@
                       {{ user.tier }}
                     </p>
                   </td>
-                  <td>
+                  <td class="d-flex justify-content-end mr-5">
                     <p class="chat-user-message text-truncate mb-0">
                       <b>{{ user.solCnt }}</b> 문제 성공
                     </p>

@@ -53,7 +53,7 @@ export default [
                 meta: {
                     beforeResolve(routeTo, routeFrom, next) {
                         /**
-                         * token이 이미 있으면 myhistory 로 가고,
+                         * token이 이미 있으면 level-record 로 가고,
                          * 없으면 로그인 화면으로 가기
                          */
                         const token = store.getters['users/getToken'];
@@ -77,7 +77,7 @@ export default [
                 meta: {
                     beforeResolve(routeTo, routeFrom, next) {
                         /**
-                         * token이 이미 있으면 myhistory 로 가고,
+                         * token이 이미 있으면 level-contribution 로 가고,
                          * 없으면 로그인 화면으로 가기
                          */
                         const token = store.getters['users/getToken'];
@@ -103,7 +103,7 @@ export default [
         meta: {
             beforeResolve(routeTo, routeFrom, next) {
                 /**
-                 * token이 이미 있으면 myhistory 로 가고,
+                 * token이 이미 있으면 level-record-update 로 가고,
                  * 없으면 로그인 화면으로 가기
                  */
                 const token = store.getters['users/getToken'];

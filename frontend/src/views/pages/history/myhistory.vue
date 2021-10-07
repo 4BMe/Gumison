@@ -1,7 +1,13 @@
 <template>
   <div>
-    <div class="px-4 pt-4">
-      <h4 class="mb-3">History</h4>
+    <div class="px-4 pt-4 container-fluid row">
+      <h4
+        class="mb-0 text-center col-1"
+        @click="goToBack()"
+        v-if="user.nickname != currNickname"
+      ><i class="ri-arrow-left-s-line"></i>
+      </h4>
+      <h4 class="mb-3 col">프로필</h4>
     </div>
     <div v-if="isData">
       <UserInfo :user=user />
@@ -64,13 +70,13 @@
               :index="index"
             />
           </li>
-          <div v-if="isData">
-          <HistoryPage
-          :solutionPage="solutionPage"
-          :solutionLastPage="solutionLastPage"
-          :isData="isData"
-          @movePage="movePage"
-          />
+          <div v-if="isData && solutionLastPage>1">
+            <HistoryPage
+              :solutionPage="solutionPage"
+              :solutionLastPage="solutionLastPage"
+              :isData="isData"
+              @movePage="movePage"
+            />
           </div>
         </ul>
       </div>
@@ -85,13 +91,13 @@ import Colors from "@/constant/colors.js";
 import UserInfo from "./components/userInfo";
 import HistoryList from "./components/historyList";
 import HistoryPage from "./components/historyPage";
-
+import store from "@/store";
 export default {
   name: "myhistory",
   components: {
     UserInfo,
     HistoryList,
-    HistoryPage
+    HistoryPage,
   },
   props: {
     nickname: String,
@@ -100,7 +106,7 @@ export default {
     return {
       isData: false,
       solutionPage: 1,
-      solutionLastPage: 2,
+      solutionLastPage: 1,
       user: {
         profile: null,
         nickname: null,
@@ -114,7 +120,11 @@ export default {
       pageNumber: 0,
     };
   },
-  computed: {},
+  computed: {
+    currNickname() {
+      return store.getters["users/getUser"].nickname;
+    },
+  },
   async mounted() {
     await axios
       .get(`${BASE_URL}/history/${this.nickname}`)
@@ -132,6 +142,9 @@ export default {
       });
   },
   methods: {
+    goToBack() {
+      this.$router.go(-1);
+    },
     searchHistory(solution) {
       axios
         .get(`${BASE_URL}/history/detail/` + solution.id)
@@ -154,17 +167,17 @@ export default {
     },
     async movePage(page) {
       await axios
-      .get(`${BASE_URL}/history/${this.nickname}/`+(page-1))
-      .then(({ data }) => {
-        this.solutionList = data.data.solutionList;
-        for (var i = 0; i < this.solutionList.length; i++) {
-          this.colors.push(Colors.colors[this.solutionList[i].level]);
-        }
-        this.isData = true;
-      })
-      .catch((err) => {
-        console.log("에러: " + err);
-      });
+        .get(`${BASE_URL}/history/${this.nickname}/` + (page - 1))
+        .then(({ data }) => {
+          this.solutionList = data.data.solutionList;
+          for (var i = 0; i < this.solutionList.length; i++) {
+            this.colors.push(Colors.colors[this.solutionList[i].level]);
+          }
+          this.isData = true;
+        })
+        .catch((err) => {
+          console.log("에러: " + err);
+        });
       this.rankPage = page;
     },
   },

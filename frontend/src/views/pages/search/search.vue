@@ -4,38 +4,41 @@
       <h4 class="mb-0">거미손</h4>
     </div>
 
-    <div class="text-center h-100">
-      <img src="@/assets/images/logo.svg"
-      height="45%"/>
+    <div class="text-center h-75">
+      <img
+        src="@/assets/images/logo.svg"
+        height="60%"
+      />
     </div>
 
-    <SearchBar class="align-middle"
-      currType = 'climbinglist'
-      currName = '클라이밍'
-      currKeyword = ''
+    <SearchBar
+      class="align-middle"
+      currType='climbinglist'
+      currName='클라이밍'
+      currKeyword=''
     />
 
   </div>
 </template>
 
 <script>
-import SearchBar from "./searchBar"
+import SearchBar from "./searchBar";
 
-export default { 
+export default {
   components: {
     SearchBar,
-  }
+  },
 };
 </script>
 
 <style scoped>
-.height-full{
-  position:relative;
+.height-full {
+  position: relative;
   height: 100vh;
 }
 
-.align-middle{
-  position:absolute;
+.align-middle {
+  position: absolute;
   width: 100%;
   top: 40%;
 }

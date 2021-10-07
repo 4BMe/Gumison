@@ -51,12 +51,22 @@
         </div>
       </div>
     </b-card>
-    <input
-      type="button"
-      value="완료"
-      class="btn btn-outline-primary float-right mt-3 mr-4 ml-3"
-      @click="submitClick()"
-    />
+    <div>
+
+      <input
+        type="button"
+        value="완료"
+        class="btn btn-primary float-right mt-3 mr-4 ml-1"
+        @click="submitClick()"
+      />
+      <input
+        type="button"
+        value="취소"
+        class="btn btn-outline-secondary float-right mt-3 mr-1 ml-3"
+        @click="goToBack()"
+      />
+    </div>
+
   </div>
 </template>
 
@@ -92,7 +102,7 @@ export default {
     handleFileUpload() {
       this.solutionVideos = this.$refs.solutionVideos.files;
     },
-    goBack() {
+    goToBack() {
       this.$router.go(-1);
     },
     async submitClick() {
