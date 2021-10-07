@@ -18,7 +18,6 @@ async function getAxiosRequest(path) {
       console.log("fail message : " + response.data.message);
       return null;
     }
-    console.log("[userRankAxios] success");
     return response.data.data;
   } catch (e) {
     console.log(e);

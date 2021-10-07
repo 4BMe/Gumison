@@ -27,7 +27,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import store from "@/store";
-import { updateUserByOauthId, updateProfileByOauthId } from "@/api/users.js";
+import { updateUserByOauthId } from "@/api/users.js";
 import ProfileItem from "./profileItem.vue";
 export default {
   name: "profileCreate",
@@ -66,36 +66,28 @@ export default {
     },
   },
   methods: {
-    onImageError(err) {
-      console.log(err, "do something with error");
-    },
+    // onImageError(err) {
+    //   console.log(err, "do something with error");
+    // },
 
-    createImage() {
-      // create a form
-      const form = new FormData();
-      form.append("name", form.values().name);
-      form.append("file", this.profileDetail.profile);
-      console.log("form: ", form.keys());
-      for (let key of form.keys()) {
-        console.log("key: ", key);
-        console.log("value: ", form.get(key));
-      }
-      // for (let value in form.values()) {
-      //   console.log("value: ", value);
-      // }
+    // createImage() {
+    //   // create a form
+    //   const form = new FormData();
+    //   form.append("name", form.values().name);
+    //   form.append("file", this.profileDetail.profile);
 
-      updateProfileByOauthId(this.user.oauthId, form)
-        .then(({ data }) => {
-          console.log("create image data:", data);
-          this.saveUser();
-        })
-        .catch(this.onImageError);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.image = e.target.result;
-        console.log("create image: ", this.image);
-      };
-    },
+    //   updateProfileByOauthId(this.user.oauthId, form)
+    //     .then(({ data }) => {
+    //       console.log("create image data:", data);
+    //       this.saveUser();
+    //     })
+    //     .catch(this.onImageError);
+    //   const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     this.image = e.target.result;
+    //     console.log("create image: ", this.image);
+    //   };
+    // },
 
     saveUser() {
       if (!this.isValidNickname) {

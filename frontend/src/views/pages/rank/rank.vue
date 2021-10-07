@@ -52,12 +52,6 @@ export default {
 
   methods: {
     searchKeyword(searchParams) {
-      console.log(
-        "[rank] search keyword " +
-          searchParams.keyword +
-          ", " +
-          searchParams.page
-      );
       this.rankKeyword = searchParams.keyword;
       this.rankPage = searchParams.page;
     },

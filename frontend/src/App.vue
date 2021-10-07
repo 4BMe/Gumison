@@ -225,7 +225,6 @@ export default {
   mounted() {
     var curPage = document.location.href;
     var routeUrl = curPage.split("/");
-    console.log(routeUrl[3]);
     switch (routeUrl[3]) {
       case "":
       case "level-record":
@@ -240,7 +239,6 @@ export default {
   methods: {
     goToMypage() {
       if (this.user.nickname) {
-        console.log("[route myhistory click] nickname : ", this.user.nickname);
         return { name: "myhistory", params: { nickname: this.user.nickname } };
       } else {
         return "/login";

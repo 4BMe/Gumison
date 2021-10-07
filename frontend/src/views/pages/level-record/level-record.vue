@@ -30,9 +30,15 @@
         </div>
       </b-card-body>
     </b-card>
-    <b-card class="border custom-accordion" v-if="!uploadId">
+    <b-card
+      class="border custom-accordion"
+      v-if="!uploadId"
+    >
       <div class="d-flex justify-content-center">
-        <label class="btn btn-primary" v-if="!solutionVideos">
+        <label
+          class="btn btn-primary"
+          v-if="!solutionVideos"
+        >
           영상 등록
           <input
             type="file"
@@ -126,8 +132,8 @@ export default {
       }
 
       let flag = false;
-      for(let i of this.solutionIds) {
-        if(i) {
+      for (let i of this.solutionIds) {
+        if (i) {
           flag = true;
           break;
         }
@@ -135,15 +141,14 @@ export default {
 
       if (flag) {
         await update(formData)
-          .then(({ data }) => {
-            console.log(data);
+          .then(() => {
             this.$alertify.success("기록되었습니다.");
             this.$router.push({
-              name: 'myhistory',
+              name: "myhistory",
               props: {
                 nickname: this.nickname,
-              }
-            })
+              },
+            });
           })
           .catch((error) => {
             console.log(error);
@@ -151,8 +156,7 @@ export default {
           });
       } else {
         await submit(formData)
-          .then(({ data }) => {
-            console.log(data);
+          .then(() => {
             this.$alertify.success("기록되었습니다.");
             this.$router.go(-1);
           })
@@ -164,27 +168,19 @@ export default {
     },
   },
   mounted() {
-    // console.log("level-record.vue");
-    // console.log("this.levelTiers", this.levelTiers)
     for (var i = 0; i < this.levelTiers.length; i++) {
       this.colors.push(Colors.colors[this.levelTiers[i].level]);
       if (this.levelTiers[i].solutionCount)
         this.recordSolutionCounts.push(this.levelTiers[i].solutionCount);
-      else
-        this.recordSolutionCounts.push(0);
+      else this.recordSolutionCounts.push(0);
 
       if (this.levelTiers[i].solutionId)
         this.solutionIds.push(this.levelTiers[i].solutionId);
-      else
-        this.solutionIds.push(0);
+      else this.solutionIds.push(0);
 
       if (this.levelTiers[i].solutionDate)
         this.solutionDate = this.levelTiers[i].solutionDate;
     }
-    // console.log("this.colors", this.colors);
-    // console.log("this.recordSolutionCounts", this.recordSolutionCounts);
-    // console.log("this.solutionIds", this.solutionIds);
-    // console.log("this.solutionDate", this.solutionDate);
   },
 };
 </script>

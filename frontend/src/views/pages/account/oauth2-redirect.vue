@@ -31,7 +31,7 @@ export default {
               oauthId: data.data.oauthId,
               token: token,
             };
-            console.log("[setUser] user: ", user);
+
             store.commit("users/SET_USER", user);
             if (!user.nickname || !user.description) {
               this.$router.push({ name: "profile-create" });
