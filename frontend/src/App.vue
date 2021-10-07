@@ -125,7 +125,7 @@
                   v-on:click.native="activetab = 4"
                   v-bind:class="[activetab === 4 ? 'active' : '']"
                 >
-                  Profile
+                  프로필
                   <i class="ri-profile-line float-right text-muted"></i>
                 </router-link>
               </b-dropdown-item>
@@ -135,7 +135,7 @@
                 v-if="user.nickname"
               >
                 <b-dropdown-divider></b-dropdown-divider>
-                Log out
+                로그아웃
                 <i class="ri-logout-circle-r-line float-right text-muted"></i>
               </b-dropdown-item>
               <b-dropdown-item
@@ -143,7 +143,7 @@
                 v-if="!user.nickname"
               >
                 <b-dropdown-divider></b-dropdown-divider>
-                Log in
+                로그인
                 <i class="ri-logout-circle-r-line float-right text-muted"></i>
               </b-dropdown-item>
             </b-dropdown>
@@ -170,7 +170,7 @@
                   v-on:click.native="activetab = 4"
                   v-bind:class="[activetab === 4 ? 'active' : '']"
                 >
-                  Profile
+                  프로필
                   <i class="ri-profile-line float-right text-muted"></i>
                 </router-link>
               </b-dropdown-item>
@@ -180,7 +180,7 @@
                 v-if="user.nickname"
               >
                 <b-dropdown-divider></b-dropdown-divider>
-                Log out
+                로그아웃
                 <i class="ri-logout-circle-r-line float-right text-muted"></i>
               </b-dropdown-item>
               <b-dropdown-item
@@ -188,7 +188,7 @@
                 v-if="!user.nickname"
               >
                 <b-dropdown-divider></b-dropdown-divider>
-                Log in
+                로그인
                 <i class="ri-logout-circle-r-line float-right text-muted"></i>
               </b-dropdown-item>
             </b-dropdown>

@@ -8,6 +8,7 @@
         :user='user'
         :nickname='nickname'
         :description='description'
+        :isValidNickname='isValidNickname'
       ></ProfileItem>
       <div class="text-right pt-5 mt-3">
         <b-button
@@ -55,6 +56,9 @@ export default {
         ? this.user.description
         : "소개글을 입력하세요.";
     },
+    isValidNickname() {
+      return store.getters["users/getIsValidNickname"];
+    },
   },
   validations: {
     profileDetail: {
@@ -94,37 +98,43 @@ export default {
     },
 
     saveUser() {
-      let userData = {
-        profile: this.profileDetail.profile
-          ? this.profileDetail.profile.name
-          : this.profile,
-        nickname: this.profileDetail.nickname
-          ? this.profileDetail.nickname
-          : this.nickname,
-        description: this.profileDetail.description
-          ? this.profileDetail.description
-          : this.description,
-        oauthId: this.user.oauthId,
-      };
-      console.log("[update user, saveUser] userData: ", userData);
-      updateUserByOauthId(this.user.oauthId, userData)
-        .then(({ data }) => {
-          console.log(data);
-          let updateUserData = {
-            nickname: data.data.nickname,
-            description: data.data.description,
-            profile: data.data.profile,
-            oauthId: data.data.oauthId,
-          };
-          store.commit("users/UPDATE_USER", updateUserData);
-          this.$router.push({
-            name: "myhistory",
-            params: { nickname: updateUserData.nickname },
+      if (!this.isValidNickname) {
+        this.$alertify.error("이미 사용중인 아이디입니다.");
+        return;
+      } else {
+        let userData = {
+          profile: this.profileDetail.profile
+            ? this.profileDetail.profile.name
+            : this.profile,
+          nickname: this.profileDetail.nickname
+            ? this.profileDetail.nickname
+            : this.nickname,
+          description: this.profileDetail.description
+            ? this.profileDetail.description
+            : this.description,
+          oauthId: this.user.oauthId,
+        };
+        console.log("[update user, saveUser] userData: ", userData);
+        updateUserByOauthId(this.user.oauthId, userData)
+          .then(({ data }) => {
+            console.log(data);
+            let updateUserData = {
+              nickname: data.data.nickname,
+              description: data.data.description,
+              profile: data.data.profile,
+              oauthId: data.data.oauthId,
+            };
+            store.commit("users/UPDATE_USER", updateUserData);
+            store.commit("users/SET_IS_VALID_NICKNAME", false);
+            this.$router.push({
+              name: "myhistory",
+              params: { nickname: updateUserData.nickname },
+            });
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      }
     },
   },
 };

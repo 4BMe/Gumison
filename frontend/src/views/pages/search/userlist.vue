@@ -1,11 +1,15 @@
 <template>
   <div class="px-2">
-    <SearchBar 
-      currName = '사용자'
-      currType = 'userlist'
-      :currKeyword = 'currKeyword'
+    <SearchBar
+      currName='사용자'
+      currType='userlist'
+      :currKeyword='currKeyword'
     />
-    <simplebar class="chat-group-list" id="chat-list" ref="current">
+    <simplebar
+      class="chat-group-list"
+      id="chat-list"
+      ref="current"
+    >
       <ul class="list-unstyled chat-list chat-user-list">
         <li
           v-for="(item, index) in userList"
@@ -22,10 +26,11 @@
                     alt
                   />
                 </div>
-                <div class="avatar-xs" v-if="!item.profile">
-                  <span
-                    class="avatar-title rounded-circle bg-soft-primary text-primary"
-                    >{{ item.nickname.charAt(0) }}
+                <div
+                  class="avatar-xs"
+                  v-if="!item.profile"
+                >
+                  <span class="avatar-title rounded-circle bg-soft-primary text-primary">{{ item.nickname.charAt(0) }}
                   </span>
                 </div>
               </div>
@@ -44,12 +49,12 @@
                 <table style="width:100%">
                   <tbody>
                     <tr>
-                      <td style="width:100px">
+                      <td style="width:0px">
                         <p class="chat-user-message text-truncate mb-0">
                           {{ item.tier }}
                         </p>
                       </td>
-                      <td>
+                      <td class="d-flex justify-content-end mr-5">
                         <p class="chat-user-message text-truncate mb-0">
                           <b>{{ item.solCnt }}</b> 문제 성공
                         </p>
@@ -62,7 +67,10 @@
           </a>
         </li>
       </ul>
-      <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+      <infinite-loading
+        @infinite="infiniteHandler"
+        spinner="waveDots"
+      >
         <div slot="no-more"></div>
         <div slot="no-results">"{{ keyword }}"을/를 찾을 수 없습니다.</div>
       </infinite-loading>
@@ -73,17 +81,17 @@
 
 <script>
 import axios from "axios";
-import { BASE_URL } from "@/constant/index"
+import { BASE_URL } from "@/constant/index";
 import simplebar from "simplebar-vue";
 import SearchBar from "./searchBar";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  name: 'userlist',
+  name: "userlist",
   components: {
     simplebar,
     SearchBar,
-    InfiniteLoading
+    InfiniteLoading,
   },
 
   props: {
@@ -96,46 +104,49 @@ export default {
     return {
       userList: [],
       pageNumber: 0,
-      currKeyword: this.keyword
+      currKeyword: this.keyword,
     };
   },
   created() {
-    if(this.currKeyword == ' '){
-      this.currKeyword = '';
+    if (this.currKeyword == " ") {
+      this.currKeyword = "";
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     searchHistory(user) {
-      this.$router.push({name: 'myhistory', params:{nickname: user.nickname}})
+      this.$router.push({
+        name: "myhistory",
+        params: { nickname: user.nickname },
+      });
     },
-    
+
     infiniteHandler($state) {
-    //  무한 스크롤
+      //  무한 스크롤
       axios
         .get(`${BASE_URL}/users/search/${this.keyword}/${this.pageNumber}`)
         .then(({ data }) => {
           // 로딩스피너를 위해 0.1초의 지연시간을 설정했다.
-          setTimeout(() => {  
-            if(data.data.users.length) {
-              this.userList = this.userList.concat(data.data.users)
+          setTimeout(() => {
+            if (data.data.users.length) {
+              this.userList = this.userList.concat(data.data.users);
               this.pageNumber++;
-              $state.loaded()
-                // 끝 지정(No more data) - 데이터가 1개 미만이면
-              if(data.data.users.length < 10) {  //종료조건
-                $state.complete()
+              $state.loaded();
+              // 끝 지정(No more data) - 데이터가 1개 미만이면
+              if (data.data.users.length < 10) {
+                //종료조건
+                $state.complete();
               }
             } else {
-                // 끝 지정(No more data)
-              $state.complete()
+              // 끝 지정(No more data)
+              $state.complete();
             }
-          }, 100)
+          }, 100);
         })
         .catch((err) => {
           console.log("에러: " + err);
         });
-    }
+    },
   },
 };
 </script>

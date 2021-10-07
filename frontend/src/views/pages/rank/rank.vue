@@ -1,6 +1,12 @@
 <template>
   <div class="height-full">
-    <RankSearchBar :rankKeyword="rankKeyword" @searchKeyword="searchKeyword" />
+    <div class="px-4 pt-4">
+      <h4 class="mb-0">랭킹</h4>
+    </div>
+    <RankSearchBar
+      :rankKeyword="rankKeyword"
+      @searchKeyword="searchKeyword"
+    />
     <infinite-loading
       v-if="!dataLoaded"
       class="align-middle"

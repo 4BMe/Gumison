@@ -11,6 +11,7 @@
       :user='user'
       :nickname='nickname'
       :description='description'
+      :isValidNickname='isValidNickname'
     ></ProfileItem>
     <div class="text-right">
       <b-button
@@ -68,6 +69,9 @@ export default {
         ? this.user.description
         : "소개글을 입력하세요.";
     },
+    isValidNickname() {
+      return store.getters["users/getIsValidNickname"];
+    },
   },
 
   validations: {
@@ -80,56 +84,60 @@ export default {
       this.showModal = false;
     },
     saveUser() {
-      console.log("saveUser");
-      let userData = {
-        profile: this.profileDetail.profile
-          ? this.profileDetail.profile.name
-          : this.profile,
-        nickname: this.profileDetail.nickname
-          ? this.profileDetail.nickname
-          : this.nickname,
-        description: this.profileDetail.description
-          ? this.profileDetail.description
-          : this.description,
-        oauthId: this.user.oauthId,
-      };
+      if (!this.isValidNickname) {
+        this.$alertify.error("이미 사용중인 아이디입니다.");
+        return;
+      } else {
+        let userData = {
+          profile: this.profileDetail.profile
+            ? this.profileDetail.profile.name
+            : this.profile,
+          nickname: this.profileDetail.nickname
+            ? this.profileDetail.nickname
+            : this.nickname,
+          description: this.profileDetail.description
+            ? this.profileDetail.description
+            : this.description,
+          oauthId: this.user.oauthId,
+        };
 
-      /**
-       * 닉네임을 변환하면 this.$router.push
-       * 아니면 this.$router.go
-       */
-      let changeNickname = false;
-      if (
-        this.profileDetail.nickname &&
-        this.nickname != this.profileDetail.nickname
-      ) {
-        changeNickname = true;
+        /**
+         * 닉네임을 변환하면 this.$router.push
+         * 아니면 this.$router.go
+         */
+        let changeNickname = false;
+        if (
+          this.profileDetail.nickname &&
+          this.nickname != this.profileDetail.nickname
+        ) {
+          changeNickname = true;
+        }
+
+        updateUserByOauthId(this.user.oauthId, userData)
+          .then(({ data }) => {
+            console.log(data);
+            let updateUserData = {
+              nickname: data.data.nickname,
+              description: data.data.description,
+              profile: data.data.profile,
+              oauthId: data.data.oauthId,
+            };
+            store.commit("users/UPDATE_USER", updateUserData);
+            store.commit("users/SET_IS_VALID_NICKNAME", false);
+            this.showModal = false;
+            if (changeNickname) {
+              this.$router.push({
+                name: "myhistory",
+                params: { nickname: updateUserData.nickname },
+              });
+            } else {
+              this.$router.go();
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-
-      updateUserByOauthId(this.user.oauthId, userData)
-        .then(({ data }) => {
-          console.log(data);
-          let updateUserData = {
-            nickname: data.data.nickname,
-            description: data.data.description,
-            profile: data.data.profile,
-            oauthId: data.data.oauthId,
-          };
-          store.commit("users/UPDATE_USER", updateUserData);
-          this.showModal = false;
-          console.log("changeNickname: ", changeNickname);
-          if (changeNickname) {
-            this.$router.push({
-              name: "myhistory",
-              params: { nickname: updateUserData.nickname },
-            });
-          } else {
-            this.$router.go();
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   },
 };
