@@ -83,7 +83,7 @@
           <div class="container-fluid row m-0 p-0">
             <div class="col-5 m-0 p-0" />
             <button class="btn btn-outline-success ml-1"
-                    @click="searchHistory('기여')">
+                    @click="clickContribution()">
               기여
             </button>
             <button class="btn btn-outline-danger ml-1"
@@ -102,8 +102,6 @@
 </template>
 
 <script>
-//http://localhost:8888/api/history/videos?fileName=535-2021-10-05T21.30.55.264-0.mp4
-// import axios from "axios";
 import axios from "axios";
 import simplebar from "simplebar-vue";
 import { BASE_URL } from "@/constant/index";
@@ -131,8 +129,7 @@ export default {
     };
   },
   mounted() {
-    console.log("data-solution.vue");
-    console.log(this.data);
+    console.log("data-solution.vue", this.data);
     this.$nextTick(function () {
       for (let i = 0; i < this.colors.length; i++) {
         document.getElementById("color-" + i).style =
@@ -143,9 +140,6 @@ export default {
   methods: {
     getVideoSrc() {
       return `${BASE_URL}/history/videos?fileName=${this.data.solution.solutionVideoList[this.videoIdx].uri}`;
-    },
-    searchHistory(param) {
-      console.log(param);
     },
     clickUpdate(){
       let levelTiers =[];
@@ -169,18 +163,46 @@ export default {
       })
     },
     async clickDelete() {
+      console.log("this.uploadId : "+this.data.uploadId);
       await axios
-        .delete(`${BASE_URL}/history/${this.nickname}`)
+        .delete(`${BASE_URL}/history/${this.data.uploadId}`)
         .then(({data}) => {
           console.log(data);
+          this.$router.push({
+              name: 'myhistory',
+              props: {
+                nickname: this.data.nickname,
+              }
+          });
         })
+        .catch(error => {
+          console.log(error);
+        })
+    },
+    clickContribution(){
+      let levelTiers = [];
+      for(let i = 0; i < this.data.solution.levelTierIds.length; i++) {
+        levelTiers.push({
+          id: this.data.solution.levelTierIds[i],
+          level: this.data.solution.level[i],
+          tier: this.data.solution.tier[i]
+        })
+      }
+      this.$router.push({
+        name: 'level-contribution',
+        params: {
+          nickname: this.data.nickname,
+          climbingId: this.data.solution.climbingId,
+          levelTiers: levelTiers,
+        }
+      })
     },
     previousVideo() {
       if(this.videoIdx > 0)
         this.videoIdx--;
     },
     nextVideo(){
-      if(this.videoIdx < this.data.solution.solutionVideoList.length) {
+      if(this.videoIdx < this.data.solution.solutionVideoList.length - 1) {
         this.videoIdx++;
       }
     }

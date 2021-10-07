@@ -18,4 +18,6 @@ public interface HistoryService {
   public List<Solution> createSolution(SolutionRequest solutionRequest);
 
   public List<Solution> updateSolution(SolutionRequest solutionRequest);
+  
+  public Long deleteSolution(String uploadId);
 }

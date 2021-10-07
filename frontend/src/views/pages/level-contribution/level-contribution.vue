@@ -38,12 +38,8 @@ export default {
         LevelContributionLine,
     },
     props: {
-        userId: {
-            default: 0
-        },
-        climbingId: {
-            default: 0
-        },
+        nickname: {},
+        climbingId: {},
         levelTiers: {},
     },
     data(){
@@ -59,18 +55,21 @@ export default {
         },
         async submitClick() {
             console.log(this.tiers);
-            var contributionData = [];
-            for (var i = 0; i < this.levelTiers.length; i++) {
+            let contributionData = [];
+            for (let i = 0; i < this.levelTiers.length; i++) {
                 contributionData.push({
                     levelTierId: this.levelTiers[i].id,
                     newTier: this.tiers[i],
                     oldTier: this.levelTiers[i].tier,
-                    userId: this.userId,
-                    date: this.contributionDate,
                 })
             }
-            console.log(contributionData);
-            await submit(contributionData)
+            let contributionRequest = {
+                contributionData: contributionData,
+                nickname: this.nickname,
+                date: this.contributionDate,
+            }
+            console.log(contributionRequest);
+            await submit(contributionRequest)
             .then(({ data }) => {
                 console.log(data);
             })
