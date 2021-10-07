@@ -208,13 +208,8 @@ public class HistoryServiceImpl implements HistoryService {
 
       increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
     }
-    log.info("비디오 없로드 시작!");
     if (solutionRequest.getVideos() != null) {
-      log.info("비디오 있음!");
       uploadVideos(user.getId(), now, solutionRequest.getVideos());
-    } else {
-      log.info("비디오 없음!");
-
     }
     return solutionRepository.saveAll(solutions);
   }
