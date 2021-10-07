@@ -6,6 +6,7 @@ import com.ssafy.gumison.common.exception.ResourceNotFoundException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserSearchRes getUserList(String nickname, int pageNumber) {
-    PageRequest page = PageRequest.of(pageNumber, 10);
+    PageRequest page = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.ASC, "nickname"));
     List<User> userList = userRepository.findByNicknameContaining(nickname, page);
 
     UserSearchRes userSearchRes = new UserSearchRes();
