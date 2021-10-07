@@ -60,10 +60,10 @@
     </div>
     <div id="solution">
       <div
-        class="mt-2 mb-2 p-2 row"
+        class="container-fluid mt-2 mb-2 p-2 row"
         id="level"
       >
-        <div class="container row">
+        <div class="container-fluid row">
           <div
             v-for="(tier, index) in data.solution.tier"
             :key=index
@@ -92,7 +92,7 @@
         <div id="video">
           <div
             v-if="data.solution.solutionVideoList && data.solution.solutionVideoList.length!=0"
-            class="container row"
+            class="container-fluid row"
           >
             <!-- <div v-for="(video, index) in data.solution.solutionVideoList" :key="index"> -->
             <button
