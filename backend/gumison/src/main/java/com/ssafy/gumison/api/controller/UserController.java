@@ -127,11 +127,12 @@ public class UserController {
       @ApiResponse(code = 500, message = "서버 오류")})
   @PreAuthorize("hasRole('USER')")
   @PutMapping("/profile/{oauthId}")
-  public ApiResponseDto<String> updateProfileByoauthId(@PathVariable("oauthId") String oauthId, @RequestParam MultipartFile file) {
-    String updateProfile="";
-    log.info("[updateProfileByoauthId] file: {}" , file);
+  public ApiResponseDto<String> updateProfileByoauthId(@PathVariable("oauthId") String oauthId,
+      @RequestParam MultipartFile file) {
+    String updateProfile = "";
+    log.info("[updateProfileByoauthId] file: {}", file);
     try {
-      updateProfile=userService.updateProfileByOauthId(oauthId, file);
+      updateProfile = userService.updateProfileByOauthId(oauthId, file);
       return ApiResponseDto.success(updateProfile);
     } catch (Exception e) {
       log.error("[updateProfileByoauthId] ", e);

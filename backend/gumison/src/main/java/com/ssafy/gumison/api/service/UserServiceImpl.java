@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
-   * 유저 닉네임으로 UserSearchDto 반환
+   * 유저 닉네임으로 UserSearchDto 반환.
    *
    * @param nickname 사용자 닉네임
    * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
-   * 키워드로 검색한 유저의 전체 수를 반환
+   * 키워드로 검색한 유저의 전체 수를 반환.
    *
    * @param keyword 검색 키워드
    * @return 해당 키워드를 포함한 유저의 수 카운트
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
 
   /**
-   * 유저 정보로 UserSearchDto 반환
+   * 유저 정보로 UserSearchDto 반환.
    *
    * @param user 유저 정보
    * @return 유저 정보 중 닉네임, 프로필, 티어코드, 문제 해결 숫자 반환

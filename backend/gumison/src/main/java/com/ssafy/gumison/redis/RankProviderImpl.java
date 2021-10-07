@@ -18,7 +18,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 /**
- * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스의 구현체
+ * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스의 구현체.
  *
  * @author cherrytomato1
  * @version 1.6   score 로직 수정
@@ -50,7 +50,7 @@ public class RankProviderImpl implements RankProvider {
   }
 
   /**
-   * 모든 유저의 닉네임과 경험치를 ZSet에 입력
+   * 모든 유저의 닉네임과 경험치를 ZSet에 입력.
    *
    * @return 입력된 유저의 수
    */
@@ -83,7 +83,7 @@ public class RankProviderImpl implements RankProvider {
   }
 
   /**
-   * 닉네임으로 해당 유저의 순위 가져오기
+   * 닉네임으로 해당 유저의 순위 가져오기.
    *
    * @param nickname 순위를 가져올 유저의 닉네임
    * @return 유저 닉네임, 순위가 기록된 DTO
@@ -108,11 +108,12 @@ public class RankProviderImpl implements RankProvider {
     }
     return UserRankDto
         .of(nickname, userRankOptional
-            .orElseThrow(() -> new ResourceNotFoundException("User - ZSet", nickname, "nickname")) + 1);
+            .orElseThrow(() -> new ResourceNotFoundException("User - ZSet", nickname, "nickname"))
+            + 1);
   }
 
   /**
-   * 시작 오프셋 + limit 의 유저 랭크 정보 및 닉네임 반환
+   * 시작 오프셋 + limit 의 유저 랭크 정보 및 닉네임 반환.
    *
    * @param startOffset 시작하는 사용자 위치 인덱스
    * @param limit       가져올 사용자 수
@@ -140,7 +141,7 @@ public class RankProviderImpl implements RankProvider {
   }
 
   /**
-   * ZSet에 저장된 유저 수를 반환
+   * ZSet에 저장된 유저 수를 반환.
    *
    * @return ZSet에 저장된 유저 수
    */
@@ -151,7 +152,7 @@ public class RankProviderImpl implements RankProvider {
   }
 
   /**
-   * 해당하는 사용자 닉네임 Value를 ZSet에서 삭제
+   * 해당하는 사용자 닉네임 Value를 ZSet에서 삭제.
    *
    * @param nickname 사용자 닉네임
    * @return 삭제 성공 여부, 존재하지 않는 유저일 경우 false
@@ -165,10 +166,5 @@ public class RankProviderImpl implements RankProvider {
 
   private long getScoreByExpAndTierCode(Long exp, Long tierCode) {
     return MAX_EXP - ((tierCode % 200) * TIER_BASE_SCORE + exp);
-  }
-
-
-  private String paddingNicknameWithAccumulateVideo(String nickname, Integer accumulateVideo) {
-    return String.format("%012d", accumulateVideo) + nickname;
   }
 }

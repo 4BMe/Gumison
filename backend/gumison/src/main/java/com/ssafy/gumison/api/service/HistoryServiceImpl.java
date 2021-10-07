@@ -268,7 +268,7 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() >= nextLevelRequireExp
           && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp =
-              getTierExpByTierCode(user.getTierCode() + 1)) {
+          getTierExpByTierCode(user.getTierCode() + 1)) {
 
         log.info("[solutionCreate] increase user tier");
         user.setTierCode(user.getTierCode() + 1);
@@ -303,7 +303,7 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() < nextLevelRequireExp
           && !user.getTierCode().equals(MIN_TIER_CODE); nextLevelRequireExp =
-              getTierExpByTierCode(user.getTierCode() - 1)) {
+          getTierExpByTierCode(user.getTierCode() - 1)) {
 
         log.info("[solutionCreate] decrease user tier");
         user.setTierCode(user.getTierCode() - 1);

@@ -11,7 +11,7 @@ import java.security.MessageDigest;
 
 
 /**
- * 해시 ID 생성기
+ * 해시 ID 생성기.
  *
  * @author cherrytomato1
  * @version 1.0 해시 ID 생성

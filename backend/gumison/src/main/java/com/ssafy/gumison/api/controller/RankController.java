@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 유저 경험치 순위 API
+ * 유저 경험치 순위 API.
  *
  * @author cherrytomato1
  * @version 1.1 키워드 검색
- */
+ **/
 
 @RequiredArgsConstructor
 @Slf4j
@@ -86,7 +86,8 @@ public class RankController {
     return ApiResponseDto.success(UserRankListRes.of(userRankDtoList, lastPageNumber));
   }
 
-  @ApiOperation(value = "키워드와 페이지에 해당하는 유저 랭킹 정보 리스트 출력", notes = "키워드와 페이지를 입력하면 해당 페이지에 출력할 사용자 정보를 반환합니다.")
+  @ApiOperation(value = "키워드와 페이지에 해당하는 유저 랭킹 정보 리스트 출력"
+      , notes = "키워드와 페이지를 입력하면 해당 페이지에 출력할 사용자 정보를 반환합니다.")
   @ApiResponses({
       @ApiResponse(code = 200, message = "성공"),
       @ApiResponse(code = 400, message = "잘못된 페이지 요청"),

@@ -13,6 +13,7 @@ public class ControllerAdvice {
   public ApiResponseDto<?> handleResourceNotFoundException(ResourceNotFoundException e) {
     return ApiResponseDto.fail(ApiResponseCode.NOT_FOUND, e.getMessage());
   }
+
   @ExceptionHandler(IllegalArgumentException.class)
   public ApiResponseDto<?> handleIllegalArgument(IllegalArgumentException e) {
     return ApiResponseDto.fail(ApiResponseCode.BAD_REQUEST, e.getMessage());
