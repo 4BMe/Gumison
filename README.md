@@ -10,9 +10,8 @@
 - [프로젝트 소개](#프로젝트-소개)
 - [주요기능](#주요기능)
 - [기술스택](#기술-스택)
-- [배포방법](#배포-방법)
-- [컨벤션](#컨벤션)
 - [역할](#역할)
+- [문서](#문서)
   <br>
 
 ## 프로젝트 개요
@@ -27,13 +26,18 @@
 - 사용자의 실력을 우리만의 레벨로 표시 및 랭킹 확인
 - 문제 풀이 영상 확인
 
+#### 🎬[유튜브 영상](https://www.youtube.com/watch?v=Qwe4dpNmiBg)
+#### 📑[개발 노션](https://www.notion.so/A202-6593d6e894874c1d810a524f4c6b936d)
+#### 🖥[거미손 이용하기](https://j5a202.p.ssafy.io/)
+* PC/모바일(모바일 메인)
 <br>
 
 ## 프로젝트 소개
-
-**거미손**은 클라이밍장의 레벨 통합 및 사용자 랭킹을 제공해주는 서비스입니다.
+**거미손**은 클라이밍장들의 서로 다른 레벨 1가지 기준으로 통합합니다.
+또한 사용자 랭킹을 확인할 수 있습니다.
 
 ### 클라이밍이란?
+**클라이밍**은 손과 발만을 이용해 벽을 따라 이동하는 스포츠입니다.
 
 <!-- <img src="https://i.imgur.com/IytV5ce.jpg" width="300" /> -->
 <div style="text-align: center">
@@ -79,20 +83,13 @@
 
 - 거미손 서비스만의 레벨
 - Bronze < Silver < Gold < Platinum < Diamond < Master
-
+- 4 < 3 < 2 < 1
 <div style="text-align: center">
     <img src="https://i.imgur.com/kDy9sGd.png" alt="tier" width="250">
 </div>
 
-<br>
 
-## 주요기능
 
-#### A 기능
-
-#### B 기능
-
-#### C 기능
 
 <br>
 
@@ -155,17 +152,6 @@
    ./gradlew clean bootJar
    ```
 
-<br>
-
-## 배포 방법
-
-[배포문서](/exec/1-배포방법.md)
-
-<br>
-
-## 컨벤션
-
-[컨벤션문서](/documents/conventions.md)
 
 <br>
 
@@ -201,18 +187,35 @@
 - 문제의 레벨 변경 기여
 - Hadoop
 
----
 
-Persona/Scenario: [Notion](https://longing-tibia-c48.notion.site/18e723784cc648f8bc3894a9e5d3ffe3)
+<br>
 
-Flowhart: [Miro](https://miro.com/app/board/o9J_ly4qOZ4=/)
+## 문서
 
-Wireframe: [Figma](https://www.figma.com/file/7QfbLKcxcf6x6PcHOX3dDi/BigData?node-id=139%3A594)
+### DB ERD
+[ERD Cloud](https://www.erdcloud.com/d/y6Fp3fQghb7LxwLeA)
 
-기술명세서: [Google Sheet](https://docs.google.com/spreadsheets/d/139-gGMcWpDHfvwfkkuRc-e0uhv6dbrThx6peVbHDJ5g/edit#gid=57751177)
 
-System Architecture: [Google Presentation](https://docs.google.com/presentation/d/1cWDYKZ30reb2djunNxHA0z655Wly9qsoL7yM0UUmuHk/edit#slide=id.gcb19888d7b_5_0)
+### 배포 방법
 
-DB ERD: [ERD Cloud](https://www.erdcloud.com/d/y6Fp3fQghb7LxwLeA)
+[배포문서](/exec/1-배포방법.md)
+### 컨벤션
 
-API 명세서: [Google Sheet](https://docs.google.com/spreadsheets/d/1kWMIpE3GkuFl15K_j_j33c6FWiQ9tc_oHB5Cfs02G-g/edit#gid=0)
+[컨벤션문서](/documents/conventions.md)
+
+### Persona/Scenario
+[Notion](https://longing-tibia-c48.notion.site/18e723784cc648f8bc3894a9e5d3ffe3)
+
+### Flowhart
+[Miro](https://miro.com/app/board/o9J_ly4qOZ4=/)
+
+### Wireframe
+[Figma](https://www.figma.com/file/7QfbLKcxcf6x6PcHOX3dDi/BigData?node-id=139%3A594)
+
+### 기술명세서
+[Google Sheet](https://docs.google.com/spreadsheets/d/139-gGMcWpDHfvwfkkuRc-e0uhv6dbrThx6peVbHDJ5g/edit#gid=57751177)
+
+
+
+### API 명세서
+[Google Sheet](https://docs.google.com/spreadsheets/d/1kWMIpE3GkuFl15K_j_j33c6FWiQ9tc_oHB5Cfs02G-g/edit#gid=0)
