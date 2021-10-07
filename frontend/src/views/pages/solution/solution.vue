@@ -48,42 +48,44 @@
           </div>
           <div class="col-2 p-0 no-padding chat-user-img online align-self-center">
           </div>
-          <div class="col-4 chat-user-img online align-self-center">
-            <h5 class="text-truncate font-size-15 mb-1 mt-3">
+          <div class="w-100"></div>
+          <div class="col-8"></div>
+          <div class="col-4 chat-user-img online align-self-right">
+            <h5 class="text-truncate font-size-15 mb-1 mt-1">
               {{ data.solution.date }}
             </h5>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="m-2 p-2"
-      id="solution"
-    >
+    <div id="solution">
       <div
-        class="m-3 p-3 row"
+        class="mt-2 mb-2 p-2 row"
         id="level"
       >
-        <div
-          v-for="(tier, index) in data.solution.tier"
-          :key=index
-          class="row text-center align-self-center col border border-2 mr-auto ml-auto"
-        >
-          <h5 class="col-5 m-0 p-0 text-center align-self-center font-size-15">
-            <img
-              :src="require(`@/assets/images/tier/` + tier + `.png`)"
-              alt="sol-tier-img"
-              id="sol-tier-img"
-              class="img-fluid rounded-circle sm-tier-img"
-            />
-          </h5>
+        <div class="container row">
           <div
-            class="col-5 rounded-circle level-record-color m-0 p-0"
-            :id="`color-${index}`"
-          ></div>
-          <div class="col-2 m-0 p-0 text-center align-self-center">
-            {{data.solution.counts[index]}}
+            v-for="(tier, index) in data.solution.tier"
+            :key=index
+            class="container-fluid row col-5 border border-2 mr-auto ml-auto"
+          >
+            <h5 class="col-5 m-0 p-0 text-center align-self-center font-size-15">
+              <img
+                :src="require(`@/assets/images/tier/` + tier + `.png`)"
+                alt="sol-tier-img"
+                id="sol-tier-img"
+                class="img-fluid rounded-circle sm-tier-img"
+              />
+            </h5>
+            <div
+              class="rounded-circle level-record-color border border-dark color-round"
+              :id="`color-${index}`"
+            ></div>
+            <div class="col-2 m-0 p-0 text-center align-self-center">
+              {{data.solution.counts[index]}}
+            </div>
           </div>
+
         </div>
       </div>
       <simplebar class="solution">
@@ -96,9 +98,14 @@
             <button
               @click="previousVideo()"
               class="col-1 btn btn-link"
+              v-if="videoIdx != 0"
             >
               <i class="ri-arrow-left-s-line"></i>
             </button>
+            <div
+              class="col-1"
+              v-else
+            ></div>
             <video
               controls
               :src="getVideoSrc()"
@@ -108,9 +115,14 @@
             <button
               @click="nextVideo()"
               class="col-1 btn btn-link"
+              v-if="videoIdx < data.solution.solutionVideoList.length - 1"
             >
               <i class="ri-arrow-right-s-line"></i>
             </button>
+            <div
+              class="col-1"
+              v-else
+            ></div>
             <!-- </div> -->
           </div>
         </div>
@@ -124,11 +136,12 @@
             <button
               class="btn btn-outline-success ml-1"
               @click="clickContribution()"
+              v-show="contributable"
             >
               기여
             </button>
             <button
-              class="btn btn-outline-danger ml-1"
+              class="btn btn-outline-info ml-1"
               @click="clickUpdate()"
             >
               수정
@@ -171,9 +184,26 @@ export default {
   data() {
     return {
       videoIdx: 0,
+      contributable: false,
     };
   },
   mounted() {
+    switch (this.data.tier) {
+      case "platinum4":
+      case "platinum3":
+      case "platinum2":
+      case "platinum1":
+      case "diamond4":
+      case "diamond3":
+      case "diamond2":
+      case "diamond1":
+      case "master4":
+      case "master3":
+      case "master2":
+      case "master1":
+        this.contributable = true;
+        break;
+    }
     this.$nextTick(function () {
       for (let i = 0; i < this.colors.length; i++) {
         document.getElementById("color-" + i).style =
@@ -257,5 +287,9 @@ export default {
 #sol-tier-img {
   width: 23px;
   height: 23px;
+}
+.color-round {
+  width: 30px;
+  height: 30px;
 }
 </style>
