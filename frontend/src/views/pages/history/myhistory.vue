@@ -100,7 +100,7 @@ export default {
     HistoryPage,
   },
   props: {
-    nickname: String,
+    nickname: {},
   },
   data() {
     return {

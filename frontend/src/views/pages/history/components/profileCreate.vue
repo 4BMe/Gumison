@@ -106,10 +106,8 @@ export default {
             : this.description,
           oauthId: this.user.oauthId,
         };
-        console.log("[update user, saveUser] userData: ", userData);
         updateUserByOauthId(this.user.oauthId, userData)
           .then(({ data }) => {
-            console.log(data);
             let updateUserData = {
               nickname: data.data.nickname,
               description: data.data.description,
