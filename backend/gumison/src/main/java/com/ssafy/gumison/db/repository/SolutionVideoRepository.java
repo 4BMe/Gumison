@@ -17,4 +17,5 @@ public interface SolutionVideoRepository extends JpaRepository<SolutionVideo, Lo
   @Modifying
   @Query(value = "delete from solution_video where upload_id=?", nativeQuery = true)
   Integer removeByUploadId(String uploadId);
+
 }

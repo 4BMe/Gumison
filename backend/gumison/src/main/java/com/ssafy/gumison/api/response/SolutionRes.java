@@ -28,8 +28,8 @@ public class SolutionRes {
     res.uploadId = solution.getUploadId();
     res.solution = SolutionDto.builder().climbingId(solution.getClimbing().getId())
         .climbingName(solution.getClimbing().getClimbingName()).solutionIds(solutionIds)
-        .level(levelNames).tier(tierNames).counts(counts).date(solution.getDate())
-        .solutionVideoList(solutionVideoList).build();
+        .levelTierIds(levelTierIds).level(levelNames).tier(tierNames).counts(counts)
+        .date(solution.getDate()).solutionVideoList(solutionVideoList).build();
     return res;
   }
 }

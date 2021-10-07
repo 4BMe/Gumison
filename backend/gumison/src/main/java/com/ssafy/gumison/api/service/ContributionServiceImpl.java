@@ -1,6 +1,8 @@
 package com.ssafy.gumison.api.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -25,17 +27,25 @@ public class ContributionServiceImpl implements ContributionService {
   private final UserRepository userRepository;
 
   @Override
-  public Contribution createContribution(ContributionRequest contributionRequest) {
+  public List<Contribution> createContribution(ContributionRequest contributionRequest) {
     log.info("[createContribution] - ContributionService : {}", contributionRequest);
-    LevelTier levelTier = levelTierRepository.findById(contributionRequest.getLevelTierId())
-        .orElseThrow(RuntimeException::new);
-    User user = userRepository.findById(contributionRequest.getUserId())
-        .orElseThrow(RuntimeException::new);
-    LocalDate today = LocalDate.now();
-    Contribution contribution = Contribution.builder().levelTier(levelTier)
-        .newTier(contributionRequest.getNewTier())
-        .oldTier(contributionRequest.getOldTier()).user(user).date(today).build();
-    Contribution ret = contributionRepository.save(contribution);
+    List<Contribution> contributions = new ArrayList<>();
+    for (int i = 0; i < contributionRequest.getContributionData().size(); i++) {
+      LevelTier levelTier = levelTierRepository
+          .findById(contributionRequest.getContributionData().get(i).getLevelTierId())
+          .orElseThrow(RuntimeException::new);
+      String newTier = contributionRequest.getContributionData().get(i).getNewTier();
+      String oldTier = contributionRequest.getContributionData().get(i).getOldTier();
+      User user = userRepository.findByNickname(contributionRequest.getNickname())
+          .orElseThrow(RuntimeException::new);
+      LocalDate today = LocalDate.now();
+      if (!oldTier.equals(newTier)) {
+        Contribution contribution = Contribution.builder().levelTier(levelTier).newTier(newTier)
+            .oldTier(oldTier).user(user).date(today).build();
+        contributions.add(contribution);
+      }
+    }
+    List<Contribution> ret = contributionRepository.saveAll(contributions);
     return ret;
   }
 

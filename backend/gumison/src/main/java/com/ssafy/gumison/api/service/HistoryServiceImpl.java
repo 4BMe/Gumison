@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.core.io.ResourceLoader;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.ssafy.gumison.api.request.SolutionRequest;
 import com.ssafy.gumison.api.response.HistoryRes;
 import com.ssafy.gumison.api.response.SolutionListItem;
@@ -31,6 +32,7 @@ import com.ssafy.gumison.db.repository.LevelTierRepository;
 import com.ssafy.gumison.db.repository.SolutionRepository;
 import com.ssafy.gumison.db.repository.SolutionVideoRepository;
 import com.ssafy.gumison.db.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +49,6 @@ public class HistoryServiceImpl implements HistoryService {
   private final SolutionVideoRepository solutionVideoRepository;
 
   private final String windowsPath = "C:\\SolutionVideo\\";
-  private final ResourceLoader resourceLoader;
 
   private final int LIST_PER_PAGE = 10;
   private final Long MAX_TIER_CODE = 224L;
@@ -98,6 +99,7 @@ public class HistoryServiceImpl implements HistoryService {
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
       counts.add(sol.getCount());
     });
+
     return SolutionRes.of(user, tier, solution, levelTierIds, tierNames, solutionIds, levelNames,
         counts, solutionVideoList);
   }
@@ -180,8 +182,6 @@ public class HistoryServiceImpl implements HistoryService {
       solutionVideos.add(solutionVideo);
     }
     solutionVideoRepository.saveAll(solutionVideos);
-    // List<SolutionVideo> solutionVideosRet =
-    // solutionVideoRepository.saveAll(solutionVideos);
   }
 
   @Override
@@ -247,9 +247,9 @@ public class HistoryServiceImpl implements HistoryService {
 
         increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
       } else {
-        Solution solution = Solution.builder().user(user).levelTier(levelTier)
-            .climbing(climbing).count(counts.get(i)).date(solutionRequest.getDate())
-            .uploadId(user.getId() + "-" + now).build();
+        Solution solution = Solution.builder().user(user).levelTier(levelTier).climbing(climbing)
+            .count(counts.get(i)).date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now)
+            .build();
 
         solutions.add(solution);
 
@@ -262,24 +262,19 @@ public class HistoryServiceImpl implements HistoryService {
 
   private void deleteVideos(String uploadId) {
     List<SolutionVideo> solutionVideos = solutionVideoRepository.findByUploadId(uploadId);
-    for (int i = 0; i < 3; i++) {
-      boolean flag = true;
-      for (SolutionVideo solutionVideo : solutionVideos) {
-        File removeFile = new File(windowsPath + solutionVideo.getUri());
-        log.info("[deleteVideos] - pathname : {}", removeFile.getPath());
-        if (removeFile.exists()) {
-          if (removeFile.delete())
-            log.info("[deleteVideos] - success!!");
-          else {
-            log.info("[deleteVideos] - fail!!");
-            flag = false;
-          }
-        } else {
-          log.info("[deleteVideos] - no file!!");
+
+    for (SolutionVideo solutionVideo : solutionVideos) {
+      File removeFile = new File(windowsPath + solutionVideo.getUri());
+      log.info("[deleteVideos] - pathname : {}", removeFile.getPath());
+      if (removeFile.exists()) {
+        if (removeFile.delete())
+          log.info("[deleteVideos] - success!!");
+        else {
+          log.info("[deleteVideos] - fail!!");
         }
+      } else {
+        log.info("[deleteVideos] - no file!!");
       }
-      if (flag)
-        break;
     }
 
     solutionVideoRepository.removeByUploadId(uploadId);

@@ -20,5 +20,9 @@ public interface HistoryService {
 
   public List<Solution> updateSolution(SolutionRequest solutionRequest);
   
+<<<<<<< HEAD
   public Integer deleteSolution(String uploadId);
+=======
+  public Long deleteSolution(String uploadId);
+>>>>>>> develop
 }

@@ -154,7 +154,7 @@
 
 <br>
 
-## :straight_ruler: Conventions
+## Conventions
 
 ### Commit 규칙
 

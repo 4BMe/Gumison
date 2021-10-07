@@ -68,28 +68,6 @@ export default [
                 },
                 props: true,
             },
-            {
-                path: '/level-contribution',
-                name: 'level-contribution',
-                component: () => import('../views/pages/level-contribution/level-contribution'),
-                meta: {
-                    beforeResolve(routeTo, routeFrom, next) {
-                        /**
-                         * token이 이미 있으면 level-contribution 로 가고,
-                         * 없으면 로그인 화면으로 가기
-                         */
-                        const token = store.getters['users/getToken'];
-                        if (token) {
-                            next()
-                        } else {
-                            next({
-                                name: 'login'
-                            })
-                        }
-                    },
-                },
-                props: true,
-            },
         ]
     },
     {
@@ -104,6 +82,30 @@ export default [
                  */
                 const token = store.getters['users/getToken'];
                 if (token) {
+                    next()
+                } else {
+                    next({
+                        name: 'login'
+                    })
+                }
+            },
+        },
+        props: true,
+    },
+    {
+        path: '/level-contribution',
+        name: 'level-contribution',
+        component: () => import('../views/pages/level-contribution/level-contribution'),
+        meta: {
+            beforeResolve(routeTo, routeFrom, next) {
+                /**
+                 * token이 이미 있으면 level-contribution 로 가고,
+                 * 없으면 로그인 화면으로 가기
+                 */
+                const token = store.getters['users/getToken'];
+                console.log('[route myhistory click] token: ', token)
+                if (token) {
+                    console.log('[route myhistory click] token token : ', token)
                     next()
                 } else {
                     next({

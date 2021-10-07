@@ -27,4 +27,5 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
   @Modifying
   @Query(value = "delete from solution where upload_id=?", nativeQuery = true)
   Integer removeByUploadId(String uploadId);
+
 }

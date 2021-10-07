@@ -1,7 +1,13 @@
 <template>
   <div>
-    <div class="mt-4 px-4 pb-4 pt-4">
-      <h4 class="mb-3 text-center align-self-center">{{ data.solution.climbingName }}</h4>
+    <div class="mt-4 px-4 pb-4 pt-4 container-fluid row ">
+      <h4
+        class="mb-0 text-center col-1 ml-1 p-0"
+        @click="goToBack()"
+      ><i class="ri-arrow-left-s-line"></i></h4>
+      <h4 class="mb-0 text-center col mr-3">
+        {{ data.solution.climbingName }}
+      </h4>
     </div>
     <div>
       <div class="px-2">
@@ -108,16 +114,11 @@
             <!-- </div> -->
           </div>
         </div>
-        <div
-          id="buttons"
-          class="mt-3"
-        >
+        <div id="buttons" class="mt-3" v-if="isMyself()">
           <div class="container-fluid row m-0 p-0">
             <div class="col-5 m-0 p-0" />
-            <button
-              class="btn btn-outline-success ml-1"
-              @click="searchHistory('기여')"
-            >
+            <button class="btn btn-outline-success ml-1"
+                    @click="clickContribution()">
               기여
             </button>
             <button
@@ -140,8 +141,6 @@
 </template>
 
 <script>
-//http://localhost:8888/api/history/videos?fileName=535-2021-10-05T21.30.55.264-0.mp4
-// import axios from "axios";
 import axios from "axios";
 import simplebar from "simplebar-vue";
 import { BASE_URL } from "@/constant/index";
@@ -169,6 +168,7 @@ export default {
     };
   },
   mounted() {
+    console.log("data-solution.vue", this.data);
     this.$nextTick(function () {
       for (let i = 0; i < this.colors.length; i++) {
         document.getElementById("color-" + i).style =
@@ -177,14 +177,17 @@ export default {
     });
   },
   methods: {
+    isMyself(){
+      return this.$store.state.users.user.nickname == this.data.nickname;
+    },
     getVideoSrc() {
       return `${BASE_URL}/history/videos?fileName=${
         this.data.solution.solutionVideoList[this.videoIdx].uri
       }`;
     },
-    clickUpdate() {
-      let levelTiers = [];
-      for (let i = 0; i < this.data.solution.level.length; i++) {
+    clickUpdate(){
+      let levelTiers =[];
+      for(let i = 0; i < this.data.solution.level.length; i++) {
         levelTiers.push({
           level: this.data.solution.level[i],
           solutionCount: this.data.solution.counts[i],
@@ -206,10 +209,21 @@ export default {
       console.log("this.uploadId : "+this.data.uploadId);
       await axios
         .delete(`${BASE_URL}/history/${this.data.uploadId}`)
+<<<<<<< HEAD
         .then(() => {
           console.log("this.data.nickname : " + this.data.nickname);
           let nickname = this.data.nickname;
           this.$router.push({ name: "myhistory", params: { nickname: nickname } });
+=======
+        .then(({data}) => {
+          console.log(data);
+          this.$router.push({
+              name: 'myhistory',
+              props: {
+                nickname: this.data.nickname,
+              }
+          });
+>>>>>>> develop
         })
         .catch(error => {
           console.log(error);
@@ -236,10 +250,13 @@ export default {
     previousVideo() {
       if (this.videoIdx > 0) this.videoIdx--;
     },
-    nextVideo() {
-      if (this.videoIdx < this.data.solution.solutionVideoList.length) {
+    nextVideo(){
+      if(this.videoIdx < this.data.solution.solutionVideoList.length - 1) {
         this.videoIdx++;
       }
+    },
+    goToBack() {
+      this.$router.go(-1);
     },
   },
 };
