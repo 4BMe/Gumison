@@ -85,6 +85,7 @@ public class HistoryServiceImpl implements HistoryService {
         .orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     List<Long> solutionIds = new ArrayList<>();
+    List<Long> levelTierIds = new ArrayList<>();
     List<String> tierNames = new ArrayList<>();
     List<String> levelNames = new ArrayList<>();
     List<Integer> counts = new ArrayList<>();
@@ -92,6 +93,7 @@ public class HistoryServiceImpl implements HistoryService {
         .findByUploadId(solution.getUploadId());
     solutionList.forEach(sol -> {
       solutionIds.add(sol.getId());
+      levelTierIds.add(sol.getLevelTier().getId());
       tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
       counts.add(sol.getCount());
