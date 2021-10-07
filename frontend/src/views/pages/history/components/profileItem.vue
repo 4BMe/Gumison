@@ -115,22 +115,17 @@ export default {
   },
   methods: {
     onBlur($event) {
-      console.log("blur event occur ", $event.target.value);
       getUserByNickname(this.profileDetail.nickname)
         .then(({ data }) => {
-          console.log(data);
           if (!data.data) {
             this.$alertify.error("이미 사용중인 아이디입니다.");
             store.commit("users/SET_IS_VALID_NICKNAME", false);
           } else {
             store.commit("users/SET_IS_VALID_NICKNAME", true);
-            console.log(
-              "사용 가능한 아이디 this.isValidNickname: ",
-              this.isValidNickname
-            );
           }
         })
         .catch((error) => {
+          console.log("blur event occur ", $event.target.value);
           console.log("error: ", error);
         });
     },
@@ -163,7 +158,6 @@ export default {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.image = e.target.result;
-        console.log("reader onload: ", this.image);
       };
       reader.readAsDataURL(this.selectedImage);
     },

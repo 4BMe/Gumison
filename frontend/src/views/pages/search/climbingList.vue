@@ -5,7 +5,11 @@
       currType="climbinglist"
       :currKeyword="currKeyword"
     />
-    <simplebar class="chat-group-list" id="chat-list" ref="current">
+    <simplebar
+      class="chat-group-list"
+      id="chat-list"
+      ref="current"
+    >
       <ul class="list-unstyled chat-list chat-user-list">
         <li
           v-for="(item, index) in climbingList"
@@ -17,7 +21,10 @@
           </a>
         </li>
       </ul>
-      <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+      <infinite-loading
+        @infinite="infiniteHandler"
+        spinner="waveDots"
+      >
         <div slot="no-more"></div>
         <div slot="no-results">"{{ keyword }}"을/를 찾을 수 없습니다.</div>
       </infinite-loading>
@@ -54,17 +61,16 @@ export default {
     };
   },
   created() {
-    if(this.currKeyword == ' '){
-      this.currKeyword = '';
+    if (this.currKeyword == " ") {
+      this.currKeyword = "";
     }
   },
   methods: {
     searchHistory(id) {
-      console.log("climbingList - id : " + id);
-      this.$router.push({path:`/climbing/${id}`})
+      this.$router.push({ path: `/climbing/${id}` });
     },
 
-    getList(){
+    getList() {
       axios
         .get(`${BASE_URL}/climbing/search/${this.keyword}/${this.pageNumber}`)
         .then(({ data }) => {
@@ -76,30 +82,31 @@ export default {
     },
 
     infiniteHandler($state) {
-    //  무한 스크롤
+      //  무한 스크롤
       axios
         .get(`${BASE_URL}/climbing/search/${this.keyword}/${this.pageNumber}`)
         .then(({ data }) => {
           // 로딩스피너를 위해 0.1초의 지연시간을 설정했다.
-          setTimeout(() => { 
-            if(data.data.length) {
-              this.climbingList = this.climbingList.concat(data.data)
+          setTimeout(() => {
+            if (data.data.length) {
+              this.climbingList = this.climbingList.concat(data.data);
               this.pageNumber++;
-              $state.loaded()
-                // 끝 지정(No more data) - 데이터가 1개 미만이면
-              if(data.data.length < 1) {  //종료조건
-                $state.complete()
+              $state.loaded();
+              // 끝 지정(No more data) - 데이터가 1개 미만이면
+              if (data.data.length < 1) {
+                //종료조건
+                $state.complete();
               }
             } else {
-                // 끝 지정(No more data)
-              $state.complete()
+              // 끝 지정(No more data)
+              $state.complete();
             }
-          }, 100)
+          }, 100);
         })
         .catch((err) => {
           console.log("에러: " + err);
         });
-    }
+    },
   },
 };
 </script>

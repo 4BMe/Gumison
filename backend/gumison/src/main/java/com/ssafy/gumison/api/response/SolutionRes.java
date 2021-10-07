@@ -11,13 +11,15 @@ import lombok.Getter;
 
 @Getter
 public class SolutionRes {
+
   private String profile;
   private String nickname;
   private String tier;
   private String uploadId;
   private SolutionDto solution;
 
-  public static SolutionRes of(User user, String tier, Solution solution, List<Long> levelTierIds, List<String> tierNames, List<Long> solutionIds,
+  public static SolutionRes of(User user, String tier, Solution solution, List<String> tierNames,
+      List<Long> solutionIds,
       List<String> levelNames, List<Integer> counts, List<SolutionVideo> solutionVideoList) {
     SolutionRes res = new SolutionRes();
     res.profile = user.getProfile();

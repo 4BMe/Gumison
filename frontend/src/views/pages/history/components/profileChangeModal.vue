@@ -115,7 +115,6 @@ export default {
 
         updateUserByOauthId(this.user.oauthId, userData)
           .then(({ data }) => {
-            console.log(data);
             let updateUserData = {
               nickname: data.data.nickname,
               description: data.data.description,

@@ -1,6 +1,7 @@
 package com.ssafy.gumison.api.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +47,5 @@ class HistoryServiceTest {
     // then
     user = userRepository.findByOauthId(OAUTH_ID).orElseThrow(RuntimeException::new);
     assertNotEquals(user.getAccumulateExp(), oldExp);
-  }
-
-  @Test
-  void 문제_해결을_수정하면_경험치와_티어가_변경된다() {
-    // to do
   }
 }
