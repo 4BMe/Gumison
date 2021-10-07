@@ -78,7 +78,7 @@ public class ClimbingServiceImpl implements ClimbingService {
   }
 
   private Page<Solution> getSolutionList(Long climbingId, Long levelTierId, int pageNumber) {
-    PageRequest pageRequest = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "id"));
+    PageRequest pageRequest = PageRequest.of(pageNumber, 10, Sort.by(Sort.Direction.DESC, "date"));
     return solutionRepository.findByClimbingIdAndLevelTierId(climbingId, levelTierId, pageRequest);
   }
 
