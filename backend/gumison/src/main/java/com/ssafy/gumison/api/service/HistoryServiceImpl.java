@@ -48,7 +48,7 @@ public class HistoryServiceImpl implements HistoryService {
   private final LevelTierRepository levelTierRepository;
   private final SolutionVideoRepository solutionVideoRepository;
 
-  private final String videoPath = "home/video";
+  private final String videoPath = "home/video/";
 
   private final int LIST_PER_PAGE = 10;
   private final Long MAX_TIER_CODE = 224L;
