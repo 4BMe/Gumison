@@ -147,7 +147,7 @@
               수정
             </button>
             <button
-              class="btn btn-outline-info ml-1"
+              class="btn btn-outline-danger ml-1"
               v-b-modal="'modal-delete'"
             >
               삭제
