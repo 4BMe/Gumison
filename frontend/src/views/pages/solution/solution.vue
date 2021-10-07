@@ -1,7 +1,13 @@
 <template>
   <div>
-    <div class="mt-4 px-4 pb-4 pt-4">
-      <h4 class="mb-3 text-center align-self-center">{{ data.solution.climbingName }}</h4>
+    <div class="mt-4 px-4 pb-4 pt-4 container-fluid row ">
+      <h4
+        class="mb-0 text-center col-1 ml-1 p-0"
+        @click="goToBack()"
+      ><i class="ri-arrow-left-s-line"></i></h4>
+      <h4 class="mb-0 text-center col mr-3">
+        {{ data.solution.climbingName }}
+      </h4>
     </div>
     <div>
       <div class="px-2">
@@ -212,6 +218,9 @@ export default {
       if (this.videoIdx < this.data.solution.solutionVideoList.length) {
         this.videoIdx++;
       }
+    },
+    goToBack() {
+      this.$router.go(-1);
     },
   },
 };

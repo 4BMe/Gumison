@@ -2,7 +2,7 @@
   <div class="px-4 pt-4">
     <div class="text-align container-fluid row ">
       <h3
-        class="mb-0 text-center col-1"
+        class="mb-0 text-center col-1 p-0"
         @click="goToBack()"
       ><i class="ri-arrow-left-s-line"></i></h3>
       <h3 class="mb-0 text-center col mr-4">
