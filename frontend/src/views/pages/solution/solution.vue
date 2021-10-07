@@ -1,13 +1,19 @@
 <template>
   <div>
     <div class="mt-4 px-4 pb-4 pt-4 container-fluid row ">
-      <h4
-        class="mb-0 text-center col-1 ml-1 p-0"
-        @click="goToBack()"
-      ><i class="ri-arrow-left-s-line"></i></h4>
-      <h4 class="mb-0 text-center col mr-3">
+      <h4 class="mb-0 text-center col-1 ml-1 p-0" @click="goToBack()">
+        <i class="ri-arrow-left-s-line"></i>
+      </h4>
+      <h4 class="mb-0 pr-0 pl-5 text-center col-9">
         {{ data.solution.climbingName }}
       </h4>
+      <a
+        class="col p-1"
+        href="https://forms.gle/ZQ1W9E7LHwAS2FrQ7"
+        target="_blank"
+      >
+        <i class="ri-alarm-warning-fill"></i
+      ></a>
     </div>
     <div>
       <div class="px-2">
@@ -16,10 +22,7 @@
             class="px-4 col-2 chat-user-img online align-self-center"
             id="userCard"
           >
-            <div
-              v-if="data.profile"
-              class="avatar-xs"
-            >
+            <div v-if="data.profile" class="avatar-xs">
               <img
                 :src="data.profile"
                 class="rounded-circle avatar-xs"
@@ -27,18 +30,17 @@
                 alt="profile"
               />
             </div>
-            <div
-              class="avatar-xs"
-              v-else
-            >
-              <span class="avatar-title rounded-circle bg-soft-primary text-primary">{{ data.nickname.charAt(0) }}
+            <div class="avatar-xs" v-else>
+              <span
+                class="avatar-title rounded-circle bg-soft-primary text-primary"
+                >{{ data.nickname.charAt(0) }}
               </span>
             </div>
           </div>
           <div class="media-body ml-4 p-0 align-self-center">
             <h5 class="text-truncate font-size-15 mb-1">
               <img
-                :src="require(`@/assets/images/tier/`+data.tier+`.png`)"
+                :src="require(`@/assets/images/tier/` + data.tier + `.png`)"
                 alt="sol-tier-img"
                 id="sol-tier-img"
                 class="img-fluid rounded-circle sm-tier-img"
@@ -46,8 +48,9 @@
               {{ data.nickname }}
             </h5>
           </div>
-          <div class="col-2 p-0 no-padding chat-user-img online align-self-center">
-          </div>
+          <div
+            class="col-2 p-0 no-padding chat-user-img online align-self-center"
+          ></div>
           <div class="w-100"></div>
           <div class="col-8"></div>
           <div class="col-4 chat-user-img online align-self-right">
@@ -59,17 +62,16 @@
       </div>
     </div>
     <div id="solution">
-      <div
-        class="container-fluid mt-2 mb-2 p-2 row"
-        id="level"
-      >
+      <div class="container-fluid mt-2 mb-2 p-2 row" id="level">
         <div class="container-fluid row">
           <div
             v-for="(tier, index) in data.solution.tier"
-            :key=index
+            :key="index"
             class="container-fluid row col-5 border border-2 mr-auto ml-auto"
           >
-            <h5 class="col-5 m-0 p-0 text-center align-self-center font-size-15">
+            <h5
+              class="col-5 m-0 p-0 text-center align-self-center font-size-15"
+            >
               <img
                 :src="require(`@/assets/images/tier/` + tier + `.png`)"
                 alt="sol-tier-img"
@@ -82,16 +84,18 @@
               :id="`color-${index}`"
             ></div>
             <div class="col-2 m-0 p-0 text-center align-self-center">
-              {{data.solution.counts[index]}}
+              {{ data.solution.counts[index] }}
             </div>
           </div>
-
         </div>
       </div>
       <simplebar class="solution">
         <div id="video">
           <div
-            v-if="data.solution.solutionVideoList && data.solution.solutionVideoList.length!=0"
+            v-if="
+              data.solution.solutionVideoList &&
+                data.solution.solutionVideoList.length != 0
+            "
             class="container-fluid row"
           >
             <!-- <div v-for="(video, index) in data.solution.solutionVideoList" :key="index"> -->
@@ -102,16 +106,12 @@
             >
               <i class="ri-arrow-left-s-line"></i>
             </button>
-            <div
-              class="col-1"
-              v-else
-            ></div>
+            <div class="col-1" v-else></div>
             <video
               controls
               :src="getVideoSrc()"
               class="container col-10"
-            >
-            </video>
+            ></video>
             <button
               @click="nextVideo()"
               class="col-1 btn btn-link"
@@ -119,18 +119,11 @@
             >
               <i class="ri-arrow-right-s-line"></i>
             </button>
-            <div
-              class="col-1"
-              v-else
-            ></div>
+            <div class="col-1" v-else></div>
             <!-- </div> -->
           </div>
         </div>
-        <div
-          id="buttons"
-          class="mt-3"
-          v-if="isMyself()"
-        >
+        <div id="buttons" class="mt-3" v-if="isMyself()">
           <div class="container-fluid row m-0 p-0">
             <div class="col-5 m-0 p-0" />
             <button
@@ -140,10 +133,7 @@
             >
               기여
             </button>
-            <button
-              class="btn btn-outline-info ml-1"
-              @click="clickUpdate()"
-            >
+            <button class="btn btn-outline-info ml-1" @click="clickUpdate()">
               수정
             </button>
             <button
@@ -154,10 +144,9 @@
             </button>
           </div>
         </div>
-        <DeleteModal :data='data'></DeleteModal>
+        <DeleteModal :data="data"></DeleteModal>
       </simplebar>
     </div>
-
   </div>
 </template>
 
@@ -204,7 +193,7 @@ export default {
         this.contributable = true;
         break;
     }
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       for (let i = 0; i < this.colors.length; i++) {
         document.getElementById("color-" + i).style =
           "border: 1px solid; background-color: " + this.colors[i];
