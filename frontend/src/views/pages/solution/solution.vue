@@ -118,7 +118,8 @@
           <div class="container-fluid row m-0 p-0">
             <div class="col-5 m-0 p-0" />
             <button class="btn btn-outline-success ml-1"
-                    @click="clickContribution()">
+                    @click="clickContribution()"
+                    v-if="contributable">
               기여
             </button>
             <button
@@ -165,9 +166,26 @@ export default {
   data() {
     return {
       videoIdx: 0,
+      contributable: false,
     };
   },
   mounted() {
+    switch(this.data.tier){
+      case "platinum4":
+      case "platinum3":
+      case "platinum2":
+      case "platinum1":
+      case "daimond4":
+      case "daimond3":
+      case "daimond2":
+      case "daimond1":
+      case "master4":
+      case "master3":
+      case "master2":
+      case "master1":
+        this.contributable = true;
+        break;
+    }
     this.$nextTick(function () {
       for (let i = 0; i < this.colors.length; i++) {
         document.getElementById("color-" + i).style =
