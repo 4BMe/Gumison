@@ -48,7 +48,7 @@ public class HistoryServiceImpl implements HistoryService {
   private final LevelTierRepository levelTierRepository;
   private final SolutionVideoRepository solutionVideoRepository;
 
-  private final String windowsPath = "C:\\SolutionVideo\\";
+  private final String videoPath = "home/video";
 
   private final int LIST_PER_PAGE = 10;
   private final Long MAX_TIER_CODE = 224L;
@@ -153,7 +153,7 @@ public class HistoryServiceImpl implements HistoryService {
   private void uploadVideos(Long userId, LocalDateTime now, List<MultipartFile> videos) {
     log.info("[uploadVideos] - HistoryService : {}", videos);
 
-    File videoFolder = new File(windowsPath);
+    File videoFolder = new File(videoPath);
     if (!videoFolder.exists()) {
       try {
         videoFolder.mkdirs();
@@ -170,7 +170,7 @@ public class HistoryServiceImpl implements HistoryService {
           originalFileName.length());
       String fileName = userId + "-" + now.toString().replace(':', '.') + "-" + i + extensionName;
       log.info("[uploadVideo] - VideoService, fileName : {}", fileName);
-      File dest = new File(windowsPath + fileName);
+      File dest = new File(videoPath + fileName);
       try {
         videos.get(i).transferTo(dest);
       } catch (IllegalStateException | IOException e) {
@@ -264,7 +264,7 @@ public class HistoryServiceImpl implements HistoryService {
     List<SolutionVideo> solutionVideos = solutionVideoRepository.findByUploadId(uploadId);
 
     for (SolutionVideo solutionVideo : solutionVideos) {
-      File removeFile = new File(windowsPath + solutionVideo.getUri());
+      File removeFile = new File(videoPath + solutionVideo.getUri());
       log.info("[deleteVideos] - pathname : {}", removeFile.getPath());
       if (removeFile.exists()) {
         if (removeFile.delete())
