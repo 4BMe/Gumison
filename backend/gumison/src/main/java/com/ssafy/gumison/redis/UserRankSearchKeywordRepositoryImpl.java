@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 유저 검색 키워드를 레디스에 저장하고 불러오는 인터페이스의 구현체
+ * 유저 검색 키워드를 레디스에 저장하고 불러오는 인터페이스의 구현체.
  *
  * @author cherrytomato1
  * @version 1.1 캐시 저장시간 5분 -> 2분 30초
@@ -49,7 +49,7 @@ public class UserRankSearchKeywordRepositoryImpl implements UserRankSearchKeywor
   }
 
   /**
-   * 키워드에 해당하는 유저의 수를 저장
+   * 키워드에 해당하는 유저의 수를 저장.
    *
    * @param keyword 저장할 키워드
    * @param count   저장할 값

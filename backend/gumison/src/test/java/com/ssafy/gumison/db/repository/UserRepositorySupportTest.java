@@ -1,6 +1,7 @@
 package com.ssafy.gumison.db.repository;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

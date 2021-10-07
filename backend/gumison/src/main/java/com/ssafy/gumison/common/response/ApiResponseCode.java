@@ -10,7 +10,10 @@ public enum ApiResponseCode {
 
   SUCCESS("success"),
   FAIL("fail"),
-  UNAUTHORIZED("unauthorized");
+  UNAUTHORIZED("unauthorized"),
+  BAD_REQUEST("bad request"),
+  NOT_FOUND("not found");
+
 
   private final String message;
 

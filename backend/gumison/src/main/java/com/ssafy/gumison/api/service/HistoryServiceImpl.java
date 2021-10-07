@@ -248,7 +248,7 @@ public class HistoryServiceImpl implements HistoryService {
         Solution solution = Solution.builder().user(user).levelTier(levelTier)
             .climbing(climbing).count(counts.get(i)).date(solutionRequest.getDate())
             .uploadId(user.getId() + "-" + now).build();
-        
+
         solutions.add(solution);
 
         increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
@@ -258,6 +258,13 @@ public class HistoryServiceImpl implements HistoryService {
     return solutionRepository.saveAll(solutions);
   }
 
+  /**
+   * 사용자의 문제 풀이 기록으로 사용자 경험치를 올린다.
+   *
+   * @param user      사용자 정보
+   * @param levelTier 난이도 정보
+   * @param count     푼 문제 수
+   */
   private void increaseUserExpByLevelTierAndCount(User user, LevelTier levelTier, Integer count) {
     Long nextExp;
 
@@ -273,6 +280,11 @@ public class HistoryServiceImpl implements HistoryService {
     userRepository.save(user);
   }
 
+  /**
+   * 사용자 경험치가 요구 경험치를 초과했을 경우 티어를 올린다.
+   *
+   * @param user 사용자 정보
+   */
   private void increaseUserTierByUserExp(User user) {
     try {
       if (user.getTierCode().equals(MAX_TIER_CODE)) {
@@ -282,8 +294,8 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() >= nextLevelRequireExp
-          && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp = getTierExpByTierCode(
-              user.getTierCode() + 1)) {
+          && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp =
+          getTierExpByTierCode(user.getTierCode() + 1)) {
 
         log.info("[solutionCreate] increase user tier");
         user.setTierCode(user.getTierCode() + 1);
@@ -292,6 +304,14 @@ public class HistoryServiceImpl implements HistoryService {
       log.error(e.getMessage());
     }
   }
+
+  /**
+   * 사용자의 문제 기록으로 사용자 경험치를 낮춘다.
+   *
+   * @param user      사용자 정보
+   * @param levelTier 난이도 정보
+   * @param count     푼 문제 수
+   */
 
   private void decreaseUserExpByLevelTierAndCount(User user, LevelTier levelTier, Integer count) {
     Long nextExp;
@@ -308,6 +328,12 @@ public class HistoryServiceImpl implements HistoryService {
     userRepository.save(user);
   }
 
+  /**
+   * 사용자 경험치가 이전 티어의 요구 경험치보다 낮을 경우 티어를 낮춘다.
+   *
+   * @param user 사용자 정보
+   */
+
   private void decreaseUserTierByUserExp(User user) {
     try {
       if (user.getTierCode().equals(MIN_TIER_CODE)) {
@@ -317,7 +343,8 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() < nextLevelRequireExp
-          && !user.getTierCode().equals(MIN_TIER_CODE); nextLevelRequireExp = getTierExpByTierCode(
+          && !user.getTierCode().equals(MIN_TIER_CODE);
+          nextLevelRequireExp = getTierExpByTierCode(
               user.getTierCode() - 1)) {
 
         log.info("[solutionCreate] decrease user tier");
