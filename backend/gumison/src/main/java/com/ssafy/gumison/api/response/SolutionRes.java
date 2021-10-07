@@ -18,17 +18,18 @@ public class SolutionRes {
   private String uploadId;
   private SolutionDto solution;
 
-  public static SolutionRes of(User user, String tier, Solution solution, List<String> tierNames,
-      List<Long> solutionIds,
-      List<String> levelNames, List<Integer> counts, List<SolutionVideo> solutionVideoList) {
+  public static SolutionRes of(User user, String tier, Solution solution, List<Long> levelTierIds,
+      List<String> tierNames, List<Long> solutionIds, List<String> levelNames, List<Integer> counts,
+      List<SolutionVideo> solutionVideoList) {
     SolutionRes res = new SolutionRes();
     res.profile = user.getProfile();
     res.nickname = user.getNickname();
     res.tier = tier;
     res.uploadId = solution.getUploadId();
-    res.solution = SolutionDto.builder().climbingId(solution.getClimbing().getId()).climbingName(solution.getClimbing().getClimbingName())
-        .solutionIds(solutionIds).levelTierIds(levelTierIds).level(levelNames).tier(tierNames).counts(counts).date(solution.getDate())
-        .solutionVideoList(solutionVideoList).build();
+    res.solution = SolutionDto.builder().climbingId(solution.getClimbing().getId())
+        .climbingName(solution.getClimbing().getClimbingName()).solutionIds(solutionIds)
+        .levelTierIds(levelTierIds).level(levelNames).tier(tierNames).counts(counts)
+        .date(solution.getDate()).solutionVideoList(solutionVideoList).build();
     return res;
   }
 }
