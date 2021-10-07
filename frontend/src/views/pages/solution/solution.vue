@@ -114,11 +114,17 @@
             <!-- </div> -->
           </div>
         </div>
-        <div id="buttons" class="mt-3" v-if="isMyself()">
+        <div
+          id="buttons"
+          class="mt-3"
+          v-if="isMyself()"
+        >
           <div class="container-fluid row m-0 p-0">
             <div class="col-5 m-0 p-0" />
-            <button class="btn btn-outline-success ml-1"
-                    @click="clickContribution()">
+            <button
+              class="btn btn-outline-success ml-1"
+              @click="clickContribution()"
+            >
               기여
             </button>
             <button
@@ -129,30 +135,30 @@
             </button>
             <button
               class="btn btn-outline-info ml-1"
-              @click="clickDelete()"
+              v-b-modal="'modal-delete'"
             >
               삭제
             </button>
           </div>
         </div>
+        <DeleteModal :data='data'></DeleteModal>
       </simplebar>
     </div>
+
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import simplebar from "simplebar-vue";
 import { BASE_URL } from "@/constant/index";
-
-/**
- * Profile component
- */
+import DeleteModal from "./components/deleteModal.vue";
 export default {
+  name: "solution",
   components: {
     simplebar,
+    DeleteModal,
   },
-  name: "solution",
+
   props: {
     data: {
       type: Object,
@@ -176,7 +182,7 @@ export default {
     });
   },
   methods: {
-    isMyself(){
+    isMyself() {
       return this.$store.state.users.user.nickname == this.data.nickname;
     },
     getVideoSrc() {
@@ -184,9 +190,9 @@ export default {
         this.data.solution.solutionVideoList[this.videoIdx].uri
       }`;
     },
-    clickUpdate(){
-      let levelTiers =[];
-      for(let i = 0; i < this.data.solution.level.length; i++) {
+    clickUpdate() {
+      let levelTiers = [];
+      for (let i = 0; i < this.data.solution.level.length; i++) {
         levelTiers.push({
           level: this.data.solution.level[i],
           solutionCount: this.data.solution.counts[i],
@@ -204,40 +210,40 @@ export default {
         },
       });
     },
-    async clickDelete() {
-      await axios
-        .delete(`${BASE_URL}/history/${this.data.uploadId}`)
-        .then(() => {
-          let nickname = this.data.nickname;
-          this.$router.push({ name: "myhistory", params: { nickname: nickname } });
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    },
-    clickContribution(){
+    // async clickDelete() {
+    //   await axios
+    //     .delete(`${BASE_URL}/history/${this.data.uploadId}`)
+    //     .then(() => {
+    //       let nickname = this.data.nickname;
+    //       this.$router.push({ name: "myhistory", params: { nickname: nickname } });
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     })
+    // },
+    clickContribution() {
       let levelTiers = [];
-      for(let i = 0; i < this.data.solution.levelTierIds.length; i++) {
+      for (let i = 0; i < this.data.solution.levelTierIds.length; i++) {
         levelTiers.push({
           id: this.data.solution.levelTierIds[i],
           level: this.data.solution.level[i],
-          tier: this.data.solution.tier[i]
-        })
+          tier: this.data.solution.tier[i],
+        });
       }
       this.$router.push({
-        name: 'level-contribution',
+        name: "level-contribution",
         params: {
           nickname: this.data.nickname,
           climbingId: this.data.solution.climbingId,
           levelTiers: levelTiers,
-        }
-      })
+        },
+      });
     },
     previousVideo() {
       if (this.videoIdx > 0) this.videoIdx--;
     },
-    nextVideo(){
-      if(this.videoIdx < this.data.solution.solutionVideoList.length - 1) {
+    nextVideo() {
+      if (this.videoIdx < this.data.solution.solutionVideoList.length - 1) {
         this.videoIdx++;
       }
     },
