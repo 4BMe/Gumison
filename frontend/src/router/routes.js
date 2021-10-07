@@ -57,9 +57,7 @@ export default [
                          * 없으면 로그인 화면으로 가기
                          */
                         const token = store.getters['users/getToken'];
-                        console.log('[route myhistory click] token: ', token)
                         if (token) {
-                            console.log('[route myhistory click] token token : ', token)
                             next()
                         } else {
                             next({
@@ -81,9 +79,7 @@ export default [
                          * 없으면 로그인 화면으로 가기
                          */
                         const token = store.getters['users/getToken'];
-                        console.log('[route myhistory click] token: ', token)
                         if (token) {
-                            console.log('[route myhistory click] token token : ', token)
                             next()
                         } else {
                             next({
@@ -107,9 +103,7 @@ export default [
                  * 없으면 로그인 화면으로 가기
                  */
                 const token = store.getters['users/getToken'];
-                console.log('[route myhistory click] token: ', token)
                 if (token) {
-                    console.log('[route myhistory click] token token : ', token)
                     next()
                 } else {
                     next({
@@ -126,9 +120,7 @@ export default [
         component: () => import('../views/pages/account/login'),
         meta: {
             beforeResolve(routeTo, routeFrom, next) {
-
                 const user = store.getters['users/getUser'];
-                console.log('[router profile] user: ', user);
                 if (user.nickname) {
                     // If the user is already logged in
                     next({

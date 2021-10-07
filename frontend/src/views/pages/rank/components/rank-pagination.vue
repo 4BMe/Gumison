@@ -40,17 +40,12 @@ export default {
   },
 
   watch: {
-    rankKeyword: function() {
+    rankKeyword: function () {
       this.page = 1;
       this.movePage();
     },
-    /*
-    rankLastPage: function() {
-      console.log("lastPage change");
-      this.generatePageList();
-    },
-    */
-    page: function() {
+
+    page: function () {
       this.movePage();
     },
   },

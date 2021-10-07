@@ -38,16 +38,13 @@ export default {
   actions: {},
   getters: {
     getUser(state) {
-      console.log("[getter getUser]", state.user);
       return state.user;
     },
     getToken(state) {
-      console.log("[getter getToken]", state.user.token);
       return state.user.token;
     },
 
     getNickname(state) {
-      console.log("[getter getNickname]", state.user.nickname);
       return state.user.nickname;
     },
     getIsValidNickname(state) {

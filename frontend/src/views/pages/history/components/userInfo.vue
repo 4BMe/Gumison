@@ -135,11 +135,6 @@ export default {
   created() {
     this.expPercent = parseInt((this.user.exp / this.user.nextExp) * 100);
   },
-  methods: {
-    searchHistory(user) {
-      console.log(user);
-    },
-  },
 };
 </script>
 <style>

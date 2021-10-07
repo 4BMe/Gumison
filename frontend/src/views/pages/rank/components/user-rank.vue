@@ -75,9 +75,6 @@ export default {
   created() {
     this.getUser(this.$store.getters["users/getNickname"]);
   },
-  mounted() {
-    console.log(this.userNickname);
-  },
   methods: {
     async getUser(nickname) {
       if (nickname == null || nickname.length == 0) {
@@ -85,7 +82,6 @@ export default {
         return;
       }
       let ret = await getUserRankByNickname(nickname);
-      console.log(ret);
       this.user = ret.userRank;
     },
     searchHistory(nickname) {
