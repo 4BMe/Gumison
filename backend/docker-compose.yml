@@ -46,8 +46,8 @@ services:
       SPRING_PROFILES_ACTIVE: "prod"
       server.address: 0.0.0.0
     # depends_on:
-      # - mysql
-      # - redis
+    # - mysql
+    # - redis
     networks:
       - internal_network
 
@@ -62,7 +62,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+      - ./nginx:/etc/nginx/conf.d
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     depends_on:
