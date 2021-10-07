@@ -41,6 +41,7 @@ services:
       - "8888:8888"
     volumes:
       - ./log:/log
+      - /home/ubuntu/video:/home/video
     environment:
       TZ: "Asia/Seoul"
       SPRING_PROFILES_ACTIVE: "prod"

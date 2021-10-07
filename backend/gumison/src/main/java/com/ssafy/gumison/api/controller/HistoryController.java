@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HistoryController {
 
   private final HistoryService historyService;
-  private final String windowsPath = "C:\\SolutionVideo\\";
+  private final String videoPath = "/home/ubuntu/video/";
 
   @ApiOperation(value = "유저 히스토리", notes = "히스토리를 보여줍니다.", response = ApiResponseDto.class)
   @GetMapping("/{nickname}")
@@ -94,7 +94,7 @@ public class HistoryController {
   public ResponseEntity<StreamingResponseBody> stream(HttpServletRequest req,
       @RequestParam("fileName") String fileName) throws Exception {
     log.info("[stream] : {}", fileName);
-    File file = new File(windowsPath + fileName);
+    File file = new File(videoPath + fileName);
     final InputStream is = new FileInputStream(file);
     StreamingResponseBody stream = os -> {
       readAndWrite(is, os);
