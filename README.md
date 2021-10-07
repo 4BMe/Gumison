@@ -6,7 +6,9 @@
 ## 목차
 * [프로젝트 개요](#프로젝트-개요) 
 * [프로젝트 소개](#프로젝트-소개) 
-* [개발 환경](#개발-환경) 
+* [주요기능](#주요기능)
+* [기술스택](#기술-스택)
+* [배포방법](#배포-방법)
 * [Conventions](#Conventions) 
 * [역할](#역할) 
 <br>
@@ -76,12 +78,25 @@
 
 <br>
 
-## 개발 환경
+## 주요기능
+
+#### A 기능
+
+#### B 기능
+
+#### C 기능
+
+<br>
+
+## 기술 스택
+
+![아키택처](./documents/아키택처.png)
+
 ### Front-end
 
 - HTML5, CSS3, JS(ES6)
 - Bootstrap4
-- Vue.js, Vuex
+- Vue.js 2.6.12, Vuex 3.5.1
 - Visual Studio Code
 
 
@@ -105,9 +120,41 @@
 - Git, Gitlab, Sourcetree, GithubDesktop
 - Mattermost
 - [Notion](https://longing-tibia-c48.notion.site/A202-6593d6e894874c1d810a524f4c6b936d)
+
+### 설치 및 실행
+
+1. 깃 레포지토리 클론
+
+   ```shell
+   git clone [주소]
+   ```
+
+2. frontend 폴더로 이동 후 node_modules 설치
+
+   ```shell
+   npm i
+   ```
+
+3. 프론트의 [index.js](/frontend/src/constant/index.js)에서 백엔드 주소 변경
+
+4. 백의 [application.yml](/backend/gumison/src/main/resources/application.yml)에서 spring.datasource.url 및 redis host 변경 
+
+5. frontend backend/gumison에서 실행
+
+   ```shell
+   npm run serve
+   ./gradlew clean bootJar
+   ```
+
 <br>
 
-## :straight_ruler: Conventions
+## 배포 방법
+
+[배포문서](/exec/1-배포방법.md)
+
+<br>
+
+## Conventions
 
 ### Commit 규칙
 

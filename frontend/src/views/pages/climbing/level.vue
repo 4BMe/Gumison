@@ -99,6 +99,6 @@ export default {
 
 <style scoped>
 .level-list{
-    height: calc(100vh - 400px);
+    height: calc(100vh - 410px);
 }
 </style>
