@@ -1,33 +1,40 @@
 # <img src="https://i.imgur.com/id2im8e.png" alt="로고" width="70"> 거미손
+
 클라이밍계의 Solved.ac
 
 <br>
 
 ## 목차
-* [프로젝트 개요](#프로젝트-개요) 
-* [프로젝트 소개](#프로젝트-소개) 
-* [주요기능](#주요기능)
-* [기술스택](#기술-스택)
-* [배포방법](#배포-방법)
-* [컨벤션](#컨벤션) 
-* [역할](#역할) 
-<br>
+
+- [프로젝트 개요](#프로젝트-개요)
+- [프로젝트 소개](#프로젝트-소개)
+- [주요기능](#주요기능)
+- [기술스택](#기술-스택)
+- [배포방법](#배포-방법)
+- [컨벤션](#컨벤션)
+- [역할](#역할)
+  <br>
 
 ## 프로젝트 개요
 
 ### 진행 기간
+
 > 2021.08.30 ~ 2021.10.08
+
 ### 목표
-  - 각기 다른 클라이밍장의 레벨을 통합
-  - 사용자의 실력을 우리만의 레벨로 표시 및 랭킹 확인
-  - 문제 풀이 영상 확인
+
+- 각기 다른 클라이밍장의 레벨을 통합
+- 사용자의 실력을 우리만의 레벨로 표시 및 랭킹 확인
+- 문제 풀이 영상 확인
 
 <br>
 
 ## 프로젝트 소개
+
 **거미손**은 클라이밍장의 레벨 통합 및 사용자 랭킹을 제공해주는 서비스입니다.
 
 ### 클라이밍이란?
+
 <!-- <img src="https://i.imgur.com/IytV5ce.jpg" width="300" /> -->
 <div style="text-align: center">
     <img src="https://i.imgur.com/uUlgZ0D.jpg" width="400" />
@@ -41,16 +48,17 @@
 <br/>
 
 - 홀드란?
-    - 암벽을 등반하기 위해 발로 밟거나 손으로 잡는 돌 (검정 홀드)
-    
+  - 암벽을 등반하기 위해 발로 밟거나 손으로 잡는 돌 (검정 홀드)
 - 레벨이란?
-    - 색상 테이프를 이용해서 난이도를 표시 (핑크 레벨)
+
+  - 색상 테이프를 이용해서 난이도를 표시 (핑크 레벨)
 
 - 문제란?
-    - 등반 시 사용할 수 있는 홀드의 집합 (검정 홀드 핑크 레벨 문제 등반 중)
-    - 검은색 문제를 풀 때는 검은색 홀드만 사용가능
+  - 등반 시 사용할 수 있는 홀드의 집합 (검정 홀드 핑크 레벨 문제 등반 중)
+  - 검은색 문제를 풀 때는 검은색 홀드만 사용가능
 
 ### 문제점
+
 - 클라이밍장마다 난이도를 표시하는 색상의 종류, 순서가 달라서 난이도를 한 눈에 파악하기 어렵습니다.
 
 <img src="https://i.imgur.com/GampCS8.png"/>
@@ -68,13 +76,13 @@
 <br>
 
 ### 티어
+
 - 거미손 서비스만의 레벨
 - Bronze < Silver < Gold < Platinum < Diamond < Master
 
 <div style="text-align: center">
     <img src="https://i.imgur.com/kDy9sGd.png" alt="tier" width="250">
 </div>
-
 
 <br>
 
@@ -99,8 +107,8 @@
 - Vue.js 2.6.12, Vuex 3.5.1
 - Visual Studio Code
 
-
 ### Back-end
+
 - Java 1.8
 - Spring Boot 2.5.4, Spring MVC, Spring Data JPA
 - JPA, Hibernate, JPQL, QueryDSL
@@ -116,6 +124,7 @@
 - Jenkins
 
 ### Collaboration
+
 - Jira
 - Git, Gitlab, Sourcetree, GithubDesktop
 - Mattermost
@@ -137,7 +146,7 @@
 
 3. 프론트의 [index.js](/frontend/src/constant/index.js)에서 백엔드 주소 변경
 
-4. 백의 [application.yml](/backend/gumison/src/main/resources/application.yml)에서 spring.datasource.url 및 redis host 변경 
+4. 백의 [application.yml](/backend/gumison/src/main/resources/application.yml)에서 spring.datasource.url 및 redis host 변경
 
 5. frontend backend/gumison에서 실행
 
@@ -161,26 +170,37 @@
 <br>
 
 ## 역할
+
 #### 이현정(BE, FE)
-* 사용자 검색
-* 클라이밍장 검색
+
+- 사용자 검색
+- 클라이밍장 검색
+
 #### 김민기(BE, FE)
-* 전체랭킹
-* 특정 사용자 랭킹
-* 경험치
-* Redis
+
+- 전체랭킹
+- 특정 사용자 랭킹
+- 경험치
+- Redis
+
 #### 김민지(BE, FE)
-* 로그인
-* 마이페이지
-* JWT
+
+- 로그인
+- 마이페이지
+- JWT
+
 #### 김용훈(BE, FE)
-* 사용자 정보 조회
-* 해결한 문제 목록 조회
-* Jenkins
+
+- 사용자 정보 조회
+- 해결한 문제 목록 조회
+- Jenkins
+
 #### 손동우(BE, FE)
-* 해결한 문제 등록
-* 문제의 레벨 변경 기여
-* Hadoop
+
+- 해결한 문제 등록
+- 문제의 레벨 변경 기여
+- Hadoop
+
 ---
 
 Persona/Scenario: [Notion](https://longing-tibia-c48.notion.site/18e723784cc648f8bc3894a9e5d3ffe3)
@@ -196,4 +216,3 @@ System Architecture: [Google Presentation](https://docs.google.com/presentation/
 DB ERD: [ERD Cloud](https://www.erdcloud.com/d/y6Fp3fQghb7LxwLeA)
 
 API 명세서: [Google Sheet](https://docs.google.com/spreadsheets/d/1kWMIpE3GkuFl15K_j_j33c6FWiQ9tc_oHB5Cfs02G-g/edit#gid=0)
-
