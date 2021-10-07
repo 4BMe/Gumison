@@ -114,10 +114,7 @@
             <!-- </div> -->
           </div>
         </div>
-        <div
-          id="buttons"
-          class="mt-3"
-        >
+        <div id="buttons" class="mt-3" v-if="isMyself()">
           <div class="container-fluid row m-0 p-0">
             <div class="col-5 m-0 p-0" />
             <button class="btn btn-outline-success ml-1"
@@ -180,6 +177,9 @@ export default {
     });
   },
   methods: {
+    isMyself(){
+      return this.$store.state.users.user.nickname == this.data.nickname;
+    },
     getVideoSrc() {
       return `${BASE_URL}/history/videos?fileName=${
         this.data.solution.solutionVideoList[this.videoIdx].uri
