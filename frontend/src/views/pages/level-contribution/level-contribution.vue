@@ -51,7 +51,12 @@ export default {
     },
     methods:{
         goBack(){
-            this.$router.go(-1);
+            this.$router.push({
+                name: "myhistory",
+                params: {
+                    nickname: this.nickname,
+                }
+            });
         },
         async submitClick() {
             console.log(this.tiers);
@@ -70,8 +75,13 @@ export default {
             }
             console.log(contributionRequest);
             await submit(contributionRequest)
-            .then(({ data }) => {
-                console.log(data);
+            .then(() => {
+                this.$router.push({
+                name: "myhistory",
+                params: {
+                    nickname: this.nickname,
+                }
+            });
             })
             .catch(error => {
                 console.log(error);
