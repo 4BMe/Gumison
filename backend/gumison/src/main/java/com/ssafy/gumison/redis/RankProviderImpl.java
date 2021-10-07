@@ -4,6 +4,8 @@ import com.ssafy.gumison.common.dto.UserExpTierDto;
 import com.ssafy.gumison.common.dto.UserRankDto;
 import com.ssafy.gumison.common.enums.RedisKey;
 import com.ssafy.gumison.common.exception.ResourceNotFoundException;
+import com.ssafy.gumison.db.entity.User;
+import com.ssafy.gumison.db.repository.UserRepository;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,27 +21,30 @@ import org.springframework.stereotype.Component;
  * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스의 구현체
  *
  * @author cherrytomato1
- * @version 1.4   티어 가중치 수정
+ * @version 1.5   최대 Offset 수정
  */
 @Component
 @Slf4j
 public class RankProviderImpl implements RankProvider {
 
-  private final Long MAX_EXP = 0xFFFF_FFFFL;
+  private final Long MAX_EXP = 0x1_FFFF_FFFFL;
 
-  private final Long TIER_BASE_SCORE = 0x6FF_FFFFL;
+  private final Long TIER_BASE_SCORE = 0x3DFD240L;
 
   private final String KEY_PREFIX = RedisKey.GUMISON_CACHE.name();
 
   private final UserRepositorySupport userRepositorySupport;
+
+  private final UserRepository userRepository;
 
   private final ZSetOperations<String, Object> zSetOperations;
 
   private Long userCount;
 
   public RankProviderImpl(UserRepositorySupport userRepositorySupport,
-      RedisTemplate<String, Object> redisTemplate) {
+      RedisTemplate<String, Object> redisTemplate, UserRepository userRepository) {
     this.userRepositorySupport = userRepositorySupport;
+    this.userRepository = userRepository;
     this.zSetOperations = redisTemplate.opsForZSet();
     loadAllUserExpIntoRankZSet();
   }
@@ -67,7 +72,7 @@ public class RankProviderImpl implements RankProvider {
         return;
       }
 
-      long score = MAX_EXP - ((tierCode % 200) * TIER_BASE_SCORE + accumulateExp);
+      long score = getScoreByExpAndTierCode(accumulateExp, tierCode);
 
       zSetOperations
           .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, score);
@@ -89,9 +94,21 @@ public class RankProviderImpl implements RankProvider {
     Optional<Long> userRankOptional = Optional
         .ofNullable(zSetOperations.rank(KEY_PREFIX + RedisKey.RANK, nickname));
     log.info("load user rank, nickname - {}, rank - {}", nickname, userRankOptional.orElse(-1L));
+
+    if (!userRankOptional.isPresent()) {
+      User currUser = userRepository.findByNickname(nickname)
+          .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname"));
+
+      zSetOperations.add(KEY_PREFIX + RedisKey.RANK, nickname, getScoreByExpAndTierCode(
+          currUser.getAccumulateExp(), currUser.getTierCode()));
+      userCount++;
+
+      userRankOptional = Optional
+          .ofNullable(zSetOperations.rank(KEY_PREFIX + RedisKey.RANK, nickname));
+    }
     return UserRankDto
         .of(nickname, userRankOptional
-            .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname")) + 1);
+            .orElseThrow(() -> new ResourceNotFoundException("User - ZSet", nickname, "nickname")) + 1);
   }
 
   /**
@@ -141,7 +158,12 @@ public class RankProviderImpl implements RankProvider {
    */
   @Override
   public boolean deleteUserByNickname(String nickname) {
+    log.info("[rank-provider] delete user nickname - {}", nickname);
     return zSetOperations.remove(KEY_PREFIX + RedisKey.RANK, nickname) != null;
+  }
+
+  private long getScoreByExpAndTierCode(Long exp, Long tierCode) {
+    return MAX_EXP - ((tierCode % 200) * TIER_BASE_SCORE + exp);
   }
 
 
