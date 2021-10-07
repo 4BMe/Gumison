@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.core.io.ResourceLoader;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.ssafy.gumison.api.request.SolutionRequest;
 import com.ssafy.gumison.api.response.HistoryRes;
 import com.ssafy.gumison.api.response.SolutionListItem;
@@ -31,6 +32,7 @@ import com.ssafy.gumison.db.repository.LevelTierRepository;
 import com.ssafy.gumison.db.repository.SolutionRepository;
 import com.ssafy.gumison.db.repository.SolutionVideoRepository;
 import com.ssafy.gumison.db.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +49,6 @@ public class HistoryServiceImpl implements HistoryService {
   private final SolutionVideoRepository solutionVideoRepository;
 
   private final String windowsPath = "C:\\SolutionVideo\\";
-  private final ResourceLoader resourceLoader;
 
   private final int LIST_PER_PAGE = 10;
   private final Long MAX_TIER_CODE = 224L;
@@ -85,6 +86,7 @@ public class HistoryServiceImpl implements HistoryService {
         .orElseThrow(RuntimeException::new);
     String tier = codeNameConvert(code.getCode());
     List<Long> solutionIds = new ArrayList<>();
+    List<Long> levelTierIds = new ArrayList<>();
     List<String> tierNames = new ArrayList<>();
     List<String> levelNames = new ArrayList<>();
     List<Integer> counts = new ArrayList<>();
@@ -92,12 +94,14 @@ public class HistoryServiceImpl implements HistoryService {
         .findByUploadId(solution.getUploadId());
     solutionList.forEach(sol -> {
       solutionIds.add(sol.getId());
+      levelTierIds.add(sol.getLevelTier().getId());
       tierNames.add(codeNameConvert(sol.getLevelTier().getTierCode()));
       levelNames.add(codeNameConvert(sol.getLevelTier().getLevelCode()));
       counts.add(sol.getCount());
     });
-    return SolutionRes.of(user, tier, solution, tierNames, solutionIds, levelNames, counts,
-        solutionVideoList);
+
+    return SolutionRes.of(user, tier, solution, levelTierIds, tierNames, solutionIds, levelNames,
+        counts, solutionVideoList);
   }
 
   private HistoryUserDto userConvert(User user, String tier, Long exp, Long nextExp) {
@@ -178,8 +182,6 @@ public class HistoryServiceImpl implements HistoryService {
       solutionVideos.add(solutionVideo);
     }
     solutionVideoRepository.saveAll(solutionVideos);
-    // List<SolutionVideo> solutionVideosRet =
-    // solutionVideoRepository.saveAll(solutionVideos);
   }
 
   @Override
@@ -245,9 +247,9 @@ public class HistoryServiceImpl implements HistoryService {
 
         increaseUserExpByLevelTierAndCount(user, levelTier, counts.get(i));
       } else {
-        Solution solution = Solution.builder().user(user).levelTier(levelTier)
-            .climbing(climbing).count(counts.get(i)).date(solutionRequest.getDate())
-            .uploadId(user.getId() + "-" + now).build();
+        Solution solution = Solution.builder().user(user).levelTier(levelTier).climbing(climbing)
+            .count(counts.get(i)).date(solutionRequest.getDate()).uploadId(user.getId() + "-" + now)
+            .build();
 
         solutions.add(solution);
 
@@ -256,6 +258,35 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     return solutionRepository.saveAll(solutions);
+  }
+
+  private void deleteVideos(String uploadId) {
+    List<SolutionVideo> solutionVideos = solutionVideoRepository.findByUploadId(uploadId);
+
+    for (SolutionVideo solutionVideo : solutionVideos) {
+      File removeFile = new File(windowsPath + solutionVideo.getUri());
+      log.info("[deleteVideos] - pathname : {}", removeFile.getPath());
+      if (removeFile.exists()) {
+        if (removeFile.delete())
+          log.info("[deleteVideos] - success!!");
+        else {
+          log.info("[deleteVideos] - fail!!");
+        }
+      } else {
+        log.info("[deleteVideos] - no file!!");
+      }
+    }
+
+    solutionVideoRepository.removeByUploadId(uploadId);
+  }
+
+  @Override
+  public Integer deleteSolution(String uploadId) {
+    log.info("[deleteSolution] - HistoryService : {}", uploadId);
+    deleteVideos(uploadId);
+    Integer ret = solutionRepository.removeByUploadId(uploadId);
+    log.info("ret : {}", ret);
+    return ret;
   }
 
   /**
@@ -294,8 +325,8 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() >= nextLevelRequireExp
-          && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp =
-          getTierExpByTierCode(user.getTierCode() + 1)) {
+          && !user.getTierCode().equals(MAX_TIER_CODE); nextLevelRequireExp = getTierExpByTierCode(
+              user.getTierCode() + 1)) {
 
         log.info("[solutionCreate] increase user tier");
         user.setTierCode(user.getTierCode() + 1);
@@ -343,8 +374,7 @@ public class HistoryServiceImpl implements HistoryService {
       log.info("[solutionCreate] next level require exp - {}", nextLevelRequireExp);
       log.info("[solutionCreate] curr user exp - {}", user.getAccumulateExp());
       for (; user.getAccumulateExp() < nextLevelRequireExp
-          && !user.getTierCode().equals(MIN_TIER_CODE);
-          nextLevelRequireExp = getTierExpByTierCode(
+          && !user.getTierCode().equals(MIN_TIER_CODE); nextLevelRequireExp = getTierExpByTierCode(
               user.getTierCode() - 1)) {
 
         log.info("[solutionCreate] decrease user tier");

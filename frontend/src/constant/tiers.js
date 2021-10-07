@@ -30,16 +30,16 @@ export default {
             return tier.slice(0, tier.length-1) + (parseInt(tier[tier.length-1], 10) + 1)
         } else {
             switch(tier) {
-                case 'Master4':
-                    return 'Diamond1';
-                case 'Diamond4':
-                    return 'Platinum1';
-                case 'Platinum4':
-                    return 'Gold1';
-                case 'Gold4':
-                    return 'Silver1'; 
-                case 'Silver4':
-                    return 'Bronze1';
+                case 'master4':
+                    return 'diamond1';
+                case 'diamond4':
+                    return 'platinum1';
+                case 'platinum4':
+                    return 'gold1';
+                case 'gold4':
+                    return 'silver1'; 
+                case 'silver4':
+                    return 'bronze1';
             }
         }
         return tier;
@@ -49,16 +49,16 @@ export default {
             return tier.slice(0, tier.length-1) + (parseInt(tier[tier.length-1], 10) - 1)
         } else {
             switch(tier) {
-                case 'Diamond1':
-                    return 'Master4';
-                case 'Platinum1':
-                    return 'Diamond4';
-                case 'Gold1':
-                    return 'Platinum4'; 
-                case 'Silver1':
-                    return 'Gold4';
-                case 'Bronze1':
-                    return 'Silver4';
+                case 'diamond1':
+                    return 'master4';
+                case 'platinum1':
+                    return 'diamond4';
+                case 'gold1':
+                    return 'platinum4'; 
+                case 'silver1':
+                    return 'gold4';
+                case 'bronze1':
+                    return 'silver4';
             }
         }
         return tier;
