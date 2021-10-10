@@ -22,6 +22,7 @@ class RankServiceTest {
 
   @Test
   public void 닉네임으로_랭크를_불러온다() {
+
     // given
     final String NICKNAME = "dummy1";
     final Long USER_COUNT = rankProvider.getUserCount();

@@ -8,20 +8,23 @@ import com.ssafy.gumison.db.entity.User;
 import com.ssafy.gumison.db.repository.UserRepository;
 import com.ssafy.gumison.db.repository.UserRepositorySupport;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.DefaultTypedTuple;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Component;
 
 /**
  * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스의 구현체.
  *
  * @author cherrytomato1
- * @version 1.6   score 로직 수정
+ * @version 1.7   loadAllUser
  */
 @Component
 @Slf4j
@@ -59,6 +62,8 @@ public class RankProviderImpl implements RankProvider {
 
     List<UserExpTierDto> userExpTierDtoList = userRepositorySupport.findNicknamesAndExpAll();
 
+    Set<TypedTuple<Object>> userExpTierTupleSet = new HashSet<>();
+
     log.info("Load all user exp into ZSet, size - {}", userExpTierDtoList.size());
     userExpTierDtoList.forEach(userExpTierDto -> {
       String nickname = userExpTierDto.getNickname();
@@ -72,11 +77,21 @@ public class RankProviderImpl implements RankProvider {
         return;
       }
 
-      long score = getScoreByExpAndTierCode(accumulateExp, tierCode);
+      double score = (double) getScoreByExpAndTierCode(accumulateExp, tierCode);
 
-      zSetOperations
-          .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, score);
+      userExpTierTupleSet.add(new DefaultTypedTuple<>(nickname, score));
+//      zSetOperations
+//          .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, score);
     });
+
+    Optional<Long> loadedUserCount = Optional.empty();
+    while (!loadedUserCount.isPresent()) {
+      loadedUserCount = Optional
+          .ofNullable(
+              zSetOperations.addIfAbsent(KEY_PREFIX + RedisKey.RANK.name(), userExpTierTupleSet));
+    }
+
+    log.info("[Rank Provider] load all user into ZSet, User Count - {}", loadedUserCount.get());
 
     this.userCount = (long) userExpTierDtoList.size();
     return userCount;
@@ -99,7 +114,7 @@ public class RankProviderImpl implements RankProvider {
       User currUser = userRepository.findByNickname(nickname)
           .orElseThrow(() -> new ResourceNotFoundException("User", nickname, "nickname"));
 
-      zSetOperations.add(KEY_PREFIX + RedisKey.RANK, nickname, getScoreByExpAndTierCode(
+      zSetOperations.addIfAbsent(KEY_PREFIX + RedisKey.RANK, nickname, getScoreByExpAndTierCode(
           currUser.getAccumulateExp(), currUser.getTierCode()));
       userCount++;
 
@@ -132,7 +147,7 @@ public class RankProviderImpl implements RankProvider {
 
     List<UserRankDto> userRankDtoList = new ArrayList<>(limit);
     AtomicLong rank = new AtomicLong(startOffset + 1);
-    log.info("load user rank start offset - {}, limit - {}, rankdefault -{}", startOffset, limit,
+    log.info("load user rank start offset - {}, limit - {}, rank default - {}", startOffset, limit,
         rank);
     setOptional.get()
         .forEach(v -> userRankDtoList.add(UserRankDto.of((String) v, rank.getAndIncrement())));

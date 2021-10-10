@@ -24,6 +24,7 @@ class RankProviderTest {
 
   @Test
   public void 모든사용자의_경험치를_ZSET에_올린다() {
+
     // given
     final int SIZE = userRepositorySupport.findNicknamesAndExpAll().size();
     // when
@@ -34,6 +35,7 @@ class RankProviderTest {
 
   @Test
   public void 사용자의_순위를_검색한다() {
+
     // given
     final String NICKNAME = "dummy1";
     // when
@@ -46,6 +48,7 @@ class RankProviderTest {
 
   @Test
   public void 순위_목록을_가져온다() {
+
     // given
     final int START_OFFSET = 0;
     final int LIMIT = 10;

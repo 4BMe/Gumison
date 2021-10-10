@@ -27,6 +27,7 @@ class HistoryServiceTest {
 
   @Test
   void 문제를_해결하면_경험치와_티어가_변경된다() {
+
     // given
     final String OAUTH_ID = "108411740976101103566";
 

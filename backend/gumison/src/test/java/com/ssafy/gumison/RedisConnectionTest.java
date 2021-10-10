@@ -25,6 +25,7 @@ public class RedisConnectionTest {
 
   @Test
   public void 값_설정_및_조회_삭제_기능을_수행한다() {
+
     // given
     final String KEY = "testKey";
     final String VALUE = "testValue";
