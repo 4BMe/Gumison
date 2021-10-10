@@ -84,6 +84,8 @@ public class RankProviderImpl implements RankProvider {
 //          .add(KEY_PREFIX + RedisKey.RANK.name(), nickname, score);
     });
 
+    removeAllUsersFromZSet();
+
     Optional<Long> loadedUserCount = Optional.empty();
     while (!loadedUserCount.isPresent()) {
       loadedUserCount = Optional
@@ -91,9 +93,9 @@ public class RankProviderImpl implements RankProvider {
               zSetOperations.addIfAbsent(KEY_PREFIX + RedisKey.RANK.name(), userExpTierTupleSet));
     }
 
-    log.info("[Rank Provider] load all user into ZSet, User Count - {}", loadedUserCount.get());
+    log.info("[rank provider] load all user into ZSet, User Count - {}", loadedUserCount.get());
 
-    this.userCount = (long) userExpTierDtoList.size();
+    this.userCount = loadedUserCount.get();
     return userCount;
   }
 
@@ -173,10 +175,22 @@ public class RankProviderImpl implements RankProvider {
    * @return 삭제 성공 여부, 존재하지 않는 유저일 경우 false
    */
   @Override
-  public boolean deleteUserByNickname(String nickname) {
+  public boolean removeUserByNickname(String nickname) {
     log.info("[rank-provider] delete user nickname - {}", nickname);
     userCount--;
     return zSetOperations.remove(KEY_PREFIX + RedisKey.RANK, nickname) != null;
+  }
+
+  /**
+   * ZSet의 모든 사용자 제거
+   *
+   * @return 제거된 사용자 수
+   */
+  @Override
+  public Long removeAllUsersFromZSet() {
+    Long removedUserCount = zSetOperations.removeRange(KEY_PREFIX + RedisKey.RANK, 0, -1);
+    log.info("[rank provider] remove all user from ZSet, user count - {}", removedUserCount);
+    return removedUserCount;
   }
 
   private long getScoreByExpAndTierCode(Long exp, Long tierCode) {

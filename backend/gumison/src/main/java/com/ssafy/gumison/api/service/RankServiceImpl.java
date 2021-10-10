@@ -68,7 +68,7 @@ public class RankServiceImpl implements RankService {
   @Override
   public boolean deleteUserRankByNickname(String nickname) {
 
-    return rankProvider.deleteUserByNickname(nickname);
+    return rankProvider.removeUserByNickname(nickname);
   }
 
   /**
