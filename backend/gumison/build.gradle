@@ -1,0 +1,69 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'checkstyle'
+}
+
+group = 'com.ssafy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+def checkstyleVersion = "8.44"
+checkstyle {
+	toolVersion = checkstyleVersion
+	configFile = file("config/checkstyle/google_checks.xml")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    //querydsl
+    annotationProcessor("com.querydsl:querydsl-apt:4.4.0:jpa")
+    implementation("com.querydsl:querydsl-apt:4.4.0")
+    implementation("com.querydsl:querydsl-jpa:4.4.0")
+
+    //jpa
+    annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
+
+
+    //springfox
+    implementation("io.springfox:springfox-swagger2:3.0.0")
+    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+    implementation("io.springfox:springfox-data-rest:3.0.0")
+    implementation("io.springfox:springfox-bean-validators:3.0.0")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+task lint {
+	dependsOn checkstyleMain, checkstyleTest
+}

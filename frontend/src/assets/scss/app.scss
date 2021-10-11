@@ -1,0 +1,56 @@
+/*
+Template Name: Chatvia - Responsive Bootstrap 4 Chat App
+Author: Themesbrand
+Version: 1.0.0
+Website: https://themesbrand.com/
+Contact: themesbrand@gmail.com
+File: Main Css File
+*/
+
+//Fonts
+@import "custom/fonts/fonts";
+
+//Core files
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "variables";
+@import "~bootstrap/scss/mixins";
+@import '~bootstrap/scss/bootstrap';
+@import "bootstrap";
+@import '~bootstrap-vue/src/index.scss';
+
+
+// Components
+@import "custom/components/waves";
+@import "custom/components/avatar";
+@import "custom/components/helper";
+@import "custom/components/accordion";
+@import "custom/components/forms";
+
+// Plugins
+@import "custom/plugins/custom-scrollbar";
+
+// structure
+@import "custom/structure/sidemenu";
+
+// Pages
+@import "custom/pages/chat-leftsidebar";
+@import "custom/pages/user-chat";
+@import "custom/pages/user-profile-details";
+@import "custom/pages/authentication";
+
+
+// icons
+
+@import "icons";
+
+// rtl
+
+// @import "custom/rtl/bootstrap-rtl";
+// @import "custom/rtl/components-rtl";
+// @import "custom/rtl/float-rtl";
+// @import "custom/rtl/general-rtl";
+// @import "custom/rtl/pages-rtl";
+// @import "custom/rtl/spacing-rtl";
+// @import "custom/rtl/text-rtl";
+
