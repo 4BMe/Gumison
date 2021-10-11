@@ -15,6 +15,7 @@ class UserRepositoryTest {
 
   @Test
   void 키워드에_해당하는_유저_카운트를_검색한다() {
+
     // given
     String keyword = "dum";
     // when
