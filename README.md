@@ -195,6 +195,10 @@
 ### DB ERD
 [ERD Cloud](https://www.erdcloud.com/d/y6Fp3fQghb7LxwLeA)
 
+### 디렉토리 구조
+[Front-End](/documents/frontend_structure.md)
+
+[Back-End](/documents/backend_structure.md)
 
 ### 배포 방법
 

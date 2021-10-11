@@ -7,7 +7,7 @@ import java.util.List;
  * 레디스 ZSet(Sorted Set)을 제어하기 위한 인터페이스.
  *
  * @author cherrytomato1
- * @version 1.3   티어 가중치 추가
+ * @version 1.4 deleteAllUsersFromZSet 추가
  */
 
 public interface RankProvider {
@@ -50,5 +50,12 @@ public interface RankProvider {
    * @param nickname 사용자 닉네임
    * @return 삭제 성공 여부, 존재하지 않는 유저일 경우 false
    */
-  boolean deleteUserByNickname(String nickname);
+  boolean removeUserByNickname(String nickname);
+
+  /**
+   * ZSet의 모든 사용자 제거
+   *
+   * @return 제거된 사용자 수
+   */
+  Long removeAllUsersFromZSet();
 }

@@ -16,6 +16,7 @@ class UserRepositorySupportTest {
 
   @Test
   public void 모든_사용자의_경험치와_닉네임을_불러온다() {
+
     // given
 
     // when
